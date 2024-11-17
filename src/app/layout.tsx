@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter, Poppins, Rubik_Mono_One } from "next/font/google";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const rubik_mono_one = Rubik_Mono_One({
+  weight: ["400"],
+  variable: "--font-display",
+  subsets: ["latin"],
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const inter = Inter({
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body",
+  subsets: ["latin"],
+});
+const poppins = Poppins({
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-headings",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -26,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${rubik_mono_one.variable} ${inter.variable} ${poppins.variable} font-body`}
       >
         {children}
       </body>
