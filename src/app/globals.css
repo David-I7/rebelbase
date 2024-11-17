@@ -1,3 +1,178 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* SHADOW */
+  --shadow-level-1: 0 2px 6px 2px rgba(0, 0, 0, 0.15),
+    0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-level-2: 0 6px 10px 4px rgba(0, 0, 0, 0.15),
+    0 2px 3px rgba(0, 0, 0, 0.3);
+  --shadow-level-3: 0 8px 12px 6px rgba(0, 0, 0, 0.15),
+    0 4px 4px rgba(0, 0, 0, 0.3);
+
+  /* STATES */
+  --state-hovered: 115%; /*Brightness filter */
+  --state-disabled: ;
+  --state-on-disabled: ;
+
+  /* COLORS */
+  /* TEXT | ICONS | BUTTONS */
+  --color-primary: #dc00fe;
+  --color-secondary: #ececec;
+  --color-on-primary: black;
+  --color-on-secondary: #272727;
+  --color-link: #408ffa;
+
+  /* CONTAINER */
+  --color-primary-container: #ac08c5;
+  --color-secondary-container: #434343;
+  --color-on-primary-container: #fadfff;
+  --color-on-secondary-container: #ececec;
+  --color-surface: #231d24;
+  --color-surface-container-lowest: #000000;
+  --color-surface-container-low: #171717;
+  --color-surface-container-normal: #303030;
+  --color-surface-container-high: #434343;
+  --color-on-surface-body: #b3b3b3;
+  --color-on-surface-body-varient-low: #8d8d8d;
+  --color-on-surface-body-varient-lowest: #686868;
+  --color-on-surface-heading: white;
+  --color-on-surface-heading-varient: #686868;
+
+  /* OUTLINE */
+  --color-outline: #8d8d8d;
+  --color-outline-varient-low: #686868;
+  --color-outline-varient-lowest: #434343;
+
+  /* Inverse */
+  --color-inverse-surface: #ececec;
+  --color-inverse-on-surface: #434343;
+  --color-inverse-on-surface-varient: #434343;
+  --color-inverse-primary: #ac08c5;
+
+  /* FONTS */
+  /* Font-size */
+  /* Body */
+  --fs-xs: 0.75rem;
+  --fs-s: 0.875rem;
+  --fs-m: 1rem;
+  --fs-l: 1.125rem;
+  --fs-xl: 1.25rem;
+
+  --large-screen-size-increase: 0.5rem;
+
+  /* Headings */
+  --fs-h1: 2.5rem;
+  --fs-h2: 2rem;
+  --fs-h3: 1.5rem;
+  --fs-h4: 1rem;
+  /* Headings LARGE */
+  --fs-l-h1: calc(var(--fs-h1) + var(--large-screen-size-increase));
+  --fs-l-h2: calc(var(--fs-h2) + var(--large-screen-size-increase));
+  --fs-l-h3: calc(var(--fs-h3) + var(--large-screen-size-increase));
+  --fs-l-h4: calc(var(--fs-h4) + var(--large-screen-size-increase));
+
+  /* LINE-HEIGHT */
+  --lh-percentage-body: 1.5;
+  --lh-percentage-headings: 1.2;
+
+  /* Body */
+  --lh-xs: calc(var(--fs-xs) * var(--lh-percentage-body));
+  --lh-s: calc(var(--fs-s) * var(--lh-percentage-body));
+  --lh-m: calc(var(--fs-m) * var(--lh-percentage-body));
+  --lh-l: calc(var(--fs-l) * var(--lh-percentage-body));
+  --lh-xl: calc(var(--fs-xl) * var(--lh-percentage-body));
+
+  /* Headings */
+  --lh-h1: calc(var(--fs-h1) * var(--lh-percentage-headings));
+  --lh-h2: calc(var(--fs-h2) * var(--lh-percentage-headings));
+  --lh-h3: calc(var(--fs-h3) * var(--lh-percentage-headings));
+  --lh-h4: calc(var(--fs-h4) * var(--lh-percentage-headings));
+
+  /* PARAGRAPH SPACING */
+  --ps-percentage: 1.5;
+  /* Body */
+  --ps-xs: calc(var(--fs-xs) * var(--ps-percentage));
+  --ps-s: calc(var(--fs-s) * var(--ps-percentage));
+  --ps-m: calc(var(--fs-m) * var(--ps-percentage));
+  --ps-l: calc(var(--fs-l) * var(--ps-percentage));
+  --ps-xl: calc(var(--fs-xl) * var(--ps-percentage));
+
+  /* Headings */
+  --ps-h1: calc(var(--fs-h1) * var(--ps-percentage));
+  --ps-h2: calc(var(--fs-h2) * var(--ps-percentage));
+  --ps-h3: calc(var(--fs-h3) * var(--ps-percentage));
+  --ps-h4: calc(var(--fs-h4) * var(--ps-percentage));
+}
+
+.font-logo {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.font-body-xs,
+.font-body-s,
+.font-body-m,
+.font-body-l,
+.font-body-xl {
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+.font-body-xs {
+  line-height: var(--lh-xs);
+  font-size: var(--fs-xs);
+}
+
+.font-body-s {
+  line-height: var(--lh-s);
+  font-size: var(--fs-s);
+}
+.font-body-m {
+  line-height: var(--lh-m);
+  font-size: var(--fs-m);
+}
+
+.font-body-l {
+  line-height: var(--lh-l);
+  font-size: var(--fs-l);
+}
+.font-body-xl {
+  line-height: var(--lh-xl);
+  font-size: var(--fs-xl);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-headings);
+  font-weight: 600;
+}
+
+h1 {
+  line-height: var(--lh-h1);
+  font-size: var(--lh-h1);
+}
+h2 {
+  line-height: var(--lh-h2);
+  font-size: var(--lh-h2);
+}
+h3 {
+  line-height: var(--lh-h3);
+  font-size: var(--lh-h3);
+}
+h4 {
+  line-height: var(--lh-h4);
+  font-size: var(--lh-h4);
+}
+
+@media screen and (min-width: 1024px) {
+  h1 {
+    font-size: var(--fs-l-h1);
+  }
+  h2 {
+    font-size: var(--fs-l-h2);
+  }
+}
