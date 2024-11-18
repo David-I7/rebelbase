@@ -9,10 +9,16 @@ export default {
   ],
   theme: {
     extend: {
+      transitionProperty: {
+        brightness: "brightness",
+      },
       fontFamily: {
         body: ["var(--font-body)", ...fontFamily.sans],
         headings: ["var(--font-headings)", ...fontFamily.sans],
         display: ["var(--font-display)", ...fontFamily.mono],
+      },
+      brightness: {
+        "115": "115%",
       },
       colors: {
         primary: "var(--color-primary)",

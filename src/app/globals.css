@@ -2,7 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+image {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+
 :root {
+  scroll-behavior: smooth;
+
   /* SHADOW */
   --shadow-level-1: 0 2px 6px 2px rgba(0, 0, 0, 0.15),
     0 1px 2px rgba(0, 0, 0, 0.3);
@@ -38,7 +53,7 @@
   --color-on-surface-body-varient-low: #8d8d8d;
   --color-on-surface-body-varient-lowest: #686868;
   --color-on-surface-heading: white;
-  --color-on-surface-heading-varient: #686868;
+  --color-on-surface-heading-varient: #ececec;
 
   /* OUTLINE */
   --color-outline: #8d8d8d;
@@ -175,4 +190,48 @@ h4 {
   h2 {
     font-size: var(--fs-l-h2);
   }
+}
+
+body {
+  min-height: 100vh;
+}
+
+html {
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface-body);
+}
+
+ul,
+ol {
+  list-style-type: none;
+}
+
+.absolute-center {
+  transform: translateX(-50%) translateY(-50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+footer::before {
+  content: "";
+  width: 100%;
+  height: 64px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(-100%);
+  background-image: url("./assets/rebelbase_footer.svg");
+}
+
+footer {
+  margin-top: calc(120px + 64px);
+  position: relative;
 }
