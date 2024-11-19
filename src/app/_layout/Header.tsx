@@ -1,7 +1,7 @@
 import { MdSearch, MdMenu } from "react-icons/md";
-import LogoType from "../_components/logo/LogoType";
-import FullLogo from "../_components/logo/FullLogo";
-import IconTarget from "../_components/buttons/IconTarget";
+import LogoType from "../../_components/logo/LogoType";
+import FullLogo from "../../_components/logo/FullLogo";
+import IconTarget from "../../_components/buttons/IconTarget";
 import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
 

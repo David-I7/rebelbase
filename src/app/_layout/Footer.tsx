@@ -1,5 +1,5 @@
 import React from "react";
-import FullLogo from "../_components/logo/FullLogo";
+import FullLogo from "../../_components/logo/FullLogo";
 import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
 

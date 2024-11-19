@@ -228,7 +228,7 @@ footer::before {
   left: 0;
   right: 0;
   transform: translateY(-100%);
-  background-image: url("./assets/rebelbase_footer.svg");
+  background-image: url("../assets/rebelbase_footer.svg");
 }
 
 footer {
