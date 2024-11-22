@@ -4,7 +4,7 @@ export default class ErrorFactory {
       cause,
     });
   }
-  static createRedisError() {
-    return new Error("RedisError");
+  static createRedisError(message: string) {
+    return new Error(`Redis Error: ${message}`);
   }
 }

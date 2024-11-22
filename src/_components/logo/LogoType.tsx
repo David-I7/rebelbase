@@ -11,7 +11,7 @@ const LogoType = ({ responsive = false, style }: LogoTypeProps) => {
   return (
     <div
       style={style}
-      className={`${conditionalStyles} w-min font-logo text-2xl text-primary selection:bg-on-primary-container`}
+      className={`${conditionalStyles} w-min font-logo text-4xl text-primary selection:bg-on-primary-container`}
     >
       REBELBASE
     </div>

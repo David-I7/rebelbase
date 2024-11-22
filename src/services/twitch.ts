@@ -1,17 +1,17 @@
 import ErrorFactory from "@/lib/errors/errorFactory";
-import { setToCache } from "@/lib/redis/controllers";
-import CACHE_KEYS from "@/data/constants/cacheKeys";
+import { twitchDeveloperAuthUrl } from "@/data/baseUrls";
 
-const twitchDeveloperAuthUrl = "https://id.twitch.tv/oauth2/token";
-
-type TwitchOAuthRes = {
+export type TwitchOAuthRes = {
   access_token: string;
   expires_in: number;
   token_type: "bearer";
 };
 
 export async function getIGDBAccessToken(): Promise<
-  DataOrError<Pick<TwitchOAuthRes, "access_token">, Error>
+  DataOrError<
+    { payload: Pick<TwitchOAuthRes, "access_token">; revalidateIn: number },
+    Error
+  >
 > {
   let data: TwitchOAuthRes | undefined;
   let error: Error | undefined;
@@ -35,7 +35,7 @@ export async function getIGDBAccessToken(): Promise<
           `Twitch oAuth Error: ${JSON.stringify(await res.json())}`
         );
       else {
-        const data = (await res.json()) as Promise<TwitchOAuthRes>;
+        const data = (await res.json()) as TwitchOAuthRes;
         return data;
       }
     })
@@ -48,13 +48,11 @@ export async function getIGDBAccessToken(): Promise<
     return { data, error };
   }
 
-  console.log(data);
-
-  setToCache(
-    CACHE_KEYS.twitchAccessToken,
-    JSON.stringify({ access_token: data.access_token }),
-    data.expires_in - 1000
-  );
-
-  return { data: { access_token: data.access_token }, error: undefined };
+  return {
+    data: {
+      payload: { access_token: data.access_token },
+      revalidateIn: data.expires_in,
+    },
+    error: undefined,
+  };
 }
