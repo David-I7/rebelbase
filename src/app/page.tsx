@@ -1,25 +1,14 @@
-import {
-  getCasualGames,
-  getComingSoon,
-  getGameById,
-  getMoreFromCompany,
-  getMostAnticipated,
-  getOfflineGames,
-  getOnlineGames,
-  getTopNewReleases,
-  getTopRated,
-  testQuery,
-} from "@/services/igdb";
+import { getHomeData } from "@/services/igdb";
 
 export default async function Home() {
   // const topRatedPromise = getTopRated();
   // const topNewRealesesPromise = getTopNewReleases();
   // const mostAnticipatedPromise = getMostAnticipated();
-  const { data, error } = await getMoreFromCompany(47);
+  const { data, error } = await getHomeData();
   // const { data: data2, error: error2 } = await getOnlineGames();
   if (error) throw error;
   // if (error2) throw error2;
-  console.log(data.slice(0, 10));
+  console.log(data);
 
   // const { data, error } = await testQuery();
   // console.log(data);
