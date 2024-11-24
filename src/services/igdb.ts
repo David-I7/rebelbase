@@ -10,36 +10,63 @@ import { IGDB_BASE_URL } from "@/data/baseUrls";
 import ErrorFactory from "@/lib/errors/errorFactory";
 import type {
   CasualGames,
-  HomeSections,
   MostAnticipated,
   OfflineAndOnlineGames,
   Popularity_Source_Response,
   TopNewReleases,
   TopRated,
+  HomeSections,
   UpcomingReleases,
+  CardData,
+  GameModes,
+  GameData,
+  InvolvedCompanies,
 } from "../interfaces/igdb";
 
+// const homeSections:HomeSections = {
+//   topNewReleases: "topNewReleases",
+//   mostAnticipated: "mostAnticipated",
+//   offlineAndOnlineGames: "offlineAndOnlineGames",
+//   topRated: "topRated",
+//   "upcomingReleases": "upcomingReleases",
+//   casualGames: "casualGames"
+// }
+
 export type HomeMultiqueryDataResponse = [
-  { name: HomeSections.topNewReleases; result: TopNewReleases },
-  { name: HomeSections.mostAnticipated; result: MostAnticipated },
-  { name: HomeSections.topRated; result: TopRated },
-  { name: HomeSections.offlineAndOnlineGames; result: OfflineAndOnlineGames },
-  { name: HomeSections.casualGames; result: CasualGames },
-  { name: HomeSections.upcomingReleases; result: UpcomingReleases }
+  { name: HomeSections.topNewReleases; result: TopNewReleases[] },
+  { name: HomeSections.mostAnticipated; result: MostAnticipated[] },
+  { name: HomeSections.topRated; result: TopRated[] },
+  { name: HomeSections.offlineAndOnlineGames; result: OfflineAndOnlineGames[] },
+  { name: HomeSections.casualGames; result: CasualGames[] },
+  { name: HomeSections.upcomingReleases; result: UpcomingReleases[] }
 ];
+export type HomeDataResponse = {
+  topNewReleases: { result: TopNewReleases[] };
+  mostAnticipated: { result: MostAnticipated[] };
+  topRated: { result: TopRated[] };
+  offlineAndOnlineGames: {
+    result: {
+      offlineGames: OfflineAndOnlineGames[];
+      onlineGames: OfflineAndOnlineGames[];
+    };
+  };
+  casualGames: { result: CasualGames[] };
+  upcomingReleases: { result: UpcomingReleases[] };
+};
 
 export type HomeMultiqueryPopularityResponse = [
-  { name: HomeSections.topNewReleases; result: Popularity_Source_Response },
-  { name: HomeSections.mostAnticipated; result: Popularity_Source_Response },
-  { name: HomeSections.topRated; result: Popularity_Source_Response },
+  { name: HomeSections.topNewReleases; result: Popularity_Source_Response[] },
+  { name: HomeSections.mostAnticipated; result: Popularity_Source_Response[] },
+  { name: HomeSections.topRated; result: Popularity_Source_Response[] },
   {
     name: HomeSections.offlineAndOnlineGames;
-    result: Popularity_Source_Response;
+    result: Popularity_Source_Response[];
   },
-  { name: HomeSections.casualGames; result: Popularity_Source_Response },
-  { name: HomeSections.upcomingReleases; result: Popularity_Source_Response }
+  { name: HomeSections.upcomingReleases; result: Popularity_Source_Response[] }
 ];
-export async function getHomeData() {
+export async function getHomeData(): Promise<
+  DataOrError<HomeDataResponse, Error>
+> {
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
       CACHE_KEYS.twitchAccessToken,
@@ -96,7 +123,7 @@ export async function getHomeData() {
 fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
 where keywords.id = 101 & cover.image_id !=null & genres.id = (9,15,26,31)  & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} ;
 sort first_release_date desc; 
- limit 100;
+ limit ${DEFAULT_SECTION_RESULTS};
   };
 
   query games "upcomingReleases" {
@@ -136,17 +163,49 @@ limit 100;
     const offlineAndOnlineGamesIds: number[] = [];
     const upcomingReleasesIds: number[] = [];
 
+    const topNewReleasesMap: Map<number, TopNewReleases> = new Map();
+    const mostAnticipatedMap: Map<number, MostAnticipated> = new Map();
+    const topRatedMap: Map<number, TopRated> = new Map();
+    const offlineAndOnlineGamesMap: Map<number, OfflineAndOnlineGames> =
+      new Map();
+    const upcomingReleasesMap: Map<number, UpcomingReleases> = new Map();
     for (let i = 0; i < 100; i++) {
-      if (dataResponse[0].result[i])
+      if (dataResponse[0].result[i]) {
         topNewReleasesIds.push(dataResponse[0].result[i].id);
-      if (dataResponse[1].result[i])
+        topNewReleasesMap.set(
+          dataResponse[0].result[i].id,
+          dataResponse[0].result[i]
+        );
+      }
+      if (dataResponse[1].result[i]) {
         mostAnticipatedIds.push(dataResponse[1].result[i].id);
-      if (dataResponse[2].result[i])
+        mostAnticipatedMap.set(
+          dataResponse[1].result[i].id,
+          dataResponse[1].result[i]
+        );
+      }
+      if (dataResponse[2].result[i]) {
         topRatedIds.push(dataResponse[2].result[i].id);
-      if (dataResponse[3].result[i])
+        topRatedMap.set(
+          dataResponse[2].result[i].id,
+          dataResponse[2].result[i]
+        );
+      }
+      if (dataResponse[3].result[i]) {
         offlineAndOnlineGamesIds.push(dataResponse[3].result[i].id);
-      if (dataResponse[5].result[i])
+        offlineAndOnlineGamesMap.set(
+          dataResponse[3].result[i].id,
+          dataResponse[3].result[i]
+        );
+      }
+
+      if (dataResponse[5].result[i]) {
         upcomingReleasesIds.push(dataResponse[5].result[i].id);
+        upcomingReleasesMap.set(
+          dataResponse[5].result[i].id,
+          dataResponse[5].result[i]
+        );
+      }
     }
 
     const popularityMultiquery = `
@@ -185,9 +244,7 @@ limit 100;
     };
     `;
 
-    console.log(popularityMultiquery);
-
-    const popularityResponse: Popularity_Source_Response = await fetch(
+    const popularityResponse: HomeMultiqueryPopularityResponse = await fetch(
       IGDB_BASE_URL + "/multiquery",
       {
         ...IGDBRequestOptions,
@@ -209,347 +266,102 @@ limit 100;
       return await res.json();
     });
 
-    return { data: popularityResponse, error: undefined };
+    const topNewReleasesResult: TopNewReleases[] = [];
+    const mostAnticipatedResult: MostAnticipated[] = [];
+    const topRatedResult: TopRated[] = [];
+    const offlineAndOnlineGamesResult: {
+      offlineGames: OfflineAndOnlineGames[];
+      onlineGames: OfflineAndOnlineGames[];
+    } = { offlineGames: [], onlineGames: [] };
+    const casualGamesResult: CasualGames[] = dataResponse[4].result;
+    const upcomingReleasesResult: UpcomingReleases[] = [];
+
+    for (let i = 0; i < 100; i++) {
+      if (
+        offlineAndOnlineGamesResult.offlineGames.length >=
+          DEFAULT_SECTION_RESULTS &&
+        offlineAndOnlineGamesResult.onlineGames.length >=
+          DEFAULT_SECTION_RESULTS
+      )
+        break;
+
+      if (i < popularityResponse[0].result.length) {
+        topNewReleasesResult.push(
+          topNewReleasesMap.get(popularityResponse[0].result[i].game_id)!
+        );
+      }
+      if (i < popularityResponse[1].result.length) {
+        mostAnticipatedResult.push(
+          mostAnticipatedMap.get(popularityResponse[1].result[i].game_id)!
+        );
+      }
+      if (i < popularityResponse[2].result.length) {
+        topRatedResult.push(
+          topRatedMap.get(popularityResponse[2].result[i].game_id)!
+        );
+      }
+      if (i < popularityResponse[4].result.length) {
+        upcomingReleasesResult.push(
+          upcomingReleasesMap.get(popularityResponse[4].result[i].game_id)!
+        );
+      }
+      if (i < popularityResponse[3].result.length) {
+        const unCategorizedGame = offlineAndOnlineGamesMap.get(
+          popularityResponse[3].result[i].game_id!
+        )!;
+        const id = getOnlineOrOfflineGameId(unCategorizedGame);
+        if (!id) continue;
+        if (id === 1) {
+          if (
+            offlineAndOnlineGamesResult.offlineGames.length >=
+            DEFAULT_SECTION_RESULTS
+          )
+            continue;
+          offlineAndOnlineGamesResult.offlineGames.push(unCategorizedGame);
+        } else if (id === 2) {
+          if (
+            offlineAndOnlineGamesResult.onlineGames.length >=
+            DEFAULT_SECTION_RESULTS
+          )
+            continue;
+          offlineAndOnlineGamesResult.onlineGames.push(unCategorizedGame);
+        }
+      }
+    }
+
+    const homeData: HomeDataResponse = {
+      topNewReleases: { result: topNewReleasesResult },
+      mostAnticipated: { result: mostAnticipatedResult },
+      topRated: { result: topRatedResult },
+      offlineAndOnlineGames: { result: offlineAndOnlineGamesResult },
+      casualGames: { result: casualGamesResult },
+      upcomingReleases: { result: upcomingReleasesResult },
+    };
+
+    return { data: homeData, error: undefined };
   } catch (err) {
     return { data: undefined, error: err as Error };
   }
 }
 
-export async function getTopNewReleases() {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
+function getOnlineOrOfflineGameId(
+  unCategorizedGame: OfflineAndOnlineGames
+): GameModes[number]["id"] | undefined {
+  if (
+    !unCategorizedGame["game_modes"] ||
+    !unCategorizedGame["game_modes"].length
+  )
+    return;
 
-  if (err) return { data: undefined, error: err };
-
-  const now = Math.floor(new Date().getTime() / 1000);
-  const unix6MonthsAgo = Math.floor(
-    new Date(new Date().setMonth(new Date().getMonth() - 6)).getTime() / 1000
-  );
-
-  try {
-    const response = await fetch(IGDB_BASE_URL + "/games", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: ``,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
-
-      return await res.json();
-    });
-
-    console.log(response);
-    const objectIds: number[] = [];
-
-    let data = response as [{ id: number }];
-
-    data.map((game) => objectIds.push(game.id));
-
-    const response2 = await fetch(IGDB_BASE_URL + "/popularity_primitives", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: ``,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
-
-      return await res.json();
-    });
-
-    return { data: response2, error: undefined };
-  } catch (err) {
-    return { data: undefined, error: err };
-  }
-}
-export async function getMostAnticipated() {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
-
-  if (err) return { data: undefined, error: err };
-
-  const twoYears = Math.floor(
-    new Date(new Date().setFullYear(new Date().getFullYear() + 2)).getTime() /
-      1000
-  );
-  const now = Math.floor(new Date().getTime() / 1000);
-
-  try {
-    const response = await fetch(IGDB_BASE_URL + "/games", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: ``,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
-
-      return await res.json();
-    });
-
-    const objectIds: number[] = [];
-
-    let data = response as [{ id: number }];
-
-    data.map((game) => objectIds.push(game.id));
-
-    const response2 = await fetch(IGDB_BASE_URL + "/popularity_primitives", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: ``,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
-
-      return await res.json();
-    });
-
-    return { data: response2, error: undefined };
-  } catch (err) {
-    return { data: undefined, error: err };
-  }
-}
-//can this be fetched at build time?
-export async function getTopRated() {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
-
-  if (err) return { data: undefined, error: err };
-
-  try {
-    const response = await fetch(IGDB_BASE_URL + "/games", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: ``,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
-
-      return await res.json();
-    });
-
-    const objectIds: number[] = [];
-
-    let data = response as [{ id: number }];
-
-    data.map((game) => objectIds.push(game.id));
-
-    const response2 = await fetch(IGDB_BASE_URL + "/popularity_primitives", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: ``,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
-
-      return await res.json();
-    });
-
-    return { data: response2, error: undefined };
-  } catch (err) {
-    return { data: undefined, error: err };
-  }
-}
-
-//can this be fetched at build time?
-// can we make 1 metch request then I can filter the results myself
-export async function getOnlineAndOfflineGames() {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
-
-  if (err) return { data: undefined, error: err };
-
-  const now = Math.floor(new Date().getTime() / 1000);
-  const fourYears = Math.floor(
-    new Date(new Date().setFullYear(new Date().getFullYear() - 4)).getTime() /
-      1000
-  );
-
-  try {
-    const response = await fetch(IGDB_BASE_URL + "/games", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: ``,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
-
-      return await res.json();
-    });
-
-    console.log(response);
-    const objectIds: number[] = [];
-    const responseMap: Map<number, { [index: string]: any }> = new Map();
-
-    let data = response as [{ id: number }];
-
-    data.map((game) => {
-      objectIds.push(game.id);
-      responseMap.set(game.id, { ...game });
-    });
-
-    const response2 = await fetch(IGDB_BASE_URL + "/popularity_primitives", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: ``,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
-
-      return (await res.json()) as { game_id: number }[];
-    });
-
-    let onlineGames: { [index: string]: string }[] = [];
-    let offlinesGames: { [index: string]: string }[] = [];
-
-    for (let i = 0; i < response2.length; i++) {
-      const unCategorizedGame = responseMap.get(response2[i].game_id)!;
-
-      if (
-        !unCategorizedGame["game_modes"] ||
-        !unCategorizedGame["game_modes"].length
-      )
-        continue;
-
-      if (
-        unCategorizedGame["game_modes"][0].id === 1 &&
-        offlinesGames.length < 10
-      ) {
-        offlinesGames.push(unCategorizedGame);
-      } else if (
-        unCategorizedGame["game_modes"][0].id === 2 &&
-        onlineGames.length < 10
-      ) {
-        onlineGames.push(unCategorizedGame);
-      } else if (
-        unCategorizedGame["game_modes"][0].id === 1 &&
-        unCategorizedGame["game_modes"][1]?.id === 2 &&
-        onlineGames.length < 10
-      ) {
-        onlineGames.push(unCategorizedGame);
-      }
-
-      if (onlineGames.length === 10 && offlinesGames.length === 10) break;
-    }
-
-    return { data: { onlineGames, offlinesGames }, error: undefined };
-  } catch (err) {
-    return { data: undefined, error: err };
-  }
-}
-//can this be fetched at build time?
-export async function getCasualGames() {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
-
-  if (err) return { data: undefined, error: err };
-
-  const now = Math.floor(new Date().getTime() / 1000);
-  const fourYears = Math.floor(
-    new Date(new Date().setFullYear(new Date().getFullYear() - 5)).getTime() /
-      1000
-  );
-
-  try {
-    const response = await fetch(IGDB_BASE_URL + "/games", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: ``,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
-
-      return await res.json();
-    });
-
-    return { data: response, error: undefined };
-  } catch (err) {
-    return { data: undefined, error: err };
+  if (unCategorizedGame["game_modes"][0].id === 1) {
+    return 1;
+  } else if (unCategorizedGame["game_modes"][0].id === 2) {
+    return 2;
+  } else if (
+    unCategorizedGame["game_modes"][0].id === 1 &&
+    unCategorizedGame["game_modes"][1]?.id === 2
+  ) {
+    return 2;
   }
 }
 export async function testQuery() {
@@ -587,7 +399,10 @@ export async function testQuery() {
   }
 }
 
-export async function getUpcomingReleases() {
+//When something is missing from the response it won't be there at all, so access using bracket notation to prevent errors
+export async function getGameById(
+  id: number
+): Promise<DataOrError<GameData, Error>> {
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
       CACHE_KEYS.twitchAccessToken,
@@ -596,19 +411,23 @@ export async function getUpcomingReleases() {
 
   if (err) return { data: undefined, error: err };
 
-  const now = Math.floor(new Date().getTime() / 1000);
-  const unix3MonthsForward = Math.floor(
-    new Date(new Date().setMonth(new Date().getMonth() + 3)).getTime() / 1000
-  );
-
   try {
-    const response = await fetch(IGDB_BASE_URL + "/games", {
+    const gameData: GameData = await fetch(IGDB_BASE_URL + "/games", {
       ...IGDBRequestOptions,
       headers: {
         ...IGDBRequestOptions.headers,
         Authorization: `bearer ${twitchAccessToken!.access_token}`,
       },
-      body: ``,
+      body: `fields cover.image_id,rating,name,first_release_date,videos.video_id,videos.name,genres.name,themes.name,keywords.name,game_modes.name,platforms.name,
+      player_perspectives.name,age_ratings.category,age_ratings.rating,
+      release_dates.date,release_dates.platform.name,
+      language_supports.language.name,language_supports.language.locale,language_supports.language_support_type.name,
+      websites.category,websites.url,
+      summary,storyline,
+      involved_companies.company.name,involved_companies.developer,
+      similar_games.name,similar_games.rating,similar_games.genres.name,similar_games.themes.name,similar_games.cover.image_id,
+      artworks.image_id,screenshots.image_id;
+      where id = ${id}; limit 1;`,
     }).then(async (res) => {
       if (res.status >= 400) {
         throw ErrorFactory.createFetchError(
@@ -621,39 +440,16 @@ export async function getUpcomingReleases() {
       return await res.json();
     });
 
-    const objectIds: number[] = [];
-
-    let data = response as [{ id: number }];
-
-    data.map((game) => objectIds.push(game.id));
-
-    const response2 = await fetch(IGDB_BASE_URL + "/popularity_primitives", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: ``,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
-
-      return await res.json();
-    });
-
-    return { data: response2, error: undefined };
+    return { data: gameData, error: undefined };
   } catch (err) {
-    return { data: undefined, error: err };
+    return { data: undefined, error: err as Error };
   }
 }
+export async function getMoreFromCompany(
+  involvedCompanies?: InvolvedCompanies
+): Promise<DataOrError<CardData[], Error>> {
+  if (!involvedCompanies) return { data: [], error: undefined };
 
-export async function getGameById(id: number) {
-  // Need to also fetch games from campany with developer = true
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
       CACHE_KEYS.twitchAccessToken,
@@ -662,49 +458,31 @@ export async function getGameById(id: number) {
 
   if (err) return { data: undefined, error: err };
 
-  try {
-    const response = await fetch(IGDB_BASE_URL + "/games", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: `fields cover.image_id,rating,name,first_release_date,videos.video_id,videos.name ,genres.name,themes.name,keywords.name,game_modes.name,platforms.name,player_perspectives.name,age_ratings.category,age_ratings.rating,age_ratings.rating_cover_url,release_dates.date,release_dates.platform.name,language_supports.language.name,language_supports.language.locale,language_supports.language_support_type.name,websites.category,websites.url,summary,storyline,involved_companies.company.name,involved_companies.developer,similar_games.name,similar_games.rating,similar_games.genres.name,similar_games.themes.name,similar_games.cover.image_id,artworks.image_id,screenshots.image_id;where id = ${id}; limit 1;`,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
+  let involvedCompanyDeveloperid!: number;
 
-      return await res.json();
-    });
-
-    return { data: response, error: undefined };
-  } catch (err) {
-    return { data: undefined, error: err };
+  for (let i = 0; i < involvedCompanies.length; i++) {
+    if (involvedCompanies[i].developer) {
+      involvedCompanyDeveloperid = involvedCompanies[i].company.id;
+      break;
+    }
   }
-}
-export async function getMoreFromCompany(companyId: number) {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
 
-  if (err) return { data: undefined, error: err };
+  if (!involvedCompanyDeveloperid) return { data: [], error: undefined };
 
   try {
-    const response = await fetch(IGDB_BASE_URL + "/games", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;where involved_companies.company = ${companyId};sort rating_count desc; limit 25;`,
-    }).then(async (res) => {
+    const moreGamesFromCompanyRes: CardData[] = await fetch(
+      IGDB_BASE_URL + "/games",
+      {
+        ...IGDBRequestOptions,
+        headers: {
+          ...IGDBRequestOptions.headers,
+          Authorization: `bearer ${twitchAccessToken!.access_token}`,
+        },
+        body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;where involved_companies.company = ${involvedCompanyDeveloperid};sort rating_count desc; limit ${
+          DEFAULT_SECTION_RESULTS - 5
+        };`,
+      }
+    ).then(async (res) => {
       if (res.status >= 400) {
         throw ErrorFactory.createFetchError(
           res.status,
@@ -716,8 +494,8 @@ export async function getMoreFromCompany(companyId: number) {
       return await res.json();
     });
 
-    return { data: response, error: undefined };
+    return { data: moreGamesFromCompanyRes, error: undefined };
   } catch (err) {
-    return { data: undefined, error: err };
+    return { data: undefined, error: err as Error };
   }
 }
