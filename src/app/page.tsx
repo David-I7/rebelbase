@@ -1,13 +1,18 @@
 import { getGameById, getHomeData, getMoreFromCompany } from "@/services/igdb";
+import getOrSetCache from "@/lib/redis/controllers";
+import CACHE_KEYS from "@/data/constants/cacheKeys";
+import VerticalCardCarousel from "./_components/gameRepresentation/verticalCard/VerticalCardCarousel";
 
 export default async function Home() {
-  const { data: gameData, error: gameError } = await getGameById(119133);
-  if (gameError) throw gameError;
-  const { data, error } = await getMoreFromCompany(
-    gameData![0]["involved_companies"]
+  const { data: gameData, error: gameError } = await getOrSetCache(
+    CACHE_KEYS.homePage,
+    getHomeData
   );
-  console.log(gameData![0]["involved_companies"]);
-  console.log(data);
+  if (gameError) throw gameError;
 
-  return <main className=""></main>;
+  return (
+    <main className="px-4">
+      <VerticalCardCarousel gameData={gameData?.topRated.result} />
+    </main>
+  );
 }
