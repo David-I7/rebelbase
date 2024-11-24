@@ -8,7 +8,7 @@ import SearchBar from "./SearchBar";
 const Header = () => {
   return (
     <header className="flex relative items-center justify-between  md:justify-between h-20 px-4 lg:px-8 bg-surface">
-      <div className="md:flex-initial w-max">
+      <div className="md:flex-initial">
         <LogoType responsive={true} />
         <FullLogo responsive={true} />
       </div>

@@ -124,6 +124,7 @@ image {
 .font-logo {
   font-family: var(--font-display);
   font-weight: 400;
+  font-size: 1.5rem;
 }
 
 .font-body-xs,

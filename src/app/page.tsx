@@ -1,42 +1,13 @@
-import {
-  getCasualGames,
-  getComingSoon,
-  getGameById,
-  getMoreFromCompany,
-  getMostAnticipated,
-  getOfflineGames,
-  getOnlineGames,
-  getTopNewReleases,
-  getTopRated,
-  testQuery,
-} from "@/services/igdb";
+import { getGameById, getHomeData, getMoreFromCompany } from "@/services/igdb";
 
 export default async function Home() {
-  // const topRatedPromise = getTopRated();
-  // const topNewRealesesPromise = getTopNewReleases();
-  // const mostAnticipatedPromise = getMostAnticipated();
-  const { data, error } = await getMoreFromCompany(47);
-  // const { data: data2, error: error2 } = await getOnlineGames();
-  if (error) throw error;
-  // if (error2) throw error2;
-  console.log(data.slice(0, 10));
-
-  // const { data, error } = await testQuery();
-  // console.log(data);
-
-  // const data = Promise.all([
-  //   topRatedPromise,
-  //   topNewRealesesPromise,
-  //   mostAnticipatedPromise,
-  // ]);
-
-  // (await data).map((res) => {
-  //   if (res.error) {
-  //     throw res.error;
-  //   }
-
-  //   console.log(res.data);
-  // });
+  const { data: gameData, error: gameError } = await getGameById(119133);
+  if (gameError) throw gameError;
+  const { data, error } = await getMoreFromCompany(
+    gameData![0]["involved_companies"]
+  );
+  console.log(gameData![0]["involved_companies"]);
+  console.log(data);
 
   return <main className=""></main>;
 }
