@@ -1,21 +1,21 @@
 import { imagesMap } from "@/data/constants/igdbEnums";
 import React from "react";
 
-type CardImageProps = {
+type HeroImageProps = {
   imgId?: string;
   gameName: string;
 };
 
-const CardImage = ({ imgId, gameName }: CardImageProps) => {
+const HeroImage = ({ imgId, gameName }: HeroImageProps) => {
   return (
     <div
       className={`${
         imgId ? "" : "bg-surface-container-low"
-      } max-w-[244px] aspect-[3/4] rounded-xl overflow-hidden mb-3`}
+      } max-w-[835px] aspect-video rounded-xl overflow-hidden mb-3`}
     >
       {imgId && (
         <img
-          src={`${imagesMap.baseUrl}${imagesMap.verticalCardLarge}/${imgId}.jpg`}
+          src={`${imagesMap.baseUrl}${imagesMap.horizonatalCardHero}/${imgId}.jpg`}
           alt={`${gameName} game cover`}
         />
       )}
@@ -23,4 +23,4 @@ const CardImage = ({ imgId, gameName }: CardImageProps) => {
   );
 };
 
-export default CardImage;
+export default HeroImage;

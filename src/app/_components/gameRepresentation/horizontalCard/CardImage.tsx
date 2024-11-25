@@ -11,11 +11,11 @@ const CardImage = ({ imgId, gameName }: CardImageProps) => {
     <div
       className={`${
         imgId ? "" : "bg-surface-container-low"
-      } max-w-[244px] aspect-[3/4] rounded-xl overflow-hidden mb-3`}
+      } max-w-[308px] aspect-video rounded-xl overflow-hidden mb-3`}
     >
       {imgId && (
         <img
-          src={`${imagesMap.baseUrl}${imagesMap.verticalCardLarge}/${imgId}.jpg`}
+          src={`${imagesMap.baseUrl}${imagesMap.horizontalCardLarge}/${imgId}.jpg`}
           alt={`${gameName} game cover`}
         />
       )}

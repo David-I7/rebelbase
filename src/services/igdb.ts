@@ -219,6 +219,7 @@ limit 100;
     query popularity_primitives "mostAnticipated" {
    fields game_id, value;
    where popularity_type = 2 & game_id = (${mostAnticipatedIds.join()});
+   sort value desc;
    limit ${DEFAULT_SECTION_RESULTS}; 
     };
   
