@@ -29,6 +29,8 @@ image {
   --state-hovered: 115%; /*Brightness filter */
   --state-disabled: ;
   --state-on-disabled: ;
+  --state-background-blur-dark: rgba(0, 0, 0, 0.5);
+  --state-background-blur-light: rgba(255, 255, 255, 0.5);
 
   /* COLORS */
   /* TEXT | ICONS | BUTTONS */
@@ -77,9 +79,9 @@ image {
   --large-screen-size-increase: 0.5rem;
 
   /* Headings */
-  --fs-h1: 2.5rem;
-  --fs-h2: 2rem;
-  --fs-h3: 1.5rem;
+  --fs-h1: 2rem;
+  --fs-h2: 1.75rem;
+  --fs-h3: 1.375rem;
   --fs-h4: 1rem;
   /* Headings LARGE */
   --fs-l-h1: calc(var(--fs-h1) + var(--large-screen-size-increase));
@@ -169,19 +171,19 @@ h4 {
 
 h1 {
   line-height: var(--lh-h1);
-  font-size: var(--lh-h1);
+  font-size: var(--fs-h1);
 }
 h2 {
   line-height: var(--lh-h2);
-  font-size: var(--lh-h2);
+  font-size: var(--fs-h2);
 }
 h3 {
   line-height: var(--lh-h3);
-  font-size: var(--lh-h3);
+  font-size: var(--fs-h3);
 }
 h4 {
   line-height: var(--lh-h4);
-  font-size: var(--lh-h4);
+  font-size: var(--fs-h4);
 }
 
 @media screen and (min-width: 1024px) {
@@ -213,6 +215,16 @@ ol {
   top: 50%;
   left: 50%;
 }
+.vertical-center {
+  transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+}
+.horizontal-center {
+  transform: translateX(-50%);
+  position: absolute;
+  left: 50%;
+}
 
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
@@ -235,4 +247,15 @@ footer::before {
 footer {
   margin-top: calc(120px + 64px);
   position: relative;
+}
+
+.darken-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 40%,
+    var(--state-background-blur-dark) 75%
+  );
 }

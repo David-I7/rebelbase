@@ -18,6 +18,7 @@ const VerticalListSection = ({
     <div className="flex gap-6 overflow-x-auto">
       <VerticalList gameData={firstSectionData} />
       <VerticalRay />
+
       <VerticalList gameData={secondSectionData} />
       <VerticalRay />
       <VerticalList gameData={thirdSectionData} />

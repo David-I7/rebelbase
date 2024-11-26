@@ -4,7 +4,7 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/_components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -52,6 +52,9 @@ export default {
         "inverse-on-surface": "var(--color-inverse-on-surface)",
         "inverse-on-surface-varient": "var(--color-inverse-on-surface-varient)",
         "inverse-primary": "var(--color-primary)",
+
+        "background-blur-dark": "var(--state-background-blur-dark)",
+        "background-blur-light": "var(--state-background-blur-light)",
       },
     },
   },

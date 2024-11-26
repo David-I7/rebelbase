@@ -25,6 +25,7 @@ const CardDetails = ({ game, lastRow }: CardDetailsProps) => {
                   backgroundColor: "var(--color-on-surface-body-varient-low)",
                 }}
               />
+
               <div className="line-clamp-1 text-ellipsis">{tags[1]}</div>
             </>
           )}

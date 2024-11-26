@@ -6,6 +6,7 @@ import HorizontalCardCarousel from "./_components/gameRepresentation/horizontalC
 import VerticalList from "./_components/gameRepresentation/list/VerticalList";
 import VerticalListSection from "./_components/gameRepresentation/list/VerticalListSection";
 import HeroSection from "./_components/gameRepresentation/hero/HeroSection";
+import Test from "@/_components/test/Test";
 
 export default async function Home() {
   const { data: gameData, error: gameError } = await getOrSetCache(
@@ -15,17 +16,19 @@ export default async function Home() {
   if (gameError) throw gameError;
 
   return (
-    <main className="px-4">
+    <main>
       <HeroSection gameData={gameData?.topNewReleases.result} />
-      <HorizontalCardCarousel gameData={gameData?.mostAnticipated.result} />
-      <VerticalCardCarousel gameData={gameData?.topRated.result} />
-      <VerticalListSection
-        firstSectionData={gameData?.offlineAndOnlineGames.result.offlineGames}
-        secondSectionData={gameData?.offlineAndOnlineGames.result.onlineGames}
-        thirdSectionData={gameData?.casualGames.result}
-      />
+      <div className="px-4">
+        <HorizontalCardCarousel gameData={gameData?.mostAnticipated.result} />
+        <VerticalCardCarousel gameData={gameData?.topRated.result} />
+        <VerticalListSection
+          firstSectionData={gameData?.offlineAndOnlineGames.result.offlineGames}
+          secondSectionData={gameData?.offlineAndOnlineGames.result.onlineGames}
+          thirdSectionData={gameData?.casualGames.result}
+        />
 
-      <HorizontalCardCarousel gameData={gameData?.upcomingReleases.result} />
+        <HorizontalCardCarousel gameData={gameData?.upcomingReleases.result} />
+      </div>
     </main>
   );
 }
