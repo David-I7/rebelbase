@@ -1,6 +1,6 @@
 import { CardData } from "@/interfaces/igdb";
 import React from "react";
-import HeroCarouselB from "./HeroCarouselB";
+import HeroCarouselC from "./HeroCarouselC";
 
 type HeroSectionProps = {
   gameData?: CardData[];
@@ -11,7 +11,7 @@ const HeroSection = ({ gameData }: HeroSectionProps) => {
 
   return (
     <section>
-      <HeroCarouselB gameData={gameData} />
+      <HeroCarouselC gameData={gameData} />
     </section>
   );
 };

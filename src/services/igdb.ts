@@ -1,5 +1,6 @@
 //There is a rate limit of 4 requests per second.
 const DEFAULT_SECTION_RESULTS = 15;
+const DEFAULT_HERO_RESULTS = 8;
 
 import { getOrSetToCacheDynamicExpiration } from "@/lib/redis/controllers";
 ("@/lib/redis/controllers");
@@ -22,15 +23,6 @@ import type {
   GameData,
   InvolvedCompanies,
 } from "../interfaces/igdb";
-
-// const homeSections:HomeSections = {
-//   topNewReleases: "topNewReleases",
-//   mostAnticipated: "mostAnticipated",
-//   offlineAndOnlineGames: "offlineAndOnlineGames",
-//   topRated: "topRated",
-//   "upcomingReleases": "upcomingReleases",
-//   casualGames: "casualGames"
-// }
 
 export type HomeMultiqueryDataResponse = [
   { name: HomeSections.topNewReleases; result: TopNewReleases[] },
@@ -213,7 +205,7 @@ limit 100;
     fields game_id, value;
     where popularity_type = 1 & game_id = (${topNewReleasesIds.join()});
     sort value desc;
-    limit ${DEFAULT_SECTION_RESULTS}; 
+    limit ${DEFAULT_HERO_RESULTS}; 
     };
   
     query popularity_primitives "mostAnticipated" {

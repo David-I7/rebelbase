@@ -3,17 +3,25 @@ import HorizontalCard from "./HorizontalCard";
 import CardImage from "./CardImage";
 import CardDetails from "../CardDetails";
 import { CardData } from "@/interfaces/igdb";
+import { MdChevronRight } from "react-icons/md";
 
 type HorizontalCardCarouselProps = {
   gameData?: CardData[];
+  heading: string;
 };
 
-const HorizontalCardCarousel = ({ gameData }: HorizontalCardCarouselProps) => {
+const HorizontalCardCarousel = ({
+  gameData,
+  heading,
+}: HorizontalCardCarouselProps) => {
   if (!gameData) return;
 
   return (
-    <div className="overflow-x-auto">
-      <ul className="mt-4 flex gap-4">
+    <section className="overflow-x-auto mt-12">
+      <h2 className="flex items-center gap-2 mb-6 text-2xl">
+        {heading} <MdChevronRight size={32} />
+      </h2>
+      <ul className="flex gap-4">
         {gameData.map((game) => (
           <li key={`Horizontal_card_${game.id}`}>
             <HorizontalCard>
@@ -23,7 +31,7 @@ const HorizontalCardCarousel = ({ gameData }: HorizontalCardCarouselProps) => {
           </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 };
 

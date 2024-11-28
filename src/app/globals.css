@@ -186,14 +186,14 @@ h4 {
   font-size: var(--fs-h4);
 }
 
-@media screen and (min-width: 1024px) {
+/* @media screen and (min-width: 1024px) {
   h1 {
     font-size: var(--fs-l-h1);
   }
   h2 {
     font-size: var(--fs-l-h2);
   }
-}
+} */
 
 body {
   min-height: 100vh;
@@ -258,4 +258,36 @@ footer {
     rgba(0, 0, 0, 0) 40%,
     var(--state-background-blur-dark) 75%
   );
+}
+
+.hero-card {
+  min-width: 280px;
+}
+
+.hero-carousel {
+  height: 373px;
+}
+
+.transiton-carousel-item {
+  transition: transform 300ms ease-out;
+}
+
+@media (min-width: 390px) {
+  .hero-card {
+    width: 320px;
+  }
+  .hero-carousel {
+    height: 426px;
+  }
+}
+@media (min-width: 768px) {
+  .transiton-carousel-item {
+    transition: transform 300ms ease-out, filter 300ms ease-out;
+  }
+  .hero-card {
+    min-width: 400px;
+  }
+  .hero-carousel {
+    height: 533px;
+  }
 }

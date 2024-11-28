@@ -15,7 +15,7 @@ const HeroCarouselB = ({ gameData }: { gameData: CardData[] }) => {
   for (let i = 0; i < ITEMS_IN_CAROUSEL; i++) {
     carouselItems.push(
       <li
-        className="min-w-full flex justify-center"
+        className="flex justify-center h-full"
         key={`hero_carousel_item_${gameData[i].id}}`}
       >
         <HeroCard>

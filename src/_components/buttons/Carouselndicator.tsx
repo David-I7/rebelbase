@@ -11,14 +11,11 @@ const Carouselndicator = ({
   selectedIndex,
   handleClick,
 }: CarouselndicatorProps) => {
-  const selectedStyles =
-    index === selectedIndex
-      ? "bg-primary"
-      : "border border-outline-varient-lowes";
+  const selectedStyles = index === selectedIndex ? "w-2 h-2" : "w-1 h-1";
   return (
     <button
       onClick={() => handleClick(index)}
-      className={`${selectedStyles} rounded-full w-2 h-2 t transition-background duration-300`}
+      className={`${selectedStyles} rounded-full bg-primary transition-background duration-300`}
     ></button>
   );
 };

@@ -3,16 +3,24 @@ import VerticalCard from "./VerticalCard";
 import CardImage from "./CardImage";
 import { CardData } from "@/interfaces/igdb";
 import CardDetails from "../CardDetails";
+import { MdChevronRight } from "react-icons/md";
 
 type VerticalCardCarouselProps = {
   gameData?: CardData[];
+  heading: string;
 };
 
-const VerticalCardCarousel = ({ gameData }: VerticalCardCarouselProps) => {
+const VerticalCardCarousel = ({
+  gameData,
+  heading,
+}: VerticalCardCarouselProps) => {
   if (!gameData) return;
 
   return (
-    <div className="overflow-x-auto">
+    <section className="overflow-x-auto mt-12">
+      <h2 className="flex items-center gap-2 mb-6 text-2xl">
+        {heading} <MdChevronRight size={32} />
+      </h2>
       <ul className="h-full w-full mt-4 flex gap-4">
         {gameData.map((game) => (
           <li key={`vertical_card_${game.id}`}>
@@ -23,7 +31,7 @@ const VerticalCardCarousel = ({ gameData }: VerticalCardCarouselProps) => {
           </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 };
 

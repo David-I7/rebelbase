@@ -11,7 +11,7 @@ const HeroImageB = ({ imgId, gameName }: HeroImageBProps) => {
     <div
       className={`${
         imgId ? "" : "bg-surface-container-low"
-      } max-w-[400px] aspect-[3/4] rounded-xl overflow-hidden mb-3 darken-image`}
+      } max-w-[400px] aspect-[3/4] rounded-xl overflow-hidden darken-image`}
     >
       {imgId && (
         <img

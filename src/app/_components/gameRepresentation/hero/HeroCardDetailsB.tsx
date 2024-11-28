@@ -12,7 +12,7 @@ const HeroCardDetailsB = ({ game }: HeroCardDetailsBProps) => {
   const tags = getCardTags(game);
 
   return (
-    <div className="absolute z-20 backdrop-blur-sm py-2 px-3 bottom-3 left-0 right-0">
+    <div className="absolute z-20 backdrop-blur-sm py-2 px-3 bottom-0 left-0 right-0">
       {tags.length && (
         <div className="font-body-s text-on-surface-body-varient-low flex items-center gap-x-2 gap-y-0 ">
           <div className="min-w-max">{tags[0]}</div>

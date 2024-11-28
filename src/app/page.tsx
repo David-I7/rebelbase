@@ -3,10 +3,8 @@ import getOrSetCache from "@/lib/redis/controllers";
 import CACHE_KEYS from "@/data/constants/cacheKeys";
 import VerticalCardCarousel from "./_components/gameRepresentation/verticalCard/VerticalCardCarousel";
 import HorizontalCardCarousel from "./_components/gameRepresentation/horizontalCard/HorizontalCardCarousel";
-import VerticalList from "./_components/gameRepresentation/list/VerticalList";
 import VerticalListSection from "./_components/gameRepresentation/list/VerticalListSection";
 import HeroSection from "./_components/gameRepresentation/hero/HeroSection";
-import Test from "@/_components/test/Test";
 
 export default async function Home() {
   const { data: gameData, error: gameError } = await getOrSetCache(
@@ -16,18 +14,30 @@ export default async function Home() {
   if (gameError) throw gameError;
 
   return (
-    <main>
+    <main className="lg:px-8 max-w-[1280px] mx-auto mt-8">
       <HeroSection gameData={gameData?.topNewReleases.result} />
-      <div className="px-4">
-        <HorizontalCardCarousel gameData={gameData?.mostAnticipated.result} />
-        <VerticalCardCarousel gameData={gameData?.topRated.result} />
+      <div className="px-4 lg:px-0">
+        <HorizontalCardCarousel
+          heading="Most Anticipated"
+          gameData={gameData?.mostAnticipated.result}
+        />
+        <VerticalCardCarousel
+          heading="Top Rated"
+          gameData={gameData?.topRated.result}
+        />
         <VerticalListSection
+          firstSectionHeading="Offline Games"
+          secondSectionHeading="Online Games"
+          thirdSectionHeading="Casual Games"
           firstSectionData={gameData?.offlineAndOnlineGames.result.offlineGames}
           secondSectionData={gameData?.offlineAndOnlineGames.result.onlineGames}
           thirdSectionData={gameData?.casualGames.result}
         />
 
-        <HorizontalCardCarousel gameData={gameData?.upcomingReleases.result} />
+        <HorizontalCardCarousel
+          heading="Upcoming Releases"
+          gameData={gameData?.upcomingReleases.result}
+        />
       </div>
     </main>
   );

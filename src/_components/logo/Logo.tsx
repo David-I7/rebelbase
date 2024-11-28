@@ -8,6 +8,7 @@ const Logo = () => {
       height="32"
       viewBox="0 0 32 32"
       fill="none"
+      className="flex-shrink-0"
     >
       <path
         d="M32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16Z"
