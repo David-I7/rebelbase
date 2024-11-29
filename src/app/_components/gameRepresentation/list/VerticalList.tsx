@@ -16,7 +16,7 @@ const VerticalList = ({ gameData }: VerticalListCarouselProps) => {
   const listItems: ReactElement[] = [];
   for (let i = 0; i < LIST_ITEM_QUANTITY; i++) {
     listItems.push(
-      <li key={`vertical_card_${gameData[i].id}`} className="min-w-[288px]">
+      <li key={`vertical_card_${gameData[i].id}`} className="">
         <CardListItem>
           <CardImage
             gameName={gameData[i].name}
@@ -28,7 +28,9 @@ const VerticalList = ({ gameData }: VerticalListCarouselProps) => {
     );
   }
 
-  return <ul className="grid flex-1">{listItems}</ul>;
+  return (
+    <ul className="grid grid-cols-[minmax(256px,1fr)] w-full">{listItems}</ul>
+  );
 };
 
 export default VerticalList;

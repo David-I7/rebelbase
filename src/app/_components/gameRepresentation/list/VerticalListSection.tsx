@@ -22,7 +22,7 @@ const VerticalListSection = ({
   thirdSectionHeading,
 }: VerticalListSectionProps) => {
   return (
-    <section className="flex gap-6 overflow-x-auto mt-12">
+    <section className="flex gap-6 overflow-x-auto mt-20 carousel w-full">
       <section className="flex flex-col flex-1">
         <h2 className="flex items-center gap-2 mb-4 text-2xl">
           {firstSectionHeading} <MdChevronRight size={32} />

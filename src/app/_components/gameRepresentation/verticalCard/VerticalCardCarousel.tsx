@@ -17,11 +17,11 @@ const VerticalCardCarousel = ({
   if (!gameData) return;
 
   return (
-    <section className="overflow-x-auto mt-12">
+    <section className="mt-20 w-full">
       <h2 className="flex items-center gap-2 mb-6 text-2xl">
         {heading} <MdChevronRight size={32} />
       </h2>
-      <ul className="h-full w-full mt-4 flex gap-4">
+      <ul className="grid grid-rows-1 grid-cols-[repeat(15,minmax(164px,1fr))] md:grid-cols-[repeat(15,minmax(204px,1fr))] lg:grid-cols-[repeat(15,minmax(244px,1fr))] mt-4 gap-4 overflow-x-auto carousel pr-4 lg:pr-8 [@media(min-width:1280px)]:pr-[calc((100vw_-_1280px)_/_2)]">
         {gameData.map((game) => (
           <li key={`vertical_card_${game.id}`}>
             <VerticalCard>

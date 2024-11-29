@@ -63,7 +63,7 @@ const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
 
             if (position === gameData.length - 1) {
               className +=
-                "[transform:translateX(-50%)_scale(0.85)] md:hover:[transform:translateX(-78%)_scale(0.88)] md:[transform:translateX(-75%)_scale(0.85)] blur-sm hover:blur-0 brightness-[85%] hover:brightness-100 z-20"; //hover:opacity-95 opactity-85
+                "[transform:translateX(-50%)_scale(0.85)] sm:hover:[transform:translateX(-78%)_scale(0.88)] sm:[transform:translateX(-75%)_scale(0.85)] blur-sm hover:blur-0 brightness-[85%] hover:brightness-100 z-20"; //hover:opacity-95 opactity-85
             } else if (position === gameData.length - 2) {
               className +=
                 "[transform:translateX(-50%)_scale(0.7)] lg:hover:[transform:translateX(-97%)_scale(0.72)] lg:[transform:translateX(-95%)_scale(0.7)] blur-sm hover:blur-0 brightness-[70%] hover:brightness-100 z-10"; //hover:opacity-80 opactity-70
@@ -72,7 +72,7 @@ const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
                 "[transform:translateX(-50%)_scale(0.7)] lg:hover:[transform:translateX(-3%)_scale(0.72)] lg:[transform:translateX(-5%)_scale(0.7)] blur-sm hover:blur-0 brightness-[70%] hover:brightness-100 z-10"; //hover:opacity-80 opactity-70
             } else if (position === 1) {
               className +=
-                "[transform:translateX(-50%)_scale(0.85)] md:hover:[transform:translateX(-22%)_scale(0.88)] md:[transform:translateX(-25%)_scale(0.85)] blur-sm hover:blur-0 brightness-[85%] hover:brightness-100 z-20"; //hover:opacity-95 opactity-85
+                "[transform:translateX(-50%)_scale(0.85)] sm:hover:[transform:translateX(-22%)_scale(0.88)] sm:[transform:translateX(-25%)_scale(0.85)] blur-sm hover:blur-0 brightness-[85%] hover:brightness-100 z-20"; //hover:opacity-95 opactity-85
             } else if (position === 0) {
               className += "[transform:translateX(-50%)_scale(1)] z-30";
             } else {

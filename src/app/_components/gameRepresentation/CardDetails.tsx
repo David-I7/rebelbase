@@ -16,7 +16,7 @@ const CardDetails = ({ game, lastRow }: CardDetailsProps) => {
   return (
     <div>
       {tags.length && (
-        <div className="font-body-xs text-on-surface-body-varient-low flex items-center gap-x-2 gap-y-0 ">
+        <div className="font-body-xs text-on-surface-body-varient-low flex items-center gap-x-2 gap-y-0 max-w-full">
           <div className="min-w-max">{tags[0]}</div>
           {tags.length > 1 && (
             <>
@@ -26,13 +26,15 @@ const CardDetails = ({ game, lastRow }: CardDetailsProps) => {
                 }}
               />
 
-              <div className="line-clamp-1 text-ellipsis">{tags[1]}</div>
+              <div className="whitespace-nowrap text-ellipsis overflow-hidden flex-1">
+                {tags[1]}
+              </div>
             </>
           )}
         </div>
       )}
       <h3
-        className={`text-base line-clamp-2 text-ellipsis ${
+        className={`text-base line-clamp-2 max-w-full text-ellipsis ${
           lastRow ? "mb-2" : ""
         }`}
       >

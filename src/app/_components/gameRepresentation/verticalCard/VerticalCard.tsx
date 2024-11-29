@@ -5,7 +5,7 @@ type VerticalCardProps = {
 };
 
 const VerticalCard = ({ children }: VerticalCardProps) => {
-  return <div className="flex flex-col min-w-[244px]">{children}</div>;
+  return <div className="flex flex-col max-w-[244px]">{children}</div>;
 };
 
 export default VerticalCard;

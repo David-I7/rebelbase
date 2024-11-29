@@ -5,8 +5,8 @@ import SearchBar from "./SearchBar";
 
 const Footer = () => {
   return (
-    <footer className="bg-surface p-4 w-full">
-      <div className="flex flex-col max-w-[600px] lg:max-w-[50%]">
+    <footer className="bg-surface p-4 w-full relative">
+      <div className="flex flex-col max-w-[600px] lg:max-w-[50%] relative z-10">
         <FullLogo />
         <div className="flex font-body-s mt-6 mb-16">
           <div className="flex-1 flex flex-col gap-3">
