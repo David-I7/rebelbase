@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Carouselndicator from "../buttons/Carouselndicator";
+import Carouselndicator from "../buttons/carousel/Carouselndicator";
 
 const Test = () => {
   return "";

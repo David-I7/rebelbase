@@ -1,11 +1,15 @@
 import { getHomeData } from "@/services/igdb";
 import getOrSetCache from "@/lib/redis/controllers";
 import CACHE_KEYS from "@/data/constants/cacheKeys";
-import VerticalCardCarousel from "./_components/gameRepresentation/verticalCard/VerticalCardCarousel";
-import HorizontalCardCarousel from "./_components/gameRepresentation/horizontalCard/HorizontalCardCarousel";
 import VerticalListSection from "./_components/gameRepresentation/list/VerticalListSection";
 import HeroSection from "./_components/gameRepresentation/hero/HeroSection";
 import MostAnticipated from "./_components/sections/MostAnticipated";
+import UpcomingReleases from "./_components/sections/UpcomingReleases";
+import TopRated from "./_components/sections/TopRated";
+import OfflineGames from "./_components/sections/OfflineGames";
+import OnlineGames from "./_components/sections/OnlineGames";
+import CasualGames from "./_components/sections/CasualGames";
+import VerticalRay from "@/_components/VerticalRay";
 
 export default async function Home() {
   const { data: gameData, error: gameError } = await getOrSetCache(
@@ -21,26 +25,23 @@ export default async function Home() {
       </div>
       <div className="flex flex-col [@media(min-width:1280px)]:ml-[calc((100vw_-_1280px)_/_2)] ml-4 lg:ml-8">
         <MostAnticipated gameData={gameData?.mostAnticipated.result} />
-        <VerticalCardCarousel
-          heading="Top Rated"
-          gameData={gameData?.topRated.result}
-        />
+        <TopRated gameData={gameData?.topRated.result} />
       </div>
-      <div className="max-w-[1280px] mx-auto">
-        <VerticalListSection
-          firstSectionHeading="Offline Games"
-          secondSectionHeading="Online Games"
-          thirdSectionHeading="Casual Games"
-          firstSectionData={gameData?.offlineAndOnlineGames.result.offlineGames}
-          secondSectionData={gameData?.offlineAndOnlineGames.result.onlineGames}
-          thirdSectionData={gameData?.casualGames.result}
-        />
+      <div className="max-w-[1280px] [@media(min-width:1280px)]:mx-auto ml-4 lg:ml-8">
+        <VerticalListSection>
+          <OfflineGames
+            gameData={gameData?.offlineAndOnlineGames.result.offlineGames}
+          />
+          <VerticalRay />
+          <OnlineGames
+            gameData={gameData?.offlineAndOnlineGames.result.onlineGames}
+          />
+          <VerticalRay />
+          <CasualGames gameData={gameData?.casualGames.result} />
+        </VerticalListSection>
       </div>
       <div className="[@media(min-width:1280px)]:ml-[calc((100vw_-_1280px)_/_2)] ml-4 lg:ml-8">
-        {/* <HorizontalCardCarousel
-          heading="Upcoming Releases"
-          gameData={gameData?.upcomingReleases.result}
-        /> */}
+        <UpcomingReleases gameData={gameData?.upcomingReleases.result} />
       </div>
     </main>
   );

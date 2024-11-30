@@ -12,10 +12,9 @@ type CardDetailsProps = {
 
 const CardDetails = ({ game, lastRow }: CardDetailsProps) => {
   const tags = getCardTags(game);
-
   return (
     <div>
-      {tags.length && (
+      {tags.length !== 0 && (
         <div className="font-body-xs text-on-surface-body-varient-low flex items-center gap-x-2 gap-y-0 max-w-full">
           <div className="min-w-max">{tags[0]}</div>
           {tags.length > 1 && (

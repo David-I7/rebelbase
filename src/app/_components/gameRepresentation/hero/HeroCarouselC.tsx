@@ -1,9 +1,9 @@
 "use client";
 import { CardData } from "@/interfaces/igdb";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 import HeroCard from "./HeroCard";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import Carouselndicator from "@/_components/buttons/Carouselndicator";
+import Carouselndicator from "@/_components/buttons/carousel/Carouselndicator";
 import HeroImageB from "./HeroImageB";
 import HeroCardDetailsB from "./HeroCardDetailsB";
 
@@ -11,19 +11,26 @@ const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
   //change to make the cards server comp if they don't need interactivity
 
   const [offset, setOffset] = useState(0);
+  const isTransitioning = useRef<boolean>(false);
 
   const handlePrev = () => {
+    if (isTransitioning.current) return;
     setOffset((prev) => (prev === 0 ? gameData.length - 1 : prev - 1));
+    isTransitioning.current = true;
   };
 
   const handleNext = () => {
+    if (isTransitioning.current) return;
     setOffset((prev) => (prev + 1) % gameData.length);
+    isTransitioning.current = true;
   };
 
   const handleShuffle = (index: number) => {
+    if (isTransitioning.current) return;
     if (isNaN(index)) return;
     if (index === offset) return;
     setOffset(index);
+    isTransitioning.current = true;
   };
 
   const carouselIndicators: ReactElement[] = [];
@@ -81,6 +88,7 @@ const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
             }
             return (
               <li
+                onTransitionEnd={() => (isTransitioning.current = false)}
                 onClick={(e) =>
                   handleShuffle(Number(e.currentTarget.dataset.index!))
                 }
