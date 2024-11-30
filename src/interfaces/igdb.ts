@@ -10,7 +10,7 @@ export type Genres = {
 
 export type Themes = {
   id: number;
-  name: number;
+  name: string;
 }[];
 
 export type GameModes = {
