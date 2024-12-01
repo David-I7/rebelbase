@@ -314,9 +314,7 @@ footer {
   height: 0;
 }
 
-@media (min-width: 640px) {
-  .carousel:hover .prev-button,
-  .carousel:hover .next-button {
-    visibility: visible;
-  }
+.carousel:hover .prev-button,
+.carousel:hover .next-button {
+  visibility: visible;
 }

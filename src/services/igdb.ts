@@ -23,6 +23,7 @@ import type {
   GameData,
   InvolvedCompanies,
 } from "../interfaces/igdb";
+import { getDeveloperCompany } from "@/utils/dataTransformation";
 
 export type HomeMultiqueryDataResponse = [
   { name: HomeSections.topNewReleases; result: TopNewReleases[] },
@@ -438,10 +439,17 @@ export async function getGameById(
     return { data: undefined, error: err as Error };
   }
 }
+
+export type MoreByCompanyResponse = {
+  result: CardData[];
+  company: ReturnType<typeof getDeveloperCompany>;
+};
+
 export async function getMoreFromCompany(
   involvedCompanies?: InvolvedCompanies
-): Promise<DataOrError<CardData[], Error>> {
-  if (!involvedCompanies) return { data: [], error: undefined };
+): Promise<DataOrError<MoreByCompanyResponse, Error>> {
+  if (!involvedCompanies || !involvedCompanies.length)
+    return { data: undefined, error: undefined };
 
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
@@ -451,16 +459,9 @@ export async function getMoreFromCompany(
 
   if (err) return { data: undefined, error: err };
 
-  let involvedCompanyDeveloperid!: number;
+  const company = getDeveloperCompany(involvedCompanies);
 
-  for (let i = 0; i < involvedCompanies.length; i++) {
-    if (involvedCompanies[i].developer) {
-      involvedCompanyDeveloperid = involvedCompanies[i].company.id;
-      break;
-    }
-  }
-
-  if (!involvedCompanyDeveloperid) return { data: [], error: undefined };
+  if (!company.developerCompanyId) return { data: undefined, error: undefined };
 
   try {
     const moreGamesFromCompanyRes: CardData[] = await fetch(
@@ -471,9 +472,9 @@ export async function getMoreFromCompany(
           ...IGDBRequestOptions.headers,
           Authorization: `bearer ${twitchAccessToken!.access_token}`,
         },
-        body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;where involved_companies.company = ${involvedCompanyDeveloperid};sort rating_count desc; limit ${
-          DEFAULT_SECTION_RESULTS - 5
-        };`,
+        body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;where involved_companies.company = ${
+          company.developerCompanyId
+        };sort rating_count desc; limit ${DEFAULT_SECTION_RESULTS - 5};`,
       }
     ).then(async (res) => {
       if (res.status >= 400) {
@@ -487,7 +488,10 @@ export async function getMoreFromCompany(
       return await res.json();
     });
 
-    return { data: moreGamesFromCompanyRes, error: undefined };
+    return {
+      data: { company, result: moreGamesFromCompanyRes },
+      error: undefined,
+    };
   } catch (err) {
     return { data: undefined, error: err as Error };
   }

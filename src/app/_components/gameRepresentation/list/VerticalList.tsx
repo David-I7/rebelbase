@@ -3,6 +3,7 @@ import React, { ReactElement } from "react";
 import CardListItem from "./CardListItem";
 import CardImage from "./CardImage";
 import CardDetails from "../CardDetails";
+import Link from "next/link";
 
 type VerticalListCarouselProps = {
   gameData: CardData[];
@@ -19,13 +20,15 @@ const VerticalList = ({ gameData, sectionName }: VerticalListCarouselProps) => {
         key={`${sectionName}_vertical_card_list_item_${gameData[i].id}`}
         className=""
       >
-        <CardListItem>
-          <CardImage
-            gameName={gameData[i].name}
-            imgId={gameData[i].cover?.image_id}
-          />
-          <CardDetails game={gameData[i]} lastRow="" />
-        </CardListItem>
+        <Link href={`/games/${gameData[i].id}`}>
+          <CardListItem>
+            <CardImage
+              gameName={gameData[i].name}
+              imgId={gameData[i].cover?.image_id}
+            />
+            <CardDetails game={gameData[i]} lastRow="" />
+          </CardListItem>
+        </Link>
       </li>
     );
   }

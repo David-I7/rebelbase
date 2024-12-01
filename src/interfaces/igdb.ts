@@ -115,7 +115,7 @@ export type GameData = [
     keywords?: Keywords;
     involved_companies?: InvolvedCompanies;
     artworks?: Artworks;
-    age_rating?: AgeRating;
+    age_ratings?: AgeRating;
   } & CardData
 ];
 

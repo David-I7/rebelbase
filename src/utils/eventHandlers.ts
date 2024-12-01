@@ -6,7 +6,7 @@ export function handleCarouselScroll(
   prevRef: React.RefObject<HTMLButtonElement>
 ): void {
   const carouselContainer = e.currentTarget as HTMLDivElement;
-  console.log(carouselContainer.scrollWidth);
+
   if (!nextRef.current || !prevRef.current) return;
   if (carouselContainer.scrollLeft > 0) {
     prevRef.current!.classList.add("prev-button");
