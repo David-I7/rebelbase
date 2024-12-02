@@ -8,13 +8,21 @@ import Link from "next/link";
 type VerticalListCarouselProps = {
   gameData: CardData[];
   sectionName: string;
+  gameId?: number;
 };
 
 const LIST_ITEM_QUANTITY = 5;
 
-const VerticalList = ({ gameData, sectionName }: VerticalListCarouselProps) => {
+const VerticalList = ({
+  gameData,
+  sectionName,
+  gameId,
+}: VerticalListCarouselProps) => {
   const listItems: ReactElement[] = [];
-  for (let i = 0; i < LIST_ITEM_QUANTITY; i++) {
+  let itemCount = 0;
+  for (let i = 0; i < gameData.length; i++) {
+    if (itemCount === LIST_ITEM_QUANTITY) break;
+    if (gameData[i].id === gameId) continue;
     listItems.push(
       <li
         key={`${sectionName}_vertical_card_list_item_${gameData[i].id}`}
@@ -31,6 +39,7 @@ const VerticalList = ({ gameData, sectionName }: VerticalListCarouselProps) => {
         </Link>
       </li>
     );
+    itemCount++;
   }
 
   return (

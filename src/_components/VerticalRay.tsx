@@ -1,10 +1,16 @@
 import React from "react";
 
-const VerticalRay = ({ style }: { style?: React.CSSProperties }) => {
+const VerticalRay = ({
+  style,
+  responsiveClassName,
+}: {
+  style?: React.CSSProperties;
+  responsiveClassName?: string;
+}) => {
   return (
     <div
       style={style}
-      className="min-w-[1px] min-h-full bg-outline-varient-lowest"
+      className={`${responsiveClassName} min-w-[1px] min-h-full self-stretch bg-outline-varient-lowest`}
     ></div>
   );
 };

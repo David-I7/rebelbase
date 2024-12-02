@@ -64,11 +64,11 @@ export function getAgeRating(
 }
 
 export function getDeveloperCompany(involvedCompanies?: InvolvedCompanies): {
-  developerCompanyId: number | null;
-  developerCompanyName: string | null;
+  developerCompanyId: number | undefined;
+  developerCompanyName: string | undefined;
 } {
   if (!involvedCompanies)
-    return { developerCompanyId: null, developerCompanyName: null };
+    return { developerCompanyId: undefined, developerCompanyName: undefined };
 
   let involvedCompanyDeveloperid!: number;
   let involvedCompanyDeveloperName!: string;

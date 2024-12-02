@@ -440,16 +440,17 @@ export async function getGameById(
   }
 }
 
-export type MoreByCompanyResponse = {
-  result: CardData[];
-  company: ReturnType<typeof getDeveloperCompany>;
-};
-
 export async function getMoreFromCompany(
+  developerCompanyId: number,
   involvedCompanies?: InvolvedCompanies
-): Promise<DataOrError<MoreByCompanyResponse, Error>> {
+): Promise<DataOrError<CardData[], Error>> {
   if (!involvedCompanies || !involvedCompanies.length)
-    return { data: undefined, error: undefined };
+    return {
+      data: undefined,
+      error: ErrorFactory.createInvalidArgumentsError(
+        "Involved companies is undefined"
+      ),
+    };
 
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
@@ -458,10 +459,6 @@ export async function getMoreFromCompany(
     );
 
   if (err) return { data: undefined, error: err };
-
-  const company = getDeveloperCompany(involvedCompanies);
-
-  if (!company.developerCompanyId) return { data: undefined, error: undefined };
 
   try {
     const moreGamesFromCompanyRes: CardData[] = await fetch(
@@ -472,9 +469,7 @@ export async function getMoreFromCompany(
           ...IGDBRequestOptions.headers,
           Authorization: `bearer ${twitchAccessToken!.access_token}`,
         },
-        body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;where involved_companies.company = ${
-          company.developerCompanyId
-        };sort rating_count desc; limit ${DEFAULT_SECTION_RESULTS - 5};`,
+        body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;where involved_companies.company = ${developerCompanyId};sort rating_count desc; limit ${DEFAULT_SECTION_RESULTS};`,
       }
     ).then(async (res) => {
       if (res.status >= 400) {
@@ -489,7 +484,7 @@ export async function getMoreFromCompany(
     });
 
     return {
-      data: { company, result: moreGamesFromCompanyRes },
+      data: moreGamesFromCompanyRes,
       error: undefined,
     };
   } catch (err) {
