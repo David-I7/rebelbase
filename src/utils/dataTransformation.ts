@@ -3,7 +3,12 @@ import {
   ageRatingImages,
   ageRatings,
 } from "@/data/constants/igdbEnums";
-import { AgeRating, CardData, InvolvedCompanies } from "@/interfaces/igdb";
+import {
+  AgeRating,
+  CardData,
+  InvolvedCompanies,
+  Videos,
+} from "@/interfaces/igdb";
 import { StaticImageData } from "next/image";
 
 export function getCardTags(game: CardData): string[] {
@@ -85,4 +90,30 @@ export function getDeveloperCompany(involvedCompanies?: InvolvedCompanies): {
     developerCompanyId: involvedCompanyDeveloperid,
     developerCompanyName: involvedCompanyDeveloperName,
   };
+}
+
+export type RelevantVideoData = { name: string; videoId: string };
+
+export function getHeroVideo(videos?: Videos): RelevantVideoData | undefined {
+  if (!videos) return;
+
+  const videoData: { [index: string]: RelevantVideoData[] } = {
+    Trailer: [],
+    "Game Play Trailer": [],
+    "Release Date Trailer": [],
+  };
+
+  for (const video of videos) {
+    if (videoData[video.name]) {
+      if (video.name === "Trailer")
+        return { name: video.name, videoId: video.video_id };
+      videoData[video.name].push({ name: video.name, videoId: video.video_id });
+    }
+  }
+
+  return videoData["Game Play Trailer"].length
+    ? videoData["Game Play Trailer"][0]
+    : videoData["Release Date Trailer"].length
+    ? videoData["Release Date Trailer"][0]
+    : undefined;
 }

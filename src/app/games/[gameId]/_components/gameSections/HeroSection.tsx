@@ -3,6 +3,8 @@ import GameMetadata from "../GameMetadata";
 import GameIdentifier from "../GameIdentifier";
 import { GameData } from "@/interfaces/igdb";
 import HeroCard from "../HeroCard";
+import HeroVideoTrailer from "../HeroVideoTrailer";
+import { getHeroVideo } from "@/utils/dataTransformation";
 
 const HeroSection = ({
   game,
@@ -11,24 +13,33 @@ const HeroSection = ({
   game: GameData;
   developerCompanyName?: string;
 }) => {
+  const heroVideo = getHeroVideo(game[0]["videos"]);
   return (
-    <section className="py-8 bg-surface-container-low">
-      <HeroCard gameName={game[0].name} imgId={game[0].cover?.image_id}>
-        <GameIdentifier
-          style={{
-            position: "absolute",
-            bottom: "0",
-            left: "50%",
-            transform: "translateX(-50%) translateY(50%)",
-          }}
-          responsiveClassName="sm:hidden"
-          gameName={game[0].name}
-          developerCompanyName={developerCompanyName}
-        />
-      </HeroCard>
-
-      <GameMetadata game={game} />
-    </section>
+    <>
+      <section className={`bg-surface-container-low`}>
+        <div className="py-8 md:pb-8 md:pt-0 relative max-w-[1280px] max-h-[80svh] md:flex md:justify-end [@media(min-width:1280px)]:mx-auto">
+          <HeroCard
+            hasHeroVideo={heroVideo ? true : false}
+            developerCompanyName={developerCompanyName}
+            game={game}
+          />
+          {heroVideo && (
+            <HeroVideoTrailer heroVideo={heroVideo} gameName={game[0].name} />
+          )}
+          <div
+            className={`md:absolute left-4 lg:left-8 [@media(min-width:1344px)]:left-0 ${
+              heroVideo ? "bottom-8" : "top-2/4 md:-translate-y-2/4"
+            }`}
+          >
+            <GameIdentifier
+              gameName={game[0].name}
+              developerCompanyName={developerCompanyName}
+            />
+            <GameMetadata hasHeroVideo={heroVideo ? true : false} game={game} />
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

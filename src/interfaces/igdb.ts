@@ -116,6 +116,7 @@ export type GameData = [
     involved_companies?: InvolvedCompanies;
     artworks?: Artworks;
     age_ratings?: AgeRating;
+    screenshots?: Screenshots;
   } & CardData
 ];
 

@@ -394,9 +394,14 @@ export async function testQuery() {
 }
 
 //When something is missing from the response it won't be there at all, so access using bracket notation to prevent errors
+type GameDataResponse = {
+  result: GameData;
+  accessToken: string;
+};
+
 export async function getGameById(
   id: number
-): Promise<DataOrError<GameData, Error>> {
+): Promise<DataOrError<GameDataResponse, Error>> {
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
       CACHE_KEYS.twitchAccessToken,
@@ -434,7 +439,10 @@ export async function getGameById(
       return await res.json();
     });
 
-    return { data: gameData, error: undefined };
+    return {
+      data: { result: gameData, accessToken: twitchAccessToken!.access_token! },
+      error: undefined,
+    };
   } catch (err) {
     return { data: undefined, error: err as Error };
   }
@@ -442,6 +450,7 @@ export async function getGameById(
 
 export async function getMoreFromCompany(
   developerCompanyId: number,
+  accessToken: string,
   involvedCompanies?: InvolvedCompanies
 ): Promise<DataOrError<CardData[], Error>> {
   if (!involvedCompanies || !involvedCompanies.length)
@@ -452,13 +461,13 @@ export async function getMoreFromCompany(
       ),
     };
 
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
-
-  if (err) return { data: undefined, error: err };
+  if (!accessToken)
+    return {
+      data: undefined,
+      error: ErrorFactory.createInvalidArgumentsError(
+        "Missing twitch access token"
+      ),
+    };
 
   try {
     const moreGamesFromCompanyRes: CardData[] = await fetch(
@@ -467,7 +476,7 @@ export async function getMoreFromCompany(
         ...IGDBRequestOptions,
         headers: {
           ...IGDBRequestOptions.headers,
-          Authorization: `bearer ${twitchAccessToken!.access_token}`,
+          Authorization: `bearer ${accessToken}`,
         },
         body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;where involved_companies.company = ${developerCompanyId};sort rating_count desc; limit ${DEFAULT_SECTION_RESULTS};`,
       }

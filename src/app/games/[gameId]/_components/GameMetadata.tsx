@@ -6,26 +6,32 @@ import { format } from "date-fns";
 import React from "react";
 import { MdStar } from "react-icons/md";
 
-const GameMetadata = async ({ game }: { game: GameData }) => {
+const GameMetadata = async ({
+  game,
+  hasHeroVideo,
+}: {
+  game: GameData;
+  hasHeroVideo: boolean;
+}) => {
   const ageRating = getAgeRating(game[0]?.age_ratings);
 
   return (
     <div
       className={`grid ${
         ageRating
-          ? "grid-cols-[repeat(3,auto)] [@media(min-width:409px)_and_(max-width:639px)]:grid-cols-[repeat(7,auto)] sm:grid-cols-[repeat(8,auto)]"
-          : "grid-cols-[repeat(5,auto)]"
-      } gap-4 items-center justify-center sm:justify-start mt-14`}
+          ? "grid-cols-[repeat(3,auto)] [@media(min-width:409px)_and_(max-width:767px)]:grid-cols-[repeat(7,auto)] md:grid-cols-[repeat(8,auto)]"
+          : "grid-cols-[repeat(5,auto)]  md:grid-cols-[repeat(6,auto)]"
+      } gap-4 items-center justify-center md:justify-start mt-14 md:mt-8`}
     >
-      {game[0]?.videos?.length && (
+      {hasHeroVideo && (
         <div
           className={`${
-            game[0].cover?.image_id ? "" : "bg-surface-container-low"
-          } aspect-[3/4] hidden sm:block max-w-16 rounded-lg overflow-hidden flex-shrink-0`}
+            game[0]["cover"]?.image_id ? "" : "bg-surface-container-low"
+          } aspect-[3/4] hidden md:block max-w-16 rounded-lg overflow-hidden flex-shrink-0`}
         >
-          {game[0].cover?.image_id && (
+          {game[0]["cover"]?.image_id && (
             <img
-              src={`${imagesMap.baseUrl}${imagesMap.verticalCardSmall}/${game[0].cover?.image_id}.jpg`}
+              src={`${imagesMap.baseUrl}${imagesMap.verticalCardSmall}/${game[0]["cover"].image_id}.jpg`}
               alt={`${game[0].name} game cover`}
             />
           )}
@@ -33,7 +39,7 @@ const GameMetadata = async ({ game }: { game: GameData }) => {
       )}
       <div className="grid gap-2 min-h-[54px]">
         <div className="flex items-center justify-center text-on-surface-heading-varient font-body-l font-medium">
-          {game[0]?.rating ? (
+          {game[0]["rating"] ? (
             <>
               {convertRating(game[0].rating)} <MdStar size={24} />
             </>
