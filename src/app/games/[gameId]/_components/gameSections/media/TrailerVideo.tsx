@@ -11,8 +11,9 @@ const TrailerVideo = ({
   return (
     <div className="rounded-xl overflow-hidden max-w-[308px] md:hidden">
       <iframe
-        className="aspect-video pointer-events-none w-full"
-        src={`https://www.youtube.com/embed/${heroVideo.videoId}?&modestbranding=1&rel=0`}
+        loading="lazy"
+        className="aspect-video w-full"
+        src={`https://www.youtube.com/embed/${heroVideo.videoId}?&modestbranding=1&rel=0&mute=1`}
         title={`${gameName} ${heroVideo.name}`}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen

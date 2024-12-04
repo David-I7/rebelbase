@@ -419,7 +419,7 @@ export async function getGameById(
       },
       body: `fields cover.image_id,rating,name,first_release_date,videos.video_id,videos.name,genres.name,themes.name,keywords.name,game_modes.name,platforms.name,
       player_perspectives.name,age_ratings.category,age_ratings.rating,
-      release_dates.date,release_dates.platform.name,
+      release_dates.date,release_dates.platform.name,release_dates.status.name,
       language_supports.language.name,language_supports.language.locale,language_supports.language_support_type.name,
       websites.category,websites.url,
       summary,storyline,

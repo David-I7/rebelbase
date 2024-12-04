@@ -5,6 +5,8 @@ import { getDeveloperCompany } from "@/utils/dataTransformation";
 import { CardData } from "@/interfaces/igdb";
 import SimilarGames from "./_components/gameSections/SimilarGames";
 import HeroSection from "./_components/gameSections/HeroSection";
+import MediaSection from "./_components/gameSections/media/MediaSection";
+import AboutGame from "./_components/gameSections/about/AboutGame";
 
 export default async function GamePage({
   params,
@@ -39,6 +41,8 @@ export default async function GamePage({
         game={gameData!.result!}
         developerCompanyName={company.developerCompanyName}
       />
+      <MediaSection game={gameData!.result!} />
+      <AboutGame game={gameData!.result!} />
       <SimilarGames similarGames={gameData!.result[0]["similar_games"]} />
       <MoreByCompany
         data={companyData}

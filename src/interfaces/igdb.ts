@@ -77,6 +77,10 @@ export type ReleaseDates = {
     id: number;
     name: string;
   };
+  status: {
+    id: number;
+    name: string;
+  };
 }[];
 
 export type Screenshots = {

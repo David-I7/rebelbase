@@ -61,3 +61,23 @@ export const ageRatingImages: {
     AO: ESRB_AO,
   },
 };
+
+import Website from "@/_components/icons/Website";
+import Facebook from "@/_components/icons/Facebook";
+import X from "@/_components/icons/X";
+import Twitch from "@/_components/icons/Twitch";
+import Instagram from "@/_components/icons/Instagram";
+import Youtube from "@/_components/icons/Youtube";
+import Reddit from "@/_components/icons/Reddit";
+import Discord from "@/_components/icons/Discord";
+
+export const socialLinksIcons = {
+  1: <Website />,
+  4: <Facebook />,
+  5: <X />,
+  6: <Twitch />,
+  8: <Instagram />,
+  9: <Youtube />,
+  14: <Reddit />,
+  18: <Discord />,
+} as { [key: number]: React.JSX.Element };

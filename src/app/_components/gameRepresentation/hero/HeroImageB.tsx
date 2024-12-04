@@ -15,6 +15,9 @@ const HeroImageB = ({ imgId, gameName }: HeroImageBProps) => {
     >
       {imgId && (
         <img
+          width="400px"
+          height="533px"
+          loading="lazy"
           className="object-cover w-full"
           src={`${imagesMap.baseUrl}${imagesMap.verticalCardLarge}_2x/${imgId}.jpg`}
           alt={`${gameName} game cover`}

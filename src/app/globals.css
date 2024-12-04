@@ -265,6 +265,7 @@ footer {
 .darken-image::after {
   content: "";
   position: absolute;
+  z-index: 0;
   inset: 0;
   background: linear-gradient(
     to bottom,
@@ -319,20 +320,48 @@ footer {
   visibility: visible;
 }
 
-.hero-video {
+.hero-video::after {
   position: absolute;
-  z-index: 100;
+  content: "";
   inset: 0;
+  z-index: 1;
   background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0) 25%,
-      var(--state-background-blur-dark) 75%,
-      rgba(0, 0, 0, 0.9) 100%
+      rgba(0, 0, 0, 0) 50%,
+      var(--color-surface-container-low) 95%
     ),
     linear-gradient(
       to left,
-      rgba(0, 0, 0, 0) 25%,
-      var(--state-background-blur-dark) 75%,
-      rgba(0, 0, 0, 0.9) 100%
+      rgba(0, 0, 0, 0) 50%,
+      var(--color-surface-container-low) 95%
     );
+}
+
+@media (min-width: 1280px) {
+  .hero-video::after {
+    position: absolute;
+    content: "";
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 50%,
+        var(--color-surface-container-low) 100%
+      ),
+      linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0) 50%,
+        var(--color-surface-container-low) 100%
+      ),
+      linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0) 80%,
+        var(--color-surface-container-low) 100%
+      ),
+      linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0) 80%,
+        var(--color-surface-container-low) 100%
+      );
+  }
 }

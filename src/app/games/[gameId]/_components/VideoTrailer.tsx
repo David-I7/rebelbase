@@ -17,6 +17,7 @@ const VideoTrailer = ({
 
   return (
     <iframe
+      loading="lazy"
       className="aspect-video pointer-events-none w-full"
       src={`https://www.youtube.com/embed/${heroVideo.videoId}?autoplay=1&mute=1&loop=1&playlist=${heroVideo.videoId}&controls=0&modestbranding=1&rel=0`}
       title={`${gameName} ${heroVideo.name}`}

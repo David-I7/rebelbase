@@ -14,9 +14,10 @@ const HeroSection = ({
   developerCompanyName?: string;
 }) => {
   const heroVideo = getHeroVideo(game[0]["videos"]);
+
   return (
     <>
-      <section className={`bg-surface-container-low`}>
+      <section className={`bg-surface-container-low relative`}>
         <div className="py-8 md:pb-8 md:pt-0 relative max-w-[1280px] max-h-[80svh] md:flex md:justify-end [@media(min-width:1280px)]:mx-auto">
           <HeroCard
             hasHeroVideo={heroVideo ? true : false}
@@ -27,7 +28,7 @@ const HeroSection = ({
             <HeroVideoTrailer heroVideo={heroVideo} gameName={game[0].name} />
           )}
           <div
-            className={`md:absolute left-4 lg:left-8 [@media(min-width:1344px)]:left-0 ${
+            className={`md:absolute z-10 left-4 lg:left-8 [@media(min-width:1344px)]:left-0 ${
               heroVideo ? "bottom-8" : "top-2/4 md:-translate-y-2/4"
             }`}
           >

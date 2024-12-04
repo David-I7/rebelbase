@@ -6,9 +6,11 @@ import {
 import {
   AgeRating,
   CardData,
+  GameData,
   InvolvedCompanies,
   Videos,
 } from "@/interfaces/igdb";
+import { match } from "assert";
 import { StaticImageData } from "next/image";
 
 export function getCardTags(game: CardData): string[] {
@@ -97,23 +99,111 @@ export type RelevantVideoData = { name: string; videoId: string };
 export function getHeroVideo(videos?: Videos): RelevantVideoData | undefined {
   if (!videos) return;
 
-  const videoData: { [index: string]: RelevantVideoData[] } = {
-    Trailer: [],
-    "Game Play Trailer": [],
-    "Release Date Trailer": [],
-  };
-
   for (const video of videos) {
-    if (videoData[video.name]) {
-      if (video.name === "Trailer")
-        return { name: video.name, videoId: video.video_id };
-      videoData[video.name].push({ name: video.name, videoId: video.video_id });
+    const isTrailer = video.name.match(/[t,T]railer/);
+
+    if (isTrailer) {
+      return { name: video.name, videoId: video.video_id };
     }
   }
 
-  return videoData["Game Play Trailer"].length
-    ? videoData["Game Play Trailer"][0]
-    : videoData["Release Date Trailer"].length
-    ? videoData["Release Date Trailer"][0]
-    : undefined;
+  return undefined;
+}
+
+type MediaType = {
+  imgId: string;
+};
+
+export type Media = {
+  artworks: MediaType[];
+  screenshots: MediaType[];
+};
+
+export function getMedia(game: GameData): Media | undefined {
+  const artworks = game[0]["artworks"];
+  const screenShots = game[0]["screenshots"];
+
+  if (!artworks && !screenShots) return undefined;
+
+  const maxLength =
+    artworks?.length && screenShots?.length
+      ? Math.max(artworks.length, screenShots.length)
+      : artworks?.length
+      ? artworks!.length
+      : screenShots!.length;
+
+  const result: Media = { artworks: [], screenshots: [] };
+
+  //we want screenshots then artworks
+
+  for (let i = 0; i < maxLength; i++) {
+    if (artworks) {
+      if (artworks[i]) {
+        result.artworks.push({ imgId: artworks[i].image_id });
+      }
+    }
+
+    if (screenShots) {
+      if (screenShots[i]) {
+        result.screenshots.push({ imgId: screenShots[i].image_id });
+      }
+    }
+  }
+
+  if (result.artworks.length || result.screenshots.length) return result;
+
+  return undefined;
+}
+
+export function getStorylineParagraphs(game: GameData): string[] | undefined {
+  const storyline = game[0]["storyline"];
+  if (!storyline) return;
+
+  return storyline.split("\n");
+}
+export function getSummaryParagraphs(game: GameData): string[] | undefined {
+  const summary = game[0]["summary"];
+  if (!summary) return;
+
+  return summary.split("\n");
+}
+
+export function getPlatformReleases(game: GameData) {
+  const releaseDates = game[0]["release_dates"];
+
+  if (!releaseDates) return;
+  // id 6 => 'Full Release'
+
+  return releaseDates.filter((date) => date.status.id === 6);
+}
+
+type Languages = {
+  [index: string]: {
+    Audio?: boolean;
+    Subtitles?: boolean;
+    Interface?: boolean;
+  };
+};
+
+export function getSupportedLanguages(game: GameData): Languages | undefined {
+  const supportedLanguages = game[0]["language_supports"];
+
+  if (!supportedLanguages) return;
+
+  const result: Languages = {};
+
+  supportedLanguages.map((language) => {
+    if (result[language.language.name]) {
+      const languageSupport = result[language.language.name];
+      languageSupport[
+        language.language_support_type.name as keyof Languages[string]
+      ] = true;
+    } else {
+      result[language.language.name] = {
+        [language.language_support_type.name]: true,
+      };
+    }
+  });
+
+  return result;
 }
