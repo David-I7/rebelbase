@@ -5,6 +5,7 @@ import AboutDescription from "./AboutDescription";
 
 import AboutGameSupport from "./AboutGameSupport";
 import AboutSocialLinks from "./AboutSocialLinks";
+import AboutGameTags from "./AboutGameTags";
 
 const AboutGame = ({ game }: { game: GameData }) => {
   return (
@@ -16,8 +17,7 @@ const AboutGame = ({ game }: { game: GameData }) => {
         <AboutDescription game={game} />
         <AboutGameSupport game={game} />
         <AboutSocialLinks game={game} />
-
-        <section>game tags that link to filter page</section>
+        <AboutGameTags game={game} />
       </div>
     </section>
   );

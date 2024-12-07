@@ -23,11 +23,11 @@ export default async function Home() {
       <div className="max-w-[1280px] mx-auto mt-8">
         <HeroSection gameData={gameData?.topNewReleases.result} />
       </div>
-      <div className="flex flex-col [@media(min-width:1280px)]:ml-[calc((100vw_-_1280px)_/_2)] ml-4 lg:ml-8">
+      <div className="flex flex-col [@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)] ml-4 lg:ml-8">
         <MostAnticipated gameData={gameData?.mostAnticipated.result} />
         <TopRated gameData={gameData?.topRated.result} />
       </div>
-      <div className="max-w-[1280px] [@media(min-width:1280px)]:mx-auto ml-4 lg:ml-8">
+      <div className="max-w-[1280px] [@media(min-width:1344px)]:mx-auto ml-4 lg:ml-8">
         <VerticalListSection>
           <OfflineGames
             gameData={gameData?.offlineAndOnlineGames.result.offlineGames}
@@ -40,7 +40,7 @@ export default async function Home() {
           <CasualGames gameData={gameData?.casualGames.result} />
         </VerticalListSection>
       </div>
-      <div className="[@media(min-width:1280px)]:ml-[calc((100vw_-_1280px)_/_2)] ml-4 lg:ml-8">
+      <div className="[@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)] ml-4 lg:ml-8">
         <UpcomingReleases gameData={gameData?.upcomingReleases.result} />
       </div>
     </main>

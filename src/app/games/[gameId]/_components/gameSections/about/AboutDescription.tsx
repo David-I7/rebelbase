@@ -32,7 +32,7 @@ const AboutDescription = ({ game }: { game: GameData }) => {
       {storylineParagraphs?.length ? (
         summaryParagraphs?.length ? (
           <div>
-            <h3 className="text-base">Storyline</h3>
+            <h3 className="text-base mb-2">Storyline</h3>
             <div>
               {storylineParagraphs.map((paragraph, index) => {
                 if (!paragraph.length) return;

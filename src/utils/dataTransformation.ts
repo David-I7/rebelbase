@@ -207,3 +207,35 @@ export function getSupportedLanguages(game: GameData): Languages | undefined {
 
   return result;
 }
+
+const MAX_TAG_AMOUNT = 6;
+
+export function getGameTags(game: GameData) {
+  const themes = game[0]["themes"];
+  const genres = game[0]["genres"];
+  const keywords = game[0]["keywords"];
+
+  if (!themes && !genres && !keywords) return;
+
+  let gameTags: { id: number; name: string; tagType: string }[] = [];
+
+  if (themes) {
+    gameTags = themes.map((theme) => ({ ...theme, tagType: "themes" }));
+  }
+  if (gameTags.length < MAX_TAG_AMOUNT && genres) {
+    gameTags.push(
+      ...genres
+        .slice(0, MAX_TAG_AMOUNT - gameTags.length)
+        .map((genre) => ({ ...genre, tagType: "genres" }))
+    );
+  }
+  if (gameTags.length < MAX_TAG_AMOUNT && keywords) {
+    gameTags.push(
+      ...keywords
+        .slice(0, MAX_TAG_AMOUNT - gameTags.length)
+        .map((keyword) => ({ ...keyword, tagType: "keywords" }))
+    );
+  }
+
+  return gameTags;
+}

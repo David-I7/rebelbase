@@ -6,6 +6,7 @@ import {
 import { format } from "date-fns";
 import React from "react";
 import { MdCheck } from "react-icons/md";
+import AboutLanguagesAccordion from "./AboutLanguagesAccordion";
 
 const AboutGameSupport = ({ game }: { game: GameData }) => {
   const releaseDates = getPlatformReleases(game);
@@ -35,7 +36,7 @@ const AboutGameSupport = ({ game }: { game: GameData }) => {
       </div>
       <div>
         <h3 className="text-base">Languages</h3>
-        <div>
+        <AboutLanguagesAccordion>
           <table className="font-body-s">
             <thead>
               <tr>
@@ -88,7 +89,7 @@ const AboutGameSupport = ({ game }: { game: GameData }) => {
                 )}
             </tbody>
           </table>
-        </div>
+        </AboutLanguagesAccordion>
       </div>
     </section>
   );
