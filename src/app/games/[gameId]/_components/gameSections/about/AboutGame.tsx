@@ -4,9 +4,9 @@ import { MdChevronRight } from "react-icons/md";
 import AboutDescription from "./AboutDescription";
 
 import AboutGameSupport from "./AboutGameSupport";
+import AboutSocialLinks from "./AboutSocialLinks";
 
 const AboutGame = ({ game }: { game: GameData }) => {
-  getSocialLinks(game);
   return (
     <section className="mt-16">
       <h2 className="flex items-center gap-2 mb-4 text-2xl">
@@ -15,9 +15,8 @@ const AboutGame = ({ game }: { game: GameData }) => {
       <div>
         <AboutDescription game={game} />
         <AboutGameSupport game={game} />
-        <section>
-          <div>links</div>
-        </section>
+        <AboutSocialLinks game={game} />
+
         <section>game tags that link to filter page</section>
       </div>
     </section>
@@ -26,10 +25,4 @@ const AboutGame = ({ game }: { game: GameData }) => {
 
 export default AboutGame;
 
-function getSocialLinks(game: GameData) {
-  const links = game[0]["websites"];
-
-  if (!links) return;
-  console.log(game);
-}
 function getGameTags(game: GameData) {}
