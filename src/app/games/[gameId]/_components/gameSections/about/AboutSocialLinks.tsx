@@ -6,7 +6,7 @@ const AboutSocialLinks = ({ game }: { game: GameData }) => {
   if (!game[0]["websites"]) return;
 
   return (
-    <section>
+    <section className="my-6">
       <div className="mb-2 font-body-s">Links</div>
       <ul className="flex flex-wrap">
         {game[0].websites.map((link) => {

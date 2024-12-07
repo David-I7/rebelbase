@@ -97,7 +97,10 @@ const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
                 data-index={`${index}`}
                 key={`hero_carousel_item_${game.id}}`}
               >
-                <Link href={`/games/${game.id}`}>
+                <Link
+                  className={`${position !== 0 ? "pointer-events-none" : ""}`}
+                  href={`/games/${game.id}`}
+                >
                   <HeroCard>
                     <HeroImageB
                       gameName={game.name}

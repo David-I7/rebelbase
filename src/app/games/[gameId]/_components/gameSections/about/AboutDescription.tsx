@@ -13,7 +13,7 @@ const AboutDescription = ({ game }: { game: GameData }) => {
   if (!storylineParagraphs?.length && !summaryParagraphs?.length) return;
 
   return (
-    <section>
+    <section className="border-b border-b-outline-varient-lowest pb-6">
       {summaryParagraphs?.length && (
         <div>
           {summaryParagraphs.map((paragraph, index) => {
@@ -39,7 +39,7 @@ const AboutDescription = ({ game }: { game: GameData }) => {
                 return (
                   <p
                     key={`storyline_paragraph_${index}`}
-                    className="font-body-s mb-[21px]"
+                    className="font-body-s mb-[21px] last-of-type:mb-0"
                   >
                     {paragraph}
                   </p>
