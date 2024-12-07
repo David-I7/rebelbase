@@ -9,7 +9,7 @@ const AboutGameTags = ({ game }: { game: GameData }) => {
   if (!gameTags || !gameTags.length) return;
 
   return (
-    <section>
+    <section className="mt-6">
       <ul className="flex flex-wrap gap-x-2 gap-y-4">
         {gameTags.map((tag) => {
           return (

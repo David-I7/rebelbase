@@ -10,7 +10,7 @@ const MediaSection = ({ game }: { game: GameData }) => {
   const heroVideo = getHeroVideo(game[0]["videos"]);
 
   return (
-    <section>
+    <section className="">
       <MediaCarousel>
         <ul className="inline-flex gap-4">
           <li className="flex-shrink-0">

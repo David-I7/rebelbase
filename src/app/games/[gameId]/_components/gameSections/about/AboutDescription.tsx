@@ -21,7 +21,7 @@ const AboutDescription = ({ game }: { game: GameData }) => {
             return (
               <p
                 key={`summary_paragraph_${index}`}
-                className="font-body-s mb-[21px]"
+                className="font-body-s mb-[21px] last-of-type:mb-0"
               >
                 {paragraph}
               </p>
@@ -31,7 +31,7 @@ const AboutDescription = ({ game }: { game: GameData }) => {
       )}
       {storylineParagraphs?.length ? (
         summaryParagraphs?.length ? (
-          <div>
+          <div className="mt-6">
             <h3 className="text-base mb-2">Storyline</h3>
             <div>
               {storylineParagraphs.map((paragraph, index) => {
@@ -54,7 +54,7 @@ const AboutDescription = ({ game }: { game: GameData }) => {
               return (
                 <p
                   key={`storyline_paragraph_${index}`}
-                  className="font-body-s mb-[21px]"
+                  className="font-body-s mb-[21px] last-of-type:mb-0"
                 >
                   {paragraph}
                 </p>

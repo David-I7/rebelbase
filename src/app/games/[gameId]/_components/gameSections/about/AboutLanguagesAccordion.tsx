@@ -1,10 +1,17 @@
 "use client";
-import React, { ReactNode, useRef, useState } from "react";
+import React, {
+  ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 const NON_EXPANDED_ACCORDION_HEIGHT = 208;
 
 const AboutLanguagesAccordion = ({ children }: { children: ReactNode }) => {
   const accordionRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleToggle = () => {
     const accordionRefScrollHeight = accordionRef.current!.scrollHeight;
@@ -16,6 +23,14 @@ const AboutLanguagesAccordion = ({ children }: { children: ReactNode }) => {
       setIsOpen(true);
     }
   };
+
+  useEffect(() => {
+    if (accordionRef.current!.scrollHeight <= NON_EXPANDED_ACCORDION_HEIGHT) {
+      accordionRef.current!.style.height = "auto";
+      buttonRef.current!.style.display = "none";
+    }
+  }, []);
+
   return (
     <div className="">
       <div
@@ -26,6 +41,7 @@ const AboutLanguagesAccordion = ({ children }: { children: ReactNode }) => {
         {children}
       </div>
       <button
+        ref={buttonRef}
         onClick={handleToggle}
         aria-expanded={isOpen}
         aria-controls="languages_table_container"
