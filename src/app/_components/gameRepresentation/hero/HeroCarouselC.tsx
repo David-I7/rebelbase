@@ -6,6 +6,7 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import Carouselndicator from "@/_components/buttons/carousel/Carouselndicator";
 import HeroImageB from "./HeroImageB";
 import HeroCardDetailsB from "./HeroCardDetailsB";
+import Link from "next/link";
 
 const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
   //change to make the cards server comp if they don't need interactivity
@@ -96,13 +97,18 @@ const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
                 data-index={`${index}`}
                 key={`hero_carousel_item_${game.id}}`}
               >
-                <HeroCard>
-                  <HeroImageB
-                    gameName={game.name}
-                    imgId={game.cover?.image_id}
-                  />
-                  <HeroCardDetailsB game={game} />
-                </HeroCard>
+                <Link
+                  className={`${position !== 0 ? "pointer-events-none" : ""}`}
+                  href={`/games/${game.id}`}
+                >
+                  <HeroCard>
+                    <HeroImageB
+                      gameName={game.name}
+                      imgId={game.cover?.image_id}
+                    />
+                    <HeroCardDetailsB game={game} />
+                  </HeroCard>
+                </Link>
               </li>
             );
           })}

@@ -77,6 +77,10 @@ export type ReleaseDates = {
     id: number;
     name: string;
   };
+  status: {
+    id: number;
+    name: string;
+  };
 }[];
 
 export type Screenshots = {
@@ -115,7 +119,8 @@ export type GameData = [
     keywords?: Keywords;
     involved_companies?: InvolvedCompanies;
     artworks?: Artworks;
-    age_rating?: AgeRating;
+    age_ratings?: AgeRating;
+    screenshots?: Screenshots;
   } & CardData
 ];
 

@@ -2,8 +2,6 @@
 import React, { forwardRef, MouseEvent, useEffect } from "react";
 import { MdChevronLeft } from "react-icons/md";
 
-const DEFAULT_SCROLL_PAN = 640;
-
 const PrevButton = forwardRef(
   (
     { isScrolling }: { isScrolling: React.MutableRefObject<boolean> },
@@ -13,8 +11,10 @@ const PrevButton = forwardRef(
       if (isScrolling.current) return;
       const carouselContainer = e.currentTarget.parentElement!;
 
+      const scrollAmount = carouselContainer.offsetWidth;
+
       if (carouselContainer.scrollLeft === 0) return;
-      else if (carouselContainer.scrollLeft - DEFAULT_SCROLL_PAN <= 0) {
+      else if (carouselContainer.scrollLeft - scrollAmount <= 0) {
         const deltaX = -carouselContainer.scrollLeft;
 
         carouselContainer.scrollBy({
@@ -24,7 +24,7 @@ const PrevButton = forwardRef(
       } else {
         carouselContainer.scrollBy({
           behavior: "smooth",
-          left: -DEFAULT_SCROLL_PAN,
+          left: -scrollAmount,
         });
       }
       isScrolling.current = true;

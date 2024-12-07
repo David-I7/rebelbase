@@ -15,6 +15,9 @@ const CardImage = ({ imgId, gameName }: CardImageProps) => {
     >
       {imgId && (
         <img
+          width="308px"
+          height="547px"
+          loading="lazy"
           src={`${imagesMap.baseUrl}${imagesMap.horizontalCardLarge}/${imgId}.jpg`}
           alt={`${gameName} game cover`}
         />

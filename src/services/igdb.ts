@@ -23,6 +23,7 @@ import type {
   GameData,
   InvolvedCompanies,
 } from "../interfaces/igdb";
+import { getDeveloperCompany } from "@/utils/dataTransformation";
 
 export type HomeMultiqueryDataResponse = [
   { name: HomeSections.topNewReleases; result: TopNewReleases[] },
@@ -393,9 +394,14 @@ export async function testQuery() {
 }
 
 //When something is missing from the response it won't be there at all, so access using bracket notation to prevent errors
+type GameDataResponse = {
+  result: GameData;
+  accessToken: string;
+};
+
 export async function getGameById(
   id: number
-): Promise<DataOrError<GameData, Error>> {
+): Promise<DataOrError<GameDataResponse, Error>> {
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
       CACHE_KEYS.twitchAccessToken,
@@ -413,7 +419,7 @@ export async function getGameById(
       },
       body: `fields cover.image_id,rating,name,first_release_date,videos.video_id,videos.name,genres.name,themes.name,keywords.name,game_modes.name,platforms.name,
       player_perspectives.name,age_ratings.category,age_ratings.rating,
-      release_dates.date,release_dates.platform.name,
+      release_dates.date,release_dates.platform.name,release_dates.status.name,
       language_supports.language.name,language_supports.language.locale,language_supports.language_support_type.name,
       websites.category,websites.url,
       summary,storyline,
@@ -433,34 +439,35 @@ export async function getGameById(
       return await res.json();
     });
 
-    return { data: gameData, error: undefined };
+    return {
+      data: { result: gameData, accessToken: twitchAccessToken!.access_token! },
+      error: undefined,
+    };
   } catch (err) {
     return { data: undefined, error: err as Error };
   }
 }
+
 export async function getMoreFromCompany(
+  developerCompanyId: number,
+  accessToken: string,
   involvedCompanies?: InvolvedCompanies
 ): Promise<DataOrError<CardData[], Error>> {
-  if (!involvedCompanies) return { data: [], error: undefined };
+  if (!involvedCompanies || !involvedCompanies.length)
+    return {
+      data: undefined,
+      error: ErrorFactory.createInvalidArgumentsError(
+        "Involved companies is undefined"
+      ),
+    };
 
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
-
-  if (err) return { data: undefined, error: err };
-
-  let involvedCompanyDeveloperid!: number;
-
-  for (let i = 0; i < involvedCompanies.length; i++) {
-    if (involvedCompanies[i].developer) {
-      involvedCompanyDeveloperid = involvedCompanies[i].company.id;
-      break;
-    }
-  }
-
-  if (!involvedCompanyDeveloperid) return { data: [], error: undefined };
+  if (!accessToken)
+    return {
+      data: undefined,
+      error: ErrorFactory.createInvalidArgumentsError(
+        "Missing twitch access token"
+      ),
+    };
 
   try {
     const moreGamesFromCompanyRes: CardData[] = await fetch(
@@ -469,11 +476,9 @@ export async function getMoreFromCompany(
         ...IGDBRequestOptions,
         headers: {
           ...IGDBRequestOptions.headers,
-          Authorization: `bearer ${twitchAccessToken!.access_token}`,
+          Authorization: `bearer ${accessToken}`,
         },
-        body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;where involved_companies.company = ${involvedCompanyDeveloperid};sort rating_count desc; limit ${
-          DEFAULT_SECTION_RESULTS - 5
-        };`,
+        body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;where involved_companies.company = ${developerCompanyId};sort rating_count desc; limit ${DEFAULT_SECTION_RESULTS};`,
       }
     ).then(async (res) => {
       if (res.status >= 400) {
@@ -487,7 +492,10 @@ export async function getMoreFromCompany(
       return await res.json();
     });
 
-    return { data: moreGamesFromCompanyRes, error: undefined };
+    return {
+      data: moreGamesFromCompanyRes,
+      error: undefined,
+    };
   } catch (err) {
     return { data: undefined, error: err as Error };
   }

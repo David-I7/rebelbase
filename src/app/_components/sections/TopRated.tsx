@@ -5,6 +5,7 @@ import { CardData } from "@/interfaces/igdb";
 import VerticalCard from "../gameRepresentation/verticalCard/VerticalCard";
 import CardImage from "../gameRepresentation/verticalCard/CardImage";
 import CardDetails from "../gameRepresentation/CardDetails";
+import Link from "next/link";
 
 const TopRated = ({ gameData }: { gameData?: CardData[] }) => {
   if (!gameData) return;
@@ -17,10 +18,15 @@ const TopRated = ({ gameData }: { gameData?: CardData[] }) => {
         <ul className="inline-grid grid-rows-1 grid-cols-[repeat(15,minmax(164px,1fr))] md:grid-cols-[repeat(15,minmax(204px,1fr))] lg:grid-cols-[repeat(15,minmax(244px,1fr))] gap-4 overflow-x-auto carousel pr-4 lg:pr-8 [@media(min-width:1280px)]:pr-[calc((100vw_-_1280px)_/_2)]">
           {gameData.map((game) => (
             <li key={`top_rated_vertical_card_${game.id}`}>
-              <VerticalCard>
-                <CardImage gameName={game.name} imgId={game.cover?.image_id} />
-                <CardDetails game={game} lastRow="RATING" />
-              </VerticalCard>
+              <Link prefetch={false} href={`/games/${game.id}`}>
+                <VerticalCard>
+                  <CardImage
+                    gameName={game.name}
+                    imgId={game.cover?.image_id}
+                  />
+                  <CardDetails game={game} lastRow="RATING" />
+                </VerticalCard>
+              </Link>
             </li>
           ))}
         </ul>

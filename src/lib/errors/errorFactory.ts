@@ -7,4 +7,9 @@ export default class ErrorFactory {
   static createRedisError(message: string) {
     return new Error(`Redis Error: ${message}`);
   }
+  static createInvalidArgumentsError(message: string, cause?: string) {
+    return new Error(`InvalidArgumentsError: ${message}`, {
+      cause,
+    });
+  }
 }
