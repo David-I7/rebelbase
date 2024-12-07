@@ -7,6 +7,7 @@ import AboutGameTags from "./AboutGameTags";
 import AboutGameDialog from "./AboutGameDialog";
 import { imagesMap } from "@/data/constants/igdbEnums";
 import CloseGameDialog from "./CloseGameDialog";
+import AboutAccordion from "./AboutAccordion";
 
 const AboutGame = ({ game }: { game: GameData }) => {
   return (
@@ -42,12 +43,13 @@ const AboutGame = ({ game }: { game: GameData }) => {
           </div>
         </AboutGameDialog>
       </h2>
-      <div>
+      <AboutAccordion>
         <AboutDescription game={game} />
         <AboutGameSupport game={game} />
         <AboutSocialLinks game={game} />
-        <AboutGameTags game={game} />
-      </div>
+      </AboutAccordion>
+
+      <AboutGameTags game={game} />
     </section>
   );
 };

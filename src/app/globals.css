@@ -281,6 +281,19 @@ footer {
   );
 }
 
+.transition-section::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 75%,
+    var(--state-background-blur-dark) 90%,
+    rgba(0, 0, 0) 100%
+  );
+}
+
 .hero-card {
   min-width: 280px;
 }
