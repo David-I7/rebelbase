@@ -1,7 +1,7 @@
 "use client";
 import Dialog from "@/_components/dialog/Dialog";
 
-import React, { ReactNode, useRef } from "react";
+import React, { ReactNode, useRef, useState } from "react";
 import { MdChevronRight } from "react-icons/md";
 
 const AboutGameDialog = ({ children }: { children: ReactNode }) => {

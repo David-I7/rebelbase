@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  ReactNode,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 const NON_EXPANDED_ACCORDION_HEIGHT = 208;
 
@@ -15,6 +9,7 @@ const AboutLanguagesAccordion = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleToggle = () => {
     const accordionRefScrollHeight = accordionRef.current!.scrollHeight;
+
     if (isOpen) {
       accordionRef.current!.style.height = `${NON_EXPANDED_ACCORDION_HEIGHT}px`;
       setIsOpen(false);

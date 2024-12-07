@@ -174,7 +174,28 @@ export function getPlatformReleases(game: GameData) {
   if (!releaseDates) return;
   // id 6 => 'Full Release'
 
-  return releaseDates.filter((date) => date.status.id === 6);
+  let platformReleses: Set<string> = new Set();
+
+  const result = releaseDates.filter((date) => {
+    if (platformReleses.has(date.platform.name)) return false;
+    if (date["status"]) {
+      platformReleses.add(date.platform.name);
+      return date["status"].id === 6;
+    }
+    platformReleses.add(date.platform.name);
+  });
+
+  if (result.length) return result;
+
+  // 2nd loop prevents old db entries without status to be included
+
+  platformReleses = new Set();
+
+  return releaseDates.filter((date) => {
+    if (platformReleses.has(date.platform.name)) return false;
+    platformReleses.add(date.platform.name);
+    return true;
+  });
 }
 
 type Languages = {
