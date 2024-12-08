@@ -12,6 +12,7 @@ const NavBar = ({ responsive = false, customClass }: NavBarProps) => {
   const currentPath = usePathname();
   const responsiveStyles = responsive ? "hidden md:block" : "block";
   const selectedStyles = "text-primary after:bg-primary";
+
   return (
     <nav className={responsiveStyles}>
       <ul className={customClass}>

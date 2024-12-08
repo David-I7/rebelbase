@@ -14,7 +14,7 @@ const IconTarget = ({
 }: IconTargetProps) => {
   return (
     <button
-      className={`${customClass} hover:brightness-115 transition-brightness  cursor-pointer grid place-content-center min-h-10 min-w-10`}
+      className={`${customClass}  cursor-pointer grid place-content-center min-h-10 min-w-10`}
       onClick={handleClick}
     >
       {children}

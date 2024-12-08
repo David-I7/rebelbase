@@ -5,7 +5,7 @@ import { MdClose } from "react-icons/md";
 type DialogToggleProps = {
   trailingIcon?: ReactNode;
   leadingIcon?: ReactNode;
-  label: string;
+  label: ReactNode;
   style?: React.CSSProperties;
   toggle: () => void;
   children: React.ReactElement;

@@ -12,7 +12,7 @@ const AboutGameDialog = ({ children }: { children: ReactNode }) => {
         onClick={() => {
           dialogRef.current!.showModal();
         }}
-        className="grid grid-cols-2 [@media(min-width:880px)]:hidden"
+        className="grid grid-cols-[repeat(2,auto)] text-nowrap gap-2 [@media(min-width:880px)]:hidden"
       >
         About this game
         <MdChevronRight className="flex-shrink-0" size={32} />

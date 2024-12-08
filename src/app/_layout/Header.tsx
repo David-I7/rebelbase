@@ -4,6 +4,7 @@ import FullLogo from "../../_components/logo/FullLogo";
 import IconTarget from "../../_components/buttons/IconTarget";
 import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
+import FullScreenDialogMenu from "./menu/FullScreenDialogMenu";
 
 const Header = () => {
   return (
@@ -13,13 +14,11 @@ const Header = () => {
         <FullLogo responsive={true} />
       </div>
       <div className="-order-1 sm:order-2">
-        <IconTarget customClass="md:hidden text-on-surface-heading-varient rounded-full bg-surface">
-          <MdMenu size={24} />
-        </IconTarget>
+        <FullScreenDialogMenu />
         <NavBar customClass="flex items-center" responsive={true} />
       </div>
       <div className="sm:flex-1 max-w-[600px]">
-        <IconTarget customClass="text-on-surface-heading-varient ml-4 sm:hidden rounded-full bg-surface">
+        <IconTarget customClass="text-on-surface-heading-varient ml-4 sm:hidden rounded-full hover:bg-surface-container-normal transition-colors">
           <MdSearch size={24} />
         </IconTarget>
         <SearchBar responsive={true} />
