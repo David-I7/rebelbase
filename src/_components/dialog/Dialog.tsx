@@ -3,7 +3,15 @@ import React, { ReactNode } from "react";
 
 const Dialog = React.forwardRef(
   (
-    { children, style }: { children: ReactNode; style?: React.CSSProperties },
+    {
+      children,
+      style,
+      onClose,
+    }: {
+      children: ReactNode;
+      style?: React.CSSProperties;
+      onClose?: () => void;
+    },
     ref: React.ForwardedRef<HTMLDialogElement>
   ) => {
     return (
@@ -20,9 +28,11 @@ const Dialog = React.forwardRef(
           ) {
             e.currentTarget.close();
           }
+
+          onClose?.();
         }}
         ref={ref}
-        className="rounded-3xl p-6 bg-surface-container-lowest backdrop:bg-[rgba(0,0,0,0.3)] text-inherit scroll-hidden"
+        className="rounded-3xl p-6 bg-surface-container-lowest backdrop:bg-[rgba(0,0,0,0.68)] text-inherit scroll-hidden"
       >
         {children}
       </dialog>

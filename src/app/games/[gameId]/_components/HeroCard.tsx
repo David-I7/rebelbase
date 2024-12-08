@@ -27,6 +27,7 @@ const HeroCard = ({
             className="object-cover w-full"
             src={`${imagesMap.baseUrl}${imagesMap.verticalCardLarge}_2x/${imgId}.jpg`}
             alt={`${game[0].name} game cover`}
+            loading="eager"
           />
         )}
       </div>

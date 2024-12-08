@@ -5,6 +5,7 @@ import { GameData } from "@/interfaces/igdb";
 import HeroCard from "../HeroCard";
 import HeroVideoTrailer from "../HeroVideoTrailer";
 import { getHeroVideo } from "@/utils/dataTransformation";
+import ViewTrailerDialog from "./media/ViewTrailerDialog";
 
 const HeroSection = ({
   game,
@@ -38,6 +39,14 @@ const HeroSection = ({
             />
             <GameMetadata hasHeroVideo={heroVideo ? true : false} game={game} />
           </div>
+          {heroVideo && (
+            <div className="absolute bottom-[55px] right-4 lg:right-8 [@media(min-width:1344px)]:right-0 hidden md:block">
+              <ViewTrailerDialog
+                heroVideo={heroVideo}
+                gameName={game[0].name}
+              />
+            </div>
+          )}
         </div>
       </section>
     </>
