@@ -114,7 +114,7 @@ const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
           })}
         </ul>
       </div>
-      <div className="flex items-center justify-center gap-2 mt-4 mb-32">
+      <div className="flex items-center justify-center gap-2 mt-4 mb-12">
         {carouselIndicators}
       </div>
     </>

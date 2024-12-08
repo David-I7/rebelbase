@@ -430,12 +430,12 @@ footer {
 
 .fullScreenDialogOpen {
   transform-origin: top right;
-  animation: fullScreenDialogOpen 500ms forwards ease-out;
+  animation: fullScreenDialogOpen 400ms forwards ease-out;
 }
 
 .fullScreenDialogClose {
   transform-origin: top right;
-  animation: fullScreenDialogClose 250ms forwards ease-in;
+  animation: fullScreenDialogClose 200ms forwards ease-in;
 }
 
 @keyframes fullScreenDialogOpen {
