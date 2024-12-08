@@ -2,6 +2,7 @@ import {
   ageCategories,
   ageRatingImages,
   ageRatings,
+  socialLinksIcons,
 } from "@/data/constants/igdbEnums";
 import {
   AgeRating,
@@ -185,17 +186,19 @@ export function getPlatformReleases(game: GameData) {
     platformReleses.add(date.platform.name);
   });
 
-  if (result.length) return result;
+  if (result.length) return result.sort((a, b) => a.date - b.date);
 
   // 2nd loop prevents old db entries without status to be included
 
   platformReleses = new Set();
 
-  return releaseDates.filter((date) => {
-    if (platformReleses.has(date.platform.name)) return false;
-    platformReleses.add(date.platform.name);
-    return true;
-  });
+  return releaseDates
+    .filter((date) => {
+      if (platformReleses.has(date.platform.name)) return false;
+      platformReleses.add(date.platform.name);
+      return true;
+    })
+    .sort((a, b) => a.date - b.date);
 }
 
 type Languages = {
@@ -259,4 +262,10 @@ export function getGameTags(game: GameData) {
   }
 
   return gameTags;
+}
+
+export function getSocialLinks(game: GameData) {
+  if (!game[0]["websites"]) return;
+
+  return game[0]["websites"].filter((link) => socialLinksIcons[link.category]);
 }

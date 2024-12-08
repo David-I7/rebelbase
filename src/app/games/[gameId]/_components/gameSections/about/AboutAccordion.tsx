@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 
-const NON_EXPANDED_ACCORDION_HEIGHT = 240;
+const NON_EXPANDED_ACCORDION_HEIGHT = 280;
 
 const AboutAccordion = ({ children }: { children: React.ReactNode }) => {
   const accordionRef = useRef<HTMLDivElement>(null);
