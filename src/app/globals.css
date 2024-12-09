@@ -429,12 +429,12 @@ footer {
 }
 
 .fullScreenDialogOpen {
-  transform-origin: top right;
+  transform-origin: top;
   animation: fullScreenDialogOpen 400ms forwards ease-out;
 }
 
 .fullScreenDialogClose {
-  transform-origin: top right;
+  transform-origin: top;
   animation: fullScreenDialogClose 200ms forwards ease-in;
 }
 

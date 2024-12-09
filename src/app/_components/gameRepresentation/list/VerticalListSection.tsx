@@ -14,7 +14,6 @@ const VerticalListSection = ({ children }: VerticalListSectionProps) => {
   const isScrolling = useRef<boolean>(false);
 
   useEffect(() => {
-    console.log("hello");
     const handleResize = () => {
       const container = prevRef.current!.parentElement!;
 
