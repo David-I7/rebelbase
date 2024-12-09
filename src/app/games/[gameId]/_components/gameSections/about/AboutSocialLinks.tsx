@@ -1,15 +1,18 @@
 import { socialLinksIcons } from "@/data/constants/igdbEnums";
 import { GameData } from "@/interfaces/igdb";
+import { getSocialLinks } from "@/utils/dataTransformation";
 import React from "react";
 
 const AboutSocialLinks = ({ game }: { game: GameData }) => {
-  if (!game[0]["websites"]) return;
+  const socialLinks = getSocialLinks(game);
+
+  if (!socialLinks || !socialLinks.length) return;
 
   return (
     <section className="mt-6">
       <div className="mb-2 font-body-s">Links</div>
       <ul className="flex flex-wrap">
-        {game[0].websites.map((link) => {
+        {socialLinks.map((link) => {
           const WebsiteLogo = socialLinksIcons[link.category];
           if (!WebsiteLogo) return;
 

@@ -427,3 +427,30 @@ footer {
     flex-direction: row;
   }
 }
+
+.fullScreenDialogOpen {
+  transform-origin: top;
+  animation: fullScreenDialogOpen 400ms forwards ease-out;
+}
+
+.fullScreenDialogClose {
+  transform-origin: top;
+  animation: fullScreenDialogClose 200ms forwards ease-in;
+}
+
+@keyframes fullScreenDialogOpen {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes fullScreenDialogClose {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}

@@ -19,7 +19,7 @@ const GameMetadata = async ({
     <div
       className={`grid ${
         ageRating
-          ? "grid-cols-[repeat(3,auto)] [@media(min-width:409px)_and_(max-width:767px)]:grid-cols-[repeat(7,auto)] md:grid-cols-[repeat(8,auto)]"
+          ? "grid-cols-[repeat(3,auto)] [@media(min-width:409px)_and_(max-width:767.8px)]:grid-cols-[repeat(7,auto)] md:grid-cols-[repeat(8,auto)]"
           : "grid-cols-[repeat(5,auto)]  md:grid-cols-[repeat(6,auto)]"
       } gap-4 items-center justify-center md:justify-start mt-14 md:mt-8`}
     >

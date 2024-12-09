@@ -23,7 +23,7 @@ import type {
   GameData,
   InvolvedCompanies,
 } from "../interfaces/igdb";
-import { getDeveloperCompany } from "@/utils/dataTransformation";
+import { SearchParamsBrowse } from "@/data/constants/queryFields";
 
 export type HomeMultiqueryDataResponse = [
   { name: HomeSections.topNewReleases; result: TopNewReleases[] },
@@ -107,7 +107,7 @@ export async function getHomeData(): Promise<
 
   query games "offlineAndOnlineGames" {
  fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
- where genres.id =(36,5,10,14,12,4) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 50 & rating_count > 20 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes.id != null;
+ where genres.id =(36,5,10,14,12,4) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes.id != null;
  sort rating desc;
  limit 100;
   };
@@ -358,40 +358,6 @@ function getOnlineOrOfflineGameId(
     return 2;
   }
 }
-export async function testQuery() {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
-
-  if (err) return { data: undefined, error: err };
-  console.log(twitchAccessToken);
-  try {
-    const response = await fetch(IGDB_BASE_URL + "/keywords", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: `fields name;  limit 100;`,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
-
-      return await res.json();
-    });
-
-    return { data: response, error: undefined };
-  } catch (err) {
-    return { data: undefined, error: err };
-  }
-}
 
 //When something is missing from the response it won't be there at all, so access using bracket notation to prevent errors
 type GameDataResponse = {
@@ -499,4 +465,87 @@ export async function getMoreFromCompany(
   } catch (err) {
     return { data: undefined, error: err as Error };
   }
+}
+
+class QueryBuilder {
+  private _fields = "";
+  private _where = "";
+  private _sort = "";
+  private _limit = "";
+  private _offset = "";
+  private endpoint!: string;
+
+  constructor(endpoint: string) {
+    this.endpoint = endpoint;
+  }
+
+  fields(fields: string | string[]): QueryBuilder {
+    if (Array.isArray(fields)) {
+      this._fields = `fields ${fields.join()};`;
+      return this;
+    }
+
+    this._fields = `fields ${fields};`;
+
+    return this;
+  }
+
+  where(conditions: string | string[]): QueryBuilder {
+    if (Array.isArray(conditions)) {
+      if (!conditions.length) return this;
+      this._where = `where`;
+
+      conditions.map((condition, index) => {
+        if (index === conditions.length - 1) {
+          this._where += ` ${condition};`;
+        } else {
+          this._where += ` ${condition} &`;
+        }
+      });
+      return this;
+    }
+
+    this._where += `where ${conditions};`;
+
+    return this;
+  }
+
+  sort(field: string, order: "asc" | "desc"): QueryBuilder {
+    this._sort = `sort ${field} ${order};`;
+    return this;
+  }
+
+  limit(limit: number): QueryBuilder {
+    this._limit = `limit ${limit};`;
+    return this;
+  }
+  offset(offset: number): QueryBuilder {
+    this._offset = `offset ${offset};`;
+    return this;
+  }
+
+  buildQuery(): { url: string; query: string } {
+    return {
+      url: `${IGDB_BASE_URL}${this.endpoint}`,
+      query: `${this._fields}${this._where}${this._sort}${this._limit}${this._offset}`,
+    };
+  }
+}
+
+export async function getBrowseQueryData(query: SearchParamsBrowse) {
+  const queryBuilder = new QueryBuilder("/games")
+    .fields([
+      "name",
+      "rating",
+      "first_release_date",
+      "genres.name",
+      "themes.name",
+      "cover.image_id",
+    ])
+    .where(query.where)
+    .sort("", query.sortDir)
+    .limit(query.limit)
+    .offset(query.offset);
+
+  // fields name,rating,first_release_date, genres.name,themes.name,cover.image_id
 }
