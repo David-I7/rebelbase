@@ -20,7 +20,7 @@ class SortDetailsFactory {
         return new SortDetails(
           "first_release_date",
           "desc",
-          `first_release_date <= ${now}`
+          `first_release_date <= ${now} & cover.image_id != null & rating_count != null`
         );
       }
       case "upcomingReleases": {
@@ -29,18 +29,24 @@ class SortDetailsFactory {
         return new SortDetails(
           "first_release_date",
           "asc",
-          `first_release_date > ${now}`
+          `first_release_date > ${now} & cover.image_id != null`
         );
       }
       case "topRated": {
         return new SortDetails(
-          "rating_count",
+          "rating",
           "desc",
           `rating > 70 & rating_count > 500`
         );
       }
     }
   }
+}
+
+export enum convertedSortByKeys {
+  "newReleases" = "New Releases",
+  "topRated" = "Top Rated",
+  "upcomingReleases" = "Upcoming Releases",
 }
 
 export enum convertedGameModeKeys {
@@ -79,12 +85,12 @@ const categories = [
   "season",
 ] as const;
 
-const sortBy = ["newReleases", "upcomingReleases", "topRated"] as const;
+export const sortBy = ["newReleases", "upcomingReleases", "topRated"] as const;
 
 const searchParamsBrowseSchema = z
   .object({
     sortBy: z.enum(sortBy).default("newReleases"),
-    sortDir: z.enum(["asc", "desc"]).optional().default("asc"),
+    sortDir: z.enum(["asc", "desc"]).optional(),
     gameModes: z
       .union([
         z.enum(gameModes),
@@ -94,19 +100,20 @@ const searchParamsBrowseSchema = z
     tags: z.string().or(z.array(z.string()).min(2)).optional(),
     genres: z.string().or(z.array(z.string()).min(2)).optional(),
     themes: z.string().or(z.array(z.string()).min(2)).optional(),
-    categories: z
-      .union([
-        z.enum(categories),
-        z.tuple([z.enum(categories)]).rest(z.enum(categories)),
-      ])
-      .default(categories[0]),
-    limit: z.coerce.number().min(1).int().optional().default(40),
-    offset: z.coerce.number().min(0).int().optional().default(0),
+    category: z.enum(categories).optional(),
+    limit: z.coerce.number().min(1).int().optional(),
+    offset: z.coerce.number().min(0).int().optional(),
   })
   .passthrough();
 
-export type SearchParamsBrowse = z.infer<typeof searchParamsBrowseSchema> & {
+type SearchParamsBrowseSchema = z.infer<typeof searchParamsBrowseSchema>;
+
+export type SearchParamsBrowse = {
   where: string[];
+  sort: { field: string; order: "asc" | "desc" };
+  limit: number;
+  offset: number;
+  sortBy: (typeof sortBy)[number];
 };
 
 const DEFAULT_FILTER_LIMIT = 40;
@@ -114,14 +121,18 @@ const DEFAULT_FILTER_OFFSET = 0;
 
 export function extractFields(searchParams: {
   [key: string]: string | string[] | undefined;
-}): SearchParamsBrowse {
+}): { queryParams: SearchParamsBrowse; queryString: string } {
+  const defaultSortDetails = SortDetailsFactory.create("newReleases");
+
   let result: SearchParamsBrowse = {
     limit: DEFAULT_FILTER_LIMIT,
     offset: DEFAULT_FILTER_OFFSET,
+    sort: {
+      field: defaultSortDetails.sortBy,
+      order: defaultSortDetails.sortDir,
+    },
     sortBy: "newReleases",
-    sortDir: "desc",
-    where: [],
-    categories: "mainGame",
+    where: [defaultSortDetails.whereCondition],
   };
 
   const parsedSearchParams = searchParamsBrowseSchema.safeParse(searchParams);
@@ -129,8 +140,8 @@ export function extractFields(searchParams: {
   if (parsedSearchParams.success) {
     const where: string[] = [];
     const categoriesCondition = getWhereCondition(
-      "category.id",
-      parsedSearchParams.data.categories,
+      "category",
+      parsedSearchParams.data.category,
       convertedCategoryKeys
     );
     const gameModesCondition = getWhereCondition(
@@ -160,10 +171,27 @@ export function extractFields(searchParams: {
     genresCondition ? where.push(genresCondition) : null;
     tagsCondition ? where.push(tagsCondition) : null;
 
-    result = { ...parsedSearchParams.data, where };
+    const sortDetails = SortDetailsFactory.create(
+      parsedSearchParams.data.sortBy
+    );
+
+    where.push(sortDetails.whereCondition);
+
+    result = {
+      ...result,
+      where,
+      sortBy: parsedSearchParams.data.sortBy,
+      sort: {
+        field: sortDetails.sortBy,
+        order: parsedSearchParams.data.sortDir
+          ? parsedSearchParams.data.sortDir
+          : sortDetails.sortDir,
+      },
+    };
+    console.log(result);
   }
 
-  return result;
+  return { queryParams: result, queryString: "" };
 }
 
 function getWhereCondition(
@@ -184,4 +212,29 @@ function getWhereCondition(
     }
     return `${condition} = (${targetValues.join()})`;
   }
+}
+
+function buildQueryString(
+  pathName: string,
+  sortByDetails: SortDetails,
+  parsedSearchParams?: SearchParamsBrowseSchema
+): string {
+  if (!parsedSearchParams) {
+    //default qs
+    return `${pathName}?sortBy=${sortByDetails.sortBy}sortDir=${sortByDetails.sortDir}`;
+  }
+
+  const category = parsedSearchParams.category
+    ? `category=${parsedSearchParams.category}`
+    : "";
+  const tags = parsedSearchParams.tags ? `` : "";
+  const themes = parsedSearchParams.themes ? `` : "";
+  const gameModes = parsedSearchParams.gameModes ? `` : "";
+  const genres = parsedSearchParams.genres ? `` : "";
+
+  return `${pathName}?sortBy=${parsedSearchParams.sortBy}&sortDir=${
+    parsedSearchParams.sortDir
+      ? parsedSearchParams.sortDir
+      : sortByDetails.sortDir
+  }&`;
 }

@@ -532,7 +532,9 @@ class QueryBuilder {
   }
 }
 
-export async function getBrowseQueryData(query: SearchParamsBrowse) {
+export async function getBrowseQueryData(
+  queryData: SearchParamsBrowse
+): Promise<DataOrError<CardData[], Error>> {
   const queryBuilder = new QueryBuilder("/games")
     .fields([
       "name",
@@ -542,10 +544,49 @@ export async function getBrowseQueryData(query: SearchParamsBrowse) {
       "themes.name",
       "cover.image_id",
     ])
-    .where(query.where)
-    .sort("", query.sortDir)
-    .limit(query.limit)
-    .offset(query.offset);
+    .where(queryData.where)
+    .sort(queryData.sort.field, queryData.sort.order)
+    .limit(queryData.limit)
+    .offset(queryData.offset);
 
-  // fields name,rating,first_release_date, genres.name,themes.name,cover.image_id
+  const browseQuery = queryBuilder.buildQuery();
+
+  console.log(browseQuery);
+
+  const { data: twitchAccessToken, error: err } =
+    await getOrSetToCacheDynamicExpiration(
+      CACHE_KEYS.twitchAccessToken,
+      getIGDBAccessToken
+    );
+
+  if (err) return { data: undefined, error: err };
+
+  try {
+    const browseQueryData: CardData[] = await fetch(browseQuery.url, {
+      ...IGDBRequestOptions,
+      headers: {
+        ...IGDBRequestOptions.headers,
+        Authorization: `bearer ${twitchAccessToken!.access_token}`,
+      },
+      body: browseQuery.query,
+    }).then(async (res) => {
+      if (res.status >= 400) {
+        throw ErrorFactory.createFetchError(
+          res.status,
+          res.statusText,
+          JSON.stringify(await res.json())
+        );
+      }
+
+      return await res.json();
+    });
+
+    return {
+      data: browseQueryData,
+      error: undefined,
+    };
+  } catch (err) {
+    console.log((err as Error).cause);
+    return { data: undefined, error: err as Error };
+  }
 }
