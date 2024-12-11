@@ -3,6 +3,7 @@ import PlatformSection from "./_components/platforms/PlatformSection";
 import { getBrowseQueryData } from "@/services/igdb";
 import GameGrid from "./_components/gameGrid/GameGrid";
 import SortGames from "./_components/gameGrid/SortGames";
+import MutateQueryString from "../_components/MutateQueryString";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -11,7 +12,7 @@ type Props = {
 export default async function Browse({ searchParams }: Props) {
   const awaitedSearchParams = await searchParams;
 
-  const extractedBrowseFields = extractFields(awaitedSearchParams);
+  const extractedBrowseFields = extractFields(awaitedSearchParams, "/browse");
 
   const { data, error } = await getBrowseQueryData(
     extractedBrowseFields.queryParams
@@ -19,13 +20,14 @@ export default async function Browse({ searchParams }: Props) {
 
   if (error) throw error;
 
-  console.log(data, extractedBrowseFields);
+  console.log(extractedBrowseFields);
 
   return (
     <main>
+      <MutateQueryString qs={extractedBrowseFields.queryString} />
       <PlatformSection />
       <SortGames
-        pathName="/browse"
+        qs={extractedBrowseFields.queryString}
         selectedSortBy={extractedBrowseFields.queryParams.sortBy}
       />
       <GameGrid

@@ -6,8 +6,10 @@ import { MdSort } from "react-icons/md";
 
 const SortDropDown = ({
   dropdownItems,
+  selectedSortBy,
 }: {
   dropdownItems: React.JSX.Element[];
+  selectedSortBy: string;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggle = () => {
@@ -20,7 +22,7 @@ const SortDropDown = ({
       ariaControlsId={ariaControlsId}
       toggle={toggle}
       isOpen={isOpen}
-      label="hello"
+      label={selectedSortBy}
     >
       <Menu id={ariaControlsId} isOpen={isOpen}>
         {dropdownItems}

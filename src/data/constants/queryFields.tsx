@@ -11,7 +11,7 @@ class SortDetails {
   }
 }
 
-class SortDetailsFactory {
+export class SortDetailsFactory {
   static create(sortType: (typeof sortBy)[number]): SortDetails {
     switch (sortType) {
       case "newReleases": {
@@ -100,7 +100,12 @@ const searchParamsBrowseSchema = z
     tags: z.string().or(z.array(z.string()).min(2)).optional(),
     genres: z.string().or(z.array(z.string()).min(2)).optional(),
     themes: z.string().or(z.array(z.string()).min(2)).optional(),
-    category: z.enum(categories).optional(),
+    categories: z
+      .union([
+        z.enum(categories),
+        z.tuple([z.enum(categories)]).rest(z.enum(categories)),
+      ])
+      .optional(),
     limit: z.coerce.number().min(1).int().optional(),
     offset: z.coerce.number().min(0).int().optional(),
   })
@@ -119,11 +124,15 @@ export type SearchParamsBrowse = {
 const DEFAULT_FILTER_LIMIT = 40;
 const DEFAULT_FILTER_OFFSET = 0;
 
-export function extractFields(searchParams: {
-  [key: string]: string | string[] | undefined;
-}): { queryParams: SearchParamsBrowse; queryString: string } {
+export function extractFields(
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  },
+  pathName: string
+): { queryParams: SearchParamsBrowse; queryString: string } {
   const defaultSortDetails = SortDetailsFactory.create("newReleases");
 
+  let queryString = buildQueryString(pathName, defaultSortDetails);
   let result: SearchParamsBrowse = {
     limit: DEFAULT_FILTER_LIMIT,
     offset: DEFAULT_FILTER_OFFSET,
@@ -141,7 +150,7 @@ export function extractFields(searchParams: {
     const where: string[] = [];
     const categoriesCondition = getWhereCondition(
       "category",
-      parsedSearchParams.data.category,
+      parsedSearchParams.data.categories,
       convertedCategoryKeys
     );
     const gameModesCondition = getWhereCondition(
@@ -177,6 +186,7 @@ export function extractFields(searchParams: {
 
     where.push(sortDetails.whereCondition);
 
+    queryString = buildQueryString(pathName, sortDetails, parsedSearchParams);
     result = {
       ...result,
       where,
@@ -188,10 +198,9 @@ export function extractFields(searchParams: {
           : sortDetails.sortDir,
       },
     };
-    console.log(result);
   }
 
-  return { queryParams: result, queryString: "" };
+  return { queryParams: result, queryString };
 }
 
 function getWhereCondition(
@@ -217,24 +226,71 @@ function getWhereCondition(
 function buildQueryString(
   pathName: string,
   sortByDetails: SortDetails,
-  parsedSearchParams?: SearchParamsBrowseSchema
+  parsedSearchParams?: z.SafeParseSuccess<SearchParamsBrowseSchema>
 ): string {
   if (!parsedSearchParams) {
     //default qs
     return `${pathName}?sortBy=${sortByDetails.sortBy}sortDir=${sortByDetails.sortDir}`;
   }
 
-  const category = parsedSearchParams.category
-    ? `category=${parsedSearchParams.category}`
-    : "";
-  const tags = parsedSearchParams.tags ? `` : "";
-  const themes = parsedSearchParams.themes ? `` : "";
-  const gameModes = parsedSearchParams.gameModes ? `` : "";
-  const genres = parsedSearchParams.genres ? `` : "";
+  const categories = getQueryStringSegment(
+    "categories",
+    parsedSearchParams.data.categories,
+    convertedCategoryKeys
+  );
+  const tags = getQueryStringSegment("tags", parsedSearchParams.data.tags);
+  const themes = getQueryStringSegment(
+    "themes",
+    parsedSearchParams.data.themes
+  );
+  const gameModes = getQueryStringSegment(
+    "gameModes",
+    parsedSearchParams.data.gameModes
+  );
+  const genres = getQueryStringSegment(
+    "genres",
+    parsedSearchParams.data.genres
+  );
 
-  return `${pathName}?sortBy=${parsedSearchParams.sortBy}&sortDir=${
-    parsedSearchParams.sortDir
-      ? parsedSearchParams.sortDir
+  return `${pathName}?sortBy=${parsedSearchParams.data.sortBy}&sortDir=${
+    parsedSearchParams.data.sortDir
+      ? parsedSearchParams.data.sortDir
       : sortByDetails.sortDir
-  }&`;
+  }${categories}${gameModes}${themes}${genres}${tags}`;
+}
+
+function getQueryStringSegment(
+  segmentName: string,
+  segmentValues: string | string[] | undefined,
+  segmentValuesConverter?: { [key: string]: string | number }
+): string {
+  let queryString = "";
+  if (Array.isArray(segmentValues)) {
+    queryString = `&${segmentName}=`;
+
+    segmentValues.forEach((segment, index) => {
+      if (segmentValuesConverter) {
+        if (index === segmentValues.length - 1) {
+          queryString += `${segmentValuesConverter[segment]}`;
+        } else {
+          queryString += `${segmentValuesConverter[segment]}&${segmentName}=`;
+        }
+      } else {
+        if (index === segmentValues.length - 1) {
+          queryString += `${segment}`;
+        } else {
+          queryString += `${segment}&${segmentName}=`;
+        }
+      }
+    });
+
+    return queryString;
+  } else if (typeof segmentValues === "string") {
+    if (segmentValuesConverter) {
+      return `&${segmentName}=${segmentValuesConverter[segmentValues]}`;
+    }
+    return `&${segmentName}=${segmentValues}`;
+  } else {
+    return queryString;
+  }
 }
