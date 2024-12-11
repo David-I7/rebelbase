@@ -1,11 +1,10 @@
 import {
   sortBy,
-  convertedSortByKeys,
+  uiFriendlySortByKeys,
   SortDetailsFactory,
 } from "@/data/constants/queryFields";
 import SortDropDown from "./SortDropDown";
 import Link from "next/link";
-import { MdCheck } from "react-icons/md";
 
 const SortGames = ({
   selectedSortBy,
@@ -27,8 +26,7 @@ const SortGames = ({
           } flex items-center px-2 min-w-max h-10 rounded-lg hover:bg-surface-container-high justify-between transition-colors`}
           href={href}
         >
-          <div className="pr-8">{convertedSortByKeys[key]}</div>
-          {selectedSortBy === key && <MdCheck size={18} />}
+          {uiFriendlySortByKeys[key]}
         </Link>
       </li>
     );
@@ -37,7 +35,7 @@ const SortGames = ({
   return (
     <div className="relative inline-block">
       <SortDropDown
-        selectedSortBy={convertedSortByKeys[selectedSortBy]}
+        selectedSortBy={uiFriendlySortByKeys[selectedSortBy]}
         dropdownItems={dropdownItems}
       />
     </div>

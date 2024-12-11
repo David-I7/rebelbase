@@ -43,29 +43,139 @@ export class SortDetailsFactory {
   }
 }
 
-export enum convertedSortByKeys {
+export enum uiFriendlySortByKeys {
   "newReleases" = "New Releases",
   "topRated" = "Top Rated",
   "upcomingReleases" = "Upcoming Releases",
 }
-
-export enum convertedGameModeKeys {
-  "singlePlayer" = 1,
-  "multiplayer" = 2,
-  "co-operative" = 3,
-  "split-screen" = 4,
-  "MMO" = 5,
-  "battleRoyale" = 6,
+export enum uiFriendlyGenreKeys {
+  "pointAndClick" = "Point-and-click",
+  "fighting" = "Fighting",
+  "shooter" = "Shooter",
+  "puzzle" = "Puzzle",
+  "RTS" = "Real Time Strategy (RTS)",
+  "RPG" = "Role-playing (RPG)",
+  "simulator" = "Simulator",
+  "sport" = "Sport",
+  "strategy" = "Strategy",
+  "TBS" = "Turn-based strategy (TBS)",
+  "tactical" = "Tactical",
+  "quiz/trivia" = "Quiz/Trivia",
+  "adventure" = "Adventure",
+  "indie" = "Indie",
+  "arcade" = "Arcade",
+  "cardAndBoardGame" = "Card & Board Game",
+  "MOBA" = "MOBA",
+}
+export enum uiFriendlyThemesKeys {
+  "action" = "Action",
+  "fantasy" = "Fantasy",
+  "scienceFiction" = "Science fiction",
+  "horror" = "Horror",
+  "thriller" = "Thriller",
+  "survival" = "Survival",
+  "stealth" = "Stealth",
+  "non-fiction" = "Non-fiction",
+  "sandbox" = "Sanbox",
+  "kids" = "Kids",
+  "openWorld" = "Open world",
+  "warfare" = "Warfare",
+  "party" = "Party",
+  "mystery" = "Mystery",
+  "educational" = "Educational",
 }
 
-export enum convertedCategoryKeys {
-  "mainGame" = 0,
-  "dlcAddon" = 1,
-  "remaster" = 9,
-  "remake" = 8,
-  "bundle" = 3,
-  "season" = 7,
-}
+export const convertedGameModeKeys: { [key: string]: number } = {
+  singlePlayer: 1,
+  multiplayer: 2,
+  "co-operative": 3,
+  "split-screen": 4,
+  MMO: 5,
+  battleRoyale: 6,
+};
+
+export const convertedCategoryKeys: { [key: string]: number } = {
+  mainGame: 0,
+  dlcAddon: 1,
+  remaster: 9,
+  remake: 8,
+  bundle: 3,
+  season: 7,
+};
+export const convertedThemesKeys: { [key: string]: number } = {
+  action: 1,
+  fantasy: 17,
+  scienceFiction: 18,
+  horror: 19,
+  thriller: 20,
+  survival: 21,
+  stealth: 23,
+  "non-fiction": 32,
+  sandbox: 33,
+  kids: 35,
+  openWorld: 38,
+  warfare: 39,
+  party: 40,
+  mystery: 43,
+  educational: 34,
+};
+export const convertedGenresKeys: { [key: string]: number } = {
+  pointAndClick: 2,
+  fighting: 4,
+  shooter: 5,
+  puzzle: 9,
+  RTS: 11,
+  RPG: 12,
+  simulator: 13,
+  sport: 14,
+  strategy: 15,
+  TBS: 16,
+  tactical: 24,
+  adventure: 31,
+  indie: 32,
+  arcade: 33,
+  cardAndBoardGame: 35,
+  MOBA: 36,
+  "quiz/trivia": 26,
+};
+
+const themes = [
+  "action",
+  "fantasy",
+  "scienceFiction",
+  "horror",
+  "thriller",
+  "survival",
+  "stealth",
+  "non-fiction",
+  "sandbox",
+  "kids",
+  "openWorld",
+  "warfare",
+  "party",
+  "mystery",
+  "educational",
+] as const;
+
+const genres = [
+  "pointAndClick",
+  "fighting",
+  "shooter",
+  "puzzle",
+  "RTS",
+  "RPG",
+  "simulator",
+  "sport",
+  "strategy",
+  "TBS",
+  "tactical",
+  "quiz/trivia",
+  "adventure",
+  "indie",
+  "arcade",
+  "cardAndBoardGame",
+  "MOBA",
+] as const;
 
 const gameModes = [
   "singlePlayer",
@@ -98,8 +208,12 @@ const searchParamsBrowseSchema = z
       ])
       .optional(),
     tags: z.string().or(z.array(z.string()).min(2)).optional(),
-    genres: z.string().or(z.array(z.string()).min(2)).optional(),
-    themes: z.string().or(z.array(z.string()).min(2)).optional(),
+    genres: z
+      .union([z.enum(genres), z.tuple([z.enum(genres)]).rest(z.enum(genres))])
+      .optional(),
+    themes: z
+      .union([z.enum(themes), z.tuple([z.enum(themes)]).rest(z.enum(themes))])
+      .optional(),
     categories: z
       .union([
         z.enum(categories),
@@ -166,12 +280,12 @@ export function extractFields(
     const themesCondition = getWhereCondition(
       "themes.id",
       parsedSearchParams.data.themes,
-      undefined
+      convertedThemesKeys
     );
     const genresCondition = getWhereCondition(
       "genres.id",
       parsedSearchParams.data.genres,
-      undefined
+      convertedGenresKeys
     );
 
     categoriesCondition ? where.push(categoriesCondition) : null;
@@ -206,7 +320,7 @@ export function extractFields(
 function getWhereCondition(
   condition: string,
   targetValues: string | string[] | undefined,
-  valueConverter: { [key: string]: number | string } | undefined
+  valueConverter: { [key: string]: number } | undefined
 ) {
   if (typeof targetValues === "string") {
     if (valueConverter) {
