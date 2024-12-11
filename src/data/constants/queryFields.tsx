@@ -43,48 +43,95 @@ export class SortDetailsFactory {
   }
 }
 
-export enum uiFriendlySortByKeys {
-  "newReleases" = "New Releases",
-  "topRated" = "Top Rated",
-  "upcomingReleases" = "Upcoming Releases",
-}
-export enum uiFriendlyGenreKeys {
-  "pointAndClick" = "Point-and-click",
-  "fighting" = "Fighting",
-  "shooter" = "Shooter",
-  "puzzle" = "Puzzle",
-  "RTS" = "Real Time Strategy (RTS)",
-  "RPG" = "Role-playing (RPG)",
-  "simulator" = "Simulator",
-  "sport" = "Sport",
-  "strategy" = "Strategy",
-  "TBS" = "Turn-based strategy (TBS)",
-  "tactical" = "Tactical",
-  "quiz/trivia" = "Quiz/Trivia",
-  "adventure" = "Adventure",
-  "indie" = "Indie",
-  "arcade" = "Arcade",
-  "cardAndBoardGame" = "Card & Board Game",
-  "MOBA" = "MOBA",
-}
-export enum uiFriendlyThemesKeys {
-  "action" = "Action",
-  "fantasy" = "Fantasy",
-  "scienceFiction" = "Science fiction",
-  "horror" = "Horror",
-  "thriller" = "Thriller",
-  "survival" = "Survival",
-  "stealth" = "Stealth",
-  "non-fiction" = "Non-fiction",
-  "sandbox" = "Sanbox",
-  "kids" = "Kids",
-  "openWorld" = "Open world",
-  "warfare" = "Warfare",
-  "party" = "Party",
-  "mystery" = "Mystery",
-  "educational" = "Educational",
-}
+export const uiFriendlySortByKeys: { [key: string]: string } = {
+  newReleases: "New Releases",
+  topRated: "Top Rated",
+  upcomingReleases: "Upcoming Releases",
+};
+export const uiFriendlyGenreKeysBiMap: { [key: string]: string } = {
+  pointAndClick: "Point-and-click",
+  fighting: "Fighting",
+  shooter: "Shooter",
+  puzzle: "Puzzle",
+  RTS: "Real Time Strategy (RTS)",
+  RPG: "Role-playing (RPG)",
+  simulator: "Simulator",
+  sport: "Sport",
+  strategy: "Strategy",
+  TBS: "Turn-based strategy (TBS)",
+  tactical: "Tactical",
+  "quiz/trivia": "Quiz/Trivia",
+  adventure: "Adventure",
+  indie: "Indie",
+  arcade: "Arcade",
+  cardAndBoardGame: "Card & Board Game",
+  MOBA: "MOBA",
+  "Point-and-click": "1",
+  Fighting: "1",
+  Shooter: "1",
+  Puzzle: "1",
+  "Real Time Strategy (RTS)": "1",
+  "Role-playing (RPG)": "1",
+  Simulator: "1",
+  Sport: "1",
+  Strategy: "1",
+  "Turn-based strategy (TBS)": "1",
+  Tactical: "1",
+  "Quiz/Trivia": "1",
+  Adventure: "1",
+  Indie: "1",
+  Arcade: "1",
+  "Card & Board Game": "1",
+};
+export const uiFriendlyThemesKeysBiMap: { [key: string]: string } = {
+  action: "Action",
+  Action: "1",
+  fantasy: "Fantasy",
+  Fantasy: "1",
+  scienceFiction: "Science fiction",
+  "Science fiction": "1",
+  horror: "Horror",
+  Horror: "1",
+  thriller: "Thriller",
+  survival: "Survival",
+  stealth: "Stealth",
+  "non-fiction": "Non-fiction",
+  sandbox: "Sanbox",
+  kids: "Kids",
+  openWorld: "Open world",
+  warfare: "Warfare",
+  party: "Party",
+  mystery: "Mystery",
+  educational: "Educational",
+  Thriller: "1",
+  Survival: "1",
+  Stealth: "1",
+  "Non-fiction": "1",
+  Sanbox: "1",
+  Kids: "1",
+  "Open world": "1",
+  Warfare: "1",
+  Party: "1",
+  Mystery: "1",
+  Educational: "1",
+};
 
+export const uiFriendlyGameModeKeys: { [key: string]: string } = {
+  singlePlayer: "Single player",
+  multiplayer: "Multiplayer",
+  "co-operative": "Co-operative",
+  "split-screen": "Split-screen",
+  MMO: "Massively Multiplayer Online (MMO)",
+  battleRoyale: "Battle royale",
+};
+export const uiFriendlyCategoriesKeys: { [key: string]: string } = {
+  mainGame: "Main game",
+  dlcAddon: "Add-on",
+  remaster: "Remaster",
+  remake: "Remake",
+  bundle: "Bundle",
+  season: "Season",
+};
 export const convertedGameModeKeys: { [key: string]: number } = {
   singlePlayer: 1,
   multiplayer: 2,
@@ -139,7 +186,7 @@ export const convertedGenresKeys: { [key: string]: number } = {
   "quiz/trivia": 26,
 };
 
-const themes = [
+export const themes = [
   "action",
   "fantasy",
   "scienceFiction",
@@ -157,7 +204,7 @@ const themes = [
   "educational",
 ] as const;
 
-const genres = [
+export const genres = [
   "pointAndClick",
   "fighting",
   "shooter",
@@ -177,7 +224,7 @@ const genres = [
   "MOBA",
 ] as const;
 
-const gameModes = [
+export const gameModes = [
   "singlePlayer",
   "multiplayer",
   "co-operative",
@@ -186,7 +233,7 @@ const gameModes = [
   "battleRoyale",
 ] as const;
 
-const categories = [
+export const categories = [
   "mainGame",
   "dlcAddon",
   "remaster",
@@ -233,6 +280,18 @@ export type SearchParamsBrowse = {
   limit: number;
   offset: number;
   sortBy: (typeof sortBy)[number];
+  sortDir: "asc" | "desc";
+  categories:
+    | (typeof categories)[number]
+    | (typeof categories)[number][]
+    | undefined;
+  themes: (typeof themes)[number] | (typeof themes)[number][] | undefined;
+  genres: (typeof genres)[number] | (typeof genres)[number][] | undefined;
+  gameModes:
+    | (typeof gameModes)[number]
+    | (typeof gameModes)[number][]
+    | undefined;
+  tags: string | string[] | undefined;
 };
 
 const DEFAULT_FILTER_LIMIT = 40;
@@ -255,7 +314,13 @@ export function extractFields(
       order: defaultSortDetails.sortDir,
     },
     sortBy: "newReleases",
+    sortDir: defaultSortDetails.sortDir,
     where: [defaultSortDetails.whereCondition],
+    categories: undefined,
+    tags: undefined,
+    themes: undefined,
+    genres: undefined,
+    gameModes: undefined,
   };
 
   const parsedSearchParams = searchParamsBrowseSchema.safeParse(searchParams);
@@ -311,6 +376,11 @@ export function extractFields(
           ? parsedSearchParams.data.sortDir
           : sortDetails.sortDir,
       },
+      categories: parsedSearchParams.data.categories,
+      gameModes: parsedSearchParams.data.gameModes,
+      genres: parsedSearchParams.data.genres,
+      tags: parsedSearchParams.data.tags,
+      themes: parsedSearchParams.data.themes,
     };
   }
 

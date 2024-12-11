@@ -5,7 +5,7 @@ import React from "react";
 
 const AboutGameTags = ({ game }: { game: GameData }) => {
   const gameTags = getGameTags(game);
-
+  console.log(game);
   if (!gameTags || !gameTags.length) return;
 
   return (
