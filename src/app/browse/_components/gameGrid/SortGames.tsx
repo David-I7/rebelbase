@@ -1,10 +1,7 @@
-import {
-  sortBy,
-  uiFriendlySortByKeys,
-  SortDetailsFactory,
-} from "@/data/constants/queryFields";
+import { sortBy, uiFriendlySortByKeys } from "@/data/constants/filterEnums";
 import SortDropDown from "./SortDropDown";
 import Link from "next/link";
+import { SortDetailsFactory } from "@/data/constants/queryFields";
 
 const SortGames = ({
   selectedSortBy,
@@ -22,8 +19,10 @@ const SortGames = ({
         <Link
           prefetch={false}
           className={`${
-            selectedSortBy === key ? "bg-surface-container-high" : ""
-          } flex items-center px-2 min-w-max h-10 rounded-lg hover:bg-surface-container-high justify-between transition-colors`}
+            selectedSortBy === key
+              ? "bg-surface-container-high font-medium text-on-surface-heading-varient"
+              : ""
+          } flex items-center px-2 font-body-s min-w-max h-10 rounded-lg hover:bg-surface-container-high justify-between transition-colors`}
           href={href}
         >
           {uiFriendlySortByKeys[key]}

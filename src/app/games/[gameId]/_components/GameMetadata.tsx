@@ -1,5 +1,5 @@
 import VerticalRay from "@/_components/VerticalRay";
-import { imagesMap } from "@/data/constants/igdbEnums";
+import { imagesMap } from "@/data/constants/gamePageEnums";
 import { GameData } from "@/interfaces/igdb";
 import { convertRating, getAgeRating } from "@/utils/dataTransformation";
 import { format } from "date-fns";

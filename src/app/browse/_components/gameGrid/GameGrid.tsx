@@ -13,11 +13,12 @@ const GameGrid = ({
   gameData: CardData[];
   sortBy: "newReleases" | "upcomingReleases" | "topRated";
 }) => {
-  const [data, setData] = useState(gameData);
+  if (gameData.length <= 0) return "No results found";
+
   return (
     <section>
       <ul className="grid place-content-center grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-x-4 gap-y-6">
-        {data.map((game) => (
+        {gameData.map((game) => (
           <li
             className="[@media(max-width:350px)]:justify-self-center"
             key={`top_rated_vertical_card_${game.id}`}

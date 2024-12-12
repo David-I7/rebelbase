@@ -11,17 +11,15 @@ const FilterGamesDialog = ({ children }: { children: ReactNode }) => {
   };
   return (
     <DialogToggleOpen
-      style={{ fontSize: "20px", color: "var(--color-primary)" }}
+      style={{ fontSize: "18px", color: "var(--color-primary)" }}
       toggle={toggleOpen}
       label="Filter"
       leadingIcon={<MdFilterAlt size={18} />}
     >
       <Dialog
         style={{
-          borderRadius: 0,
           maxWidth: "500px",
           width: "100%",
-          background: "transparent",
         }}
         ref={dialogRef}
       >

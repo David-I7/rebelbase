@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, { MouseEvent, ReactNode, useEffect, useRef } from "react";
 
 const Menu = ({
   children,
@@ -6,12 +6,14 @@ const Menu = ({
   extendedClass,
   isOpen,
   id,
+  toggle,
 }: {
   children: ReactNode;
   style?: React.CSSProperties;
   extendedClass?: string;
   isOpen: boolean;
   id: string;
+  toggle: (e: MouseEvent) => void;
 }) => {
   const menuRef = useRef<HTMLUListElement>(null);
   useEffect(() => {
@@ -42,6 +44,7 @@ const Menu = ({
 
   return (
     <ul
+      onClick={toggle}
       ref={menuRef}
       id={id}
       style={style}

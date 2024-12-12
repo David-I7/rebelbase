@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { MouseEvent, ReactNode } from "react";
 import { MdChevronRight } from "react-icons/md";
 
 const Toggle = ({
@@ -8,23 +8,26 @@ const Toggle = ({
   leadingIcon,
   label,
   toggle,
+  style,
 }: {
-  toggle: () => void;
+  toggle: (e: MouseEvent) => void;
   isOpen: boolean;
   ariaControlsId: string;
   label: ReactNode;
   leadingIcon?: ReactNode;
   children: ReactNode;
+  style?: React.CSSProperties;
 }) => {
   const buttonPadding = leadingIcon ? "px-2" : "pr-2 pl-4";
 
   return (
     <>
       <button
-        className={`${buttonPadding} text-on-surface-heading-varient flex items-center gap-2 font-medium font-body-xl`}
+        className={`${buttonPadding} text-on-surface-heading-varient flex items-center gap-2 font-medium font-body-s`}
         onClick={toggle}
         aria-expanded={isOpen}
         aria-controls={ariaControlsId}
+        style={style}
       >
         {leadingIcon}
         {label}

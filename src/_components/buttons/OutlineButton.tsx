@@ -2,19 +2,19 @@
 
 import React, { ReactNode } from "react";
 
-type FilledButtonProps = {
+type OutlineButtonProps = {
   trailingIcon?: ReactNode;
   leadingIcon?: ReactNode;
   label: string;
   handleClick?: () => void;
 };
 
-const FilledButton = ({
+const OutlineButton = ({
   trailingIcon,
   leadingIcon,
   label,
   handleClick,
-}: FilledButtonProps) => {
+}: OutlineButtonProps) => {
   const buttonPadding =
     trailingIcon && leadingIcon
       ? "px-4"
@@ -26,7 +26,7 @@ const FilledButton = ({
 
   return (
     <button
-      className={`${buttonPadding} text-sm hover:brightness-115 transition-brightness flex items-center gap-2 text-on-primary bg-primary font-medium font-headings rounded-full justify-center h-10`}
+      className={`${buttonPadding} text-sm hover:bg-surface-container-normal transition-colors flex items-center gap-2 text-primary border border-outline font-medium font-headings rounded-full justify-center h-10`}
       onClick={handleClick}
     >
       {leadingIcon}
@@ -36,4 +36,4 @@ const FilledButton = ({
   );
 };
 
-export default FilledButton;
+export default OutlineButton;

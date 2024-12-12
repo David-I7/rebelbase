@@ -1,4 +1,15 @@
 import { z } from "zod";
+import {
+  categories,
+  convertedCategoryKeys,
+  convertedGameModeKeys,
+  convertedGenresKeys,
+  convertedThemesKeys,
+  gameModes,
+  genres,
+  sortBy,
+  themes,
+} from "./filterEnums";
 
 class SortDetails {
   public sortBy!: string;
@@ -43,207 +54,6 @@ export class SortDetailsFactory {
   }
 }
 
-export const uiFriendlySortByKeys: { [key: string]: string } = {
-  newReleases: "New Releases",
-  topRated: "Top Rated",
-  upcomingReleases: "Upcoming Releases",
-};
-export const uiFriendlyGenreKeysBiMap: { [key: string]: string } = {
-  pointAndClick: "Point-and-click",
-  fighting: "Fighting",
-  shooter: "Shooter",
-  puzzle: "Puzzle",
-  RTS: "Real Time Strategy (RTS)",
-  RPG: "Role-playing (RPG)",
-  simulator: "Simulator",
-  sport: "Sport",
-  strategy: "Strategy",
-  TBS: "Turn-based strategy (TBS)",
-  tactical: "Tactical",
-  "quiz/trivia": "Quiz/Trivia",
-  adventure: "Adventure",
-  indie: "Indie",
-  arcade: "Arcade",
-  cardAndBoardGame: "Card & Board Game",
-  MOBA: "MOBA",
-  "Point-and-click": "1",
-  Fighting: "1",
-  Shooter: "1",
-  Puzzle: "1",
-  "Real Time Strategy (RTS)": "1",
-  "Role-playing (RPG)": "1",
-  Simulator: "1",
-  Sport: "1",
-  Strategy: "1",
-  "Turn-based strategy (TBS)": "1",
-  Tactical: "1",
-  "Quiz/Trivia": "1",
-  Adventure: "1",
-  Indie: "1",
-  Arcade: "1",
-  "Card & Board Game": "1",
-};
-export const uiFriendlyThemesKeysBiMap: { [key: string]: string } = {
-  action: "Action",
-  Action: "1",
-  fantasy: "Fantasy",
-  Fantasy: "1",
-  scienceFiction: "Science fiction",
-  "Science fiction": "1",
-  horror: "Horror",
-  Horror: "1",
-  thriller: "Thriller",
-  survival: "Survival",
-  stealth: "Stealth",
-  "non-fiction": "Non-fiction",
-  sandbox: "Sanbox",
-  kids: "Kids",
-  openWorld: "Open world",
-  warfare: "Warfare",
-  party: "Party",
-  mystery: "Mystery",
-  educational: "Educational",
-  Thriller: "1",
-  Survival: "1",
-  Stealth: "1",
-  "Non-fiction": "1",
-  Sanbox: "1",
-  Kids: "1",
-  "Open world": "1",
-  Warfare: "1",
-  Party: "1",
-  Mystery: "1",
-  Educational: "1",
-};
-
-export const uiFriendlyGameModeKeys: { [key: string]: string } = {
-  singlePlayer: "Single player",
-  multiplayer: "Multiplayer",
-  "co-operative": "Co-operative",
-  "split-screen": "Split-screen",
-  MMO: "Massively Multiplayer Online (MMO)",
-  battleRoyale: "Battle royale",
-};
-export const uiFriendlyCategoriesKeys: { [key: string]: string } = {
-  mainGame: "Main game",
-  dlcAddon: "Add-on",
-  remaster: "Remaster",
-  remake: "Remake",
-  bundle: "Bundle",
-  season: "Season",
-};
-export const convertedGameModeKeys: { [key: string]: number } = {
-  singlePlayer: 1,
-  multiplayer: 2,
-  "co-operative": 3,
-  "split-screen": 4,
-  MMO: 5,
-  battleRoyale: 6,
-};
-
-export const convertedCategoryKeys: { [key: string]: number } = {
-  mainGame: 0,
-  dlcAddon: 1,
-  remaster: 9,
-  remake: 8,
-  bundle: 3,
-  season: 7,
-};
-export const convertedThemesKeys: { [key: string]: number } = {
-  action: 1,
-  fantasy: 17,
-  scienceFiction: 18,
-  horror: 19,
-  thriller: 20,
-  survival: 21,
-  stealth: 23,
-  "non-fiction": 32,
-  sandbox: 33,
-  kids: 35,
-  openWorld: 38,
-  warfare: 39,
-  party: 40,
-  mystery: 43,
-  educational: 34,
-};
-export const convertedGenresKeys: { [key: string]: number } = {
-  pointAndClick: 2,
-  fighting: 4,
-  shooter: 5,
-  puzzle: 9,
-  RTS: 11,
-  RPG: 12,
-  simulator: 13,
-  sport: 14,
-  strategy: 15,
-  TBS: 16,
-  tactical: 24,
-  adventure: 31,
-  indie: 32,
-  arcade: 33,
-  cardAndBoardGame: 35,
-  MOBA: 36,
-  "quiz/trivia": 26,
-};
-
-export const themes = [
-  "action",
-  "fantasy",
-  "scienceFiction",
-  "horror",
-  "thriller",
-  "survival",
-  "stealth",
-  "non-fiction",
-  "sandbox",
-  "kids",
-  "openWorld",
-  "warfare",
-  "party",
-  "mystery",
-  "educational",
-] as const;
-
-export const genres = [
-  "pointAndClick",
-  "fighting",
-  "shooter",
-  "puzzle",
-  "RTS",
-  "RPG",
-  "simulator",
-  "sport",
-  "strategy",
-  "TBS",
-  "tactical",
-  "quiz/trivia",
-  "adventure",
-  "indie",
-  "arcade",
-  "cardAndBoardGame",
-  "MOBA",
-] as const;
-
-export const gameModes = [
-  "singlePlayer",
-  "multiplayer",
-  "co-operative",
-  "split-screen",
-  "MMO",
-  "battleRoyale",
-] as const;
-
-export const categories = [
-  "mainGame",
-  "dlcAddon",
-  "remaster",
-  "remake",
-  "bundle",
-  "season",
-] as const;
-
-export const sortBy = ["newReleases", "upcomingReleases", "topRated"] as const;
-
 const searchParamsBrowseSchema = z
   .object({
     sortBy: z.enum(sortBy).default("newReleases"),
@@ -254,7 +64,7 @@ const searchParamsBrowseSchema = z
         z.tuple([z.enum(gameModes)]).rest(z.enum(gameModes)),
       ])
       .optional(),
-    tags: z.string().or(z.array(z.string()).min(2)).optional(),
+    tag: z.string().optional(),
     genres: z
       .union([z.enum(genres), z.tuple([z.enum(genres)]).rest(z.enum(genres))])
       .optional(),
@@ -291,7 +101,7 @@ export type SearchParamsBrowse = {
     | (typeof gameModes)[number]
     | (typeof gameModes)[number][]
     | undefined;
-  tags: string | string[] | undefined;
+  tag: string | undefined;
 };
 
 const DEFAULT_FILTER_LIMIT = 40;
@@ -317,7 +127,7 @@ export function extractFields(
     sortDir: defaultSortDetails.sortDir,
     where: [defaultSortDetails.whereCondition],
     categories: undefined,
-    tags: undefined,
+    tag: undefined,
     themes: undefined,
     genres: undefined,
     gameModes: undefined,
@@ -333,22 +143,22 @@ export function extractFields(
       convertedCategoryKeys
     );
     const gameModesCondition = getWhereCondition(
-      "game_modes.id",
+      "game_modes",
       parsedSearchParams.data.gameModes,
       convertedGameModeKeys
     );
     const tagsCondition = getWhereCondition(
-      "keywords.id",
-      parsedSearchParams.data.tags,
+      "keywords",
+      parsedSearchParams.data.tag,
       undefined
     );
     const themesCondition = getWhereCondition(
-      "themes.id",
+      "themes",
       parsedSearchParams.data.themes,
       convertedThemesKeys
     );
     const genresCondition = getWhereCondition(
-      "genres.id",
+      "genres",
       parsedSearchParams.data.genres,
       convertedGenresKeys
     );
@@ -379,7 +189,7 @@ export function extractFields(
       categories: parsedSearchParams.data.categories,
       gameModes: parsedSearchParams.data.gameModes,
       genres: parsedSearchParams.data.genres,
-      tags: parsedSearchParams.data.tags,
+      tag: parsedSearchParams.data.tag,
       themes: parsedSearchParams.data.themes,
     };
   }
@@ -414,7 +224,7 @@ function buildQueryString(
 ): string {
   if (!parsedSearchParams) {
     //default qs
-    return `${pathName}?sortBy=${sortByDetails.sortBy}sortDir=${sortByDetails.sortDir}`;
+    return `${pathName}?sortBy=${sortByDetails.sortBy}&sortDir=${sortByDetails.sortDir}`;
   }
 
   const categories = getQueryStringSegment(
@@ -422,7 +232,7 @@ function buildQueryString(
     parsedSearchParams.data.categories,
     convertedCategoryKeys
   );
-  const tags = getQueryStringSegment("tags", parsedSearchParams.data.tags);
+  const tag = getQueryStringSegment("tag", parsedSearchParams.data.tag);
   const themes = getQueryStringSegment(
     "themes",
     parsedSearchParams.data.themes
@@ -440,7 +250,7 @@ function buildQueryString(
     parsedSearchParams.data.sortDir
       ? parsedSearchParams.data.sortDir
       : sortByDetails.sortDir
-  }${categories}${gameModes}${themes}${genres}${tags}`;
+  }${categories}${gameModes}${themes}${genres}${tag}`;
 }
 
 function getQueryStringSegment(

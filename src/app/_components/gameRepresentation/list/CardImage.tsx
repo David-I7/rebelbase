@@ -1,4 +1,4 @@
-import { imagesMap } from "@/data/constants/igdbEnums";
+import { imagesMap } from "@/data/constants/gamePageEnums";
 
 type CardImageProps = {
   imgId?: string;

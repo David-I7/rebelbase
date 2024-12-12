@@ -3,11 +3,11 @@ import {
   ageRatingImages,
   ageRatings,
   socialLinksIcons,
-} from "@/data/constants/igdbEnums";
+} from "@/data/constants/gamePageEnums";
 import {
   uiFriendlyGenreKeysBiMap,
   uiFriendlyThemesKeysBiMap,
-} from "@/data/constants/queryFields";
+} from "@/data/constants/filterEnums";
 import {
   AgeRating,
   CardData,

@@ -1,7 +1,7 @@
 "use client";
 import Menu from "@/_components/dropdown/Menu";
 import Toggle from "@/_components/dropdown/Toggle";
-import { useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { MdSort } from "react-icons/md";
 
 const SortDropDown = ({
@@ -12,19 +12,30 @@ const SortDropDown = ({
   selectedSortBy: string;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const toggle = () => {
+  const toggle = (e: MouseEvent) => {
+    e.stopPropagation();
     setIsOpen(!isOpen);
   };
   const ariaControlsId = "sort_dropdown";
+
+  useEffect(() => {
+    if (isOpen) {
+      window.addEventListener("click", () => setIsOpen(!isOpen), {
+        once: true,
+      });
+    }
+  }, [isOpen]);
+
   return (
     <Toggle
-      leadingIcon={<MdSort size={24} />}
+      style={{ fontSize: "16px" }}
+      leadingIcon={<MdSort size={20} />}
       ariaControlsId={ariaControlsId}
       toggle={toggle}
       isOpen={isOpen}
       label={selectedSortBy}
     >
-      <Menu id={ariaControlsId} isOpen={isOpen}>
+      <Menu toggle={toggle} id={ariaControlsId} isOpen={isOpen}>
         {dropdownItems}
       </Menu>
     </Toggle>

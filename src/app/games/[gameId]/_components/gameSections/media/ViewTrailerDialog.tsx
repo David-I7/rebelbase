@@ -39,14 +39,19 @@ const ViewTrailerDialog = ({
           setIsOpen(!isOpen);
         }}
         ref={dialogRef}
+        customClass=""
         style={{
           width: "100%",
           maxWidth: "1024px",
-          padding: 0,
           background: "transparent",
         }}
       >
-        <div className="overflow-hidden px-8">
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsOpen(!isOpen);
+          }}
+          className="overflow-hidden [@media(max-width:1072px)]:px-6"
+        >
           {isOpen && (
             <iframe
               loading="eager"

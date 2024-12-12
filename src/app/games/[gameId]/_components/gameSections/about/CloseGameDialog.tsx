@@ -10,7 +10,7 @@ const CloseGameDialog = () => {
           .parentElement as HTMLDialogElement;
         gameDialog.close();
       }}
-      className="absolute right-0 top-4 rounded-full h-10 w-10 hover:bg-surface-container-normal transition-colors grid place-content-center"
+      className="absolute right-3 top-4 rounded-full h-10 w-10 hover:bg-surface-container-normal transition-colors grid place-content-center"
     >
       <MdClose size={24} />
     </button>

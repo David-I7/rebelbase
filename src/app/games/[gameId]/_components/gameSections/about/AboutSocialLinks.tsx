@@ -1,4 +1,4 @@
-import { socialLinksIcons } from "@/data/constants/igdbEnums";
+import { socialLinksIcons } from "@/data/constants/gamePageEnums";
 import { GameData } from "@/interfaces/igdb";
 import { getSocialLinks } from "@/utils/dataTransformation";
 import React from "react";

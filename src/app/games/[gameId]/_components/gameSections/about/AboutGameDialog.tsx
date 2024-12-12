@@ -20,7 +20,11 @@ const AboutGameDialog = ({ children }: { children: ReactNode }) => {
       <span className="hidden [@media(min-width:880px)]:inline">
         About this game
       </span>
-      <Dialog style={{ paddingTop: "0px", maxWidth: "689px" }} ref={dialogRef}>
+      <Dialog
+        customClass="[@media(max-width:737px)]:mx-6"
+        style={{ maxWidth: "689px" }}
+        ref={dialogRef}
+      >
         {children}
       </Dialog>
     </>
