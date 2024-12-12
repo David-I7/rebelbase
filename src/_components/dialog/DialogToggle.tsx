@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode } from "react";
+import React, { MouseEvent, ReactNode } from "react";
 import { MdClose } from "react-icons/md";
 
 type DialogToggleProps = {
@@ -51,8 +51,8 @@ export const DialogToggleClose = ({
   style,
   toggle,
 }: {
-  style: React.CSSProperties;
-  toggle: () => void;
+  style?: React.CSSProperties;
+  toggle: (e: MouseEvent) => void;
   icon?: React.ReactElement;
 }) => {
   return (

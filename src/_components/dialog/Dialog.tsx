@@ -7,9 +7,11 @@ const Dialog = React.forwardRef(
       children,
       style,
       onClose,
+      customClass,
     }: {
       children: ReactNode;
       style?: React.CSSProperties;
+      customClass?: string;
       onClose?: () => void;
     },
     ref: React.ForwardedRef<HTMLDialogElement>
@@ -27,12 +29,11 @@ const Dialog = React.forwardRef(
             e.clientY < dialogPosition.top
           ) {
             e.currentTarget.close();
+            onClose?.();
           }
-
-          onClose?.();
         }}
         ref={ref}
-        className="rounded-3xl p-6 bg-surface-container-lowest backdrop:bg-[rgba(0,0,0,0.68)] text-inherit scroll-hidden"
+        className={`${customClass} bg-surface-container-lowest rounded-3xl backdrop:bg-[rgba(0,0,0,0.38)] text-inherit scroll-hidden`}
       >
         {children}
       </dialog>

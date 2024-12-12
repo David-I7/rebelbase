@@ -22,7 +22,7 @@ const NavBar = ({ responsive = false, customClass }: NavBarProps) => {
               currentPath === "/"
                 ? selectedStyles
                 : "text-secondary hover:text-on-primary-container transition-colors"
-            } relative after:content-['']  after:absolute after:bottom-0 after:w-[calc(100%_-_2rem)]  after:h-[2px] h-10 px-4 flex items-center cursor-pointer font-medium font-body-m`}
+            } relative   after:absolute after:bottom-0 after:w-[calc(100%_-_2rem)]  after:h-[2px] h-10 px-4 flex items-center cursor-pointer font-medium font-body-m`}
             href={`/`}
           >
             Home
@@ -34,8 +34,8 @@ const NavBar = ({ responsive = false, customClass }: NavBarProps) => {
               currentPath === "/browse"
                 ? selectedStyles
                 : "text-secondary hover:text-on-primary-container transition-colors"
-            } relative after:content-[''] after:absolute after:bottom-0 after:w-[calc(100%_-_2rem)]  after:h-[2px] h-10 px-4 flex items-center cursor-pointer font-medium font-body-m`}
-            href={`/browse?sortBy=newReleases&sortDir=desc&categories=mainGame&limit=40&offset=0`}
+            } relative  after:absolute after:bottom-0 after:w-[calc(100%_-_2rem)]  after:h-[2px] h-10 px-4 flex items-center cursor-pointer font-medium font-body-m`}
+            href={`/browse`}
           >
             Browse
           </Link>
@@ -46,7 +46,7 @@ const NavBar = ({ responsive = false, customClass }: NavBarProps) => {
               currentPath === "/media"
                 ? selectedStyles
                 : "text-secondary hover:text-on-primary-container transition-colors"
-            } relative after:content-['']  after:absolute after:bottom-0 after:w-[calc(100%_-_2rem)] after:h-[2px] h-10 px-4 flex items-center cursor-pointer font-medium font-body-m`}
+            } relative   after:absolute after:bottom-0 after:w-[calc(100%_-_2rem)] after:h-[2px] h-10 px-4 flex items-center cursor-pointer font-medium font-body-m`}
             href={`/media`}
           >
             Media

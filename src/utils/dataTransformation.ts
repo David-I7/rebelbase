@@ -3,7 +3,11 @@ import {
   ageRatingImages,
   ageRatings,
   socialLinksIcons,
-} from "@/data/constants/igdbEnums";
+} from "@/data/constants/gamePageEnums";
+import {
+  uiFriendlyGenreKeysBiMap,
+  uiFriendlyThemesKeysBiMap,
+} from "@/data/constants/filterEnums";
 import {
   AgeRating,
   CardData,
@@ -11,7 +15,6 @@ import {
   InvolvedCompanies,
   Videos,
 } from "@/interfaces/igdb";
-import { match } from "assert";
 import { StaticImageData } from "next/image";
 
 export function getCardTags(game: CardData): string[] {
@@ -20,14 +23,20 @@ export function getCardTags(game: CardData): string[] {
 
   if (game["genres"]) {
     for (let i = 0; i < game["genres"].length; i++) {
-      tags.push(game["genres"][i].name);
+      if (uiFriendlyGenreKeysBiMap[game["genres"][i].name]) {
+        tags.push(game["genres"][i].name);
+      }
+
       if (tags.length === TAG_COUNT) return tags;
     }
   }
 
   if (game["themes"]) {
     for (let i = 0; i < game["themes"].length; i++) {
-      tags.push(game["themes"][i].name);
+      if (uiFriendlyThemesKeysBiMap[game["themes"][i].name]) {
+        tags.push(game["themes"][i].name);
+      }
+
       if (tags.length === TAG_COUNT) return tags;
     }
   }
@@ -244,11 +253,17 @@ export function getGameTags(game: GameData) {
   let gameTags: { id: number; name: string; tagType: string }[] = [];
 
   if (themes) {
-    gameTags = themes.map((theme) => ({ ...theme, tagType: "themes" }));
+    const filteredThemes = themes.filter(
+      (theme) => uiFriendlyThemesKeysBiMap[theme.name]
+    );
+    gameTags = filteredThemes.map((theme) => ({ ...theme, tagType: "themes" }));
   }
   if (gameTags.length < MAX_TAG_AMOUNT && genres) {
+    const filteredGenres = genres.filter(
+      (genre) => uiFriendlyGenreKeysBiMap[genre.name]
+    );
     gameTags.push(
-      ...genres
+      ...filteredGenres
         .slice(0, MAX_TAG_AMOUNT - gameTags.length)
         .map((genre) => ({ ...genre, tagType: "genres" }))
     );
