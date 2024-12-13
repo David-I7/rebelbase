@@ -23,7 +23,6 @@ export default async function Browse({ searchParams }: Props) {
   if (error) throw error;
 
   console.log(extractedBrowseFields);
-  console.log(data);
 
   return (
     <main>

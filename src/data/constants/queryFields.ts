@@ -44,11 +44,7 @@ export class SortDetailsFactory {
         );
       }
       case "topRated": {
-        return new SortDetails(
-          "rating",
-          "desc",
-          `rating > 70 & rating_count > 500`
-        );
+        return new SortDetails("rating", "desc", `rating_count != null`);
       }
     }
   }
@@ -64,7 +60,7 @@ const searchParamsBrowseSchema = z
         z.tuple([z.enum(gameModes)]).rest(z.enum(gameModes)),
       ])
       .optional(),
-    tag: z.string().optional(),
+    keyword: z.string().optional(),
     genres: z
       .union([z.enum(genres), z.tuple([z.enum(genres)]).rest(z.enum(genres))])
       .optional(),
@@ -101,7 +97,7 @@ export type SearchParamsBrowse = {
     | (typeof gameModes)[number]
     | (typeof gameModes)[number][]
     | undefined;
-  tag: string | undefined;
+  keyword: string | undefined;
 };
 
 const DEFAULT_FILTER_LIMIT = 40;
@@ -127,7 +123,7 @@ export function extractFields(
     sortDir: defaultSortDetails.sortDir,
     where: [defaultSortDetails.whereCondition],
     categories: undefined,
-    tag: undefined,
+    keyword: undefined,
     themes: undefined,
     genres: undefined,
     gameModes: undefined,
@@ -147,11 +143,9 @@ export function extractFields(
       parsedSearchParams.data.gameModes,
       convertedGameModeKeys
     );
-    const tagsCondition = getWhereCondition(
-      "keywords",
-      parsedSearchParams.data.tag,
-      undefined
-    );
+    const keywordCondition = parsedSearchParams.data.keyword
+      ? `keywords.name ~ *"${parsedSearchParams.data.keyword}"*`
+      : "";
     const themesCondition = getWhereCondition(
       "themes",
       parsedSearchParams.data.themes,
@@ -167,7 +161,7 @@ export function extractFields(
     gameModesCondition ? where.push(gameModesCondition) : null;
     themesCondition ? where.push(themesCondition) : null;
     genresCondition ? where.push(genresCondition) : null;
-    tagsCondition ? where.push(tagsCondition) : null;
+    keywordCondition ? where.push(keywordCondition) : null;
 
     const sortDetails = SortDetailsFactory.create(
       parsedSearchParams.data.sortBy
@@ -189,7 +183,7 @@ export function extractFields(
       categories: parsedSearchParams.data.categories,
       gameModes: parsedSearchParams.data.gameModes,
       genres: parsedSearchParams.data.genres,
-      tag: parsedSearchParams.data.tag,
+      keyword: parsedSearchParams.data.keyword,
       themes: parsedSearchParams.data.themes,
     };
   }
@@ -232,7 +226,10 @@ function buildQueryString(
     parsedSearchParams.data.categories,
     convertedCategoryKeys
   );
-  const tag = getQueryStringSegment("tag", parsedSearchParams.data.tag);
+  const keyword = getQueryStringSegment(
+    "keyword",
+    parsedSearchParams.data.keyword
+  );
   const themes = getQueryStringSegment(
     "themes",
     parsedSearchParams.data.themes
@@ -250,7 +247,7 @@ function buildQueryString(
     parsedSearchParams.data.sortDir
       ? parsedSearchParams.data.sortDir
       : sortByDetails.sortDir
-  }${categories}${gameModes}${themes}${genres}${tag}`;
+  }${keyword}${categories}${gameModes}${themes}${genres}`;
 }
 
 function getQueryStringSegment(

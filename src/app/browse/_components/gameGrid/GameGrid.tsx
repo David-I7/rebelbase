@@ -13,7 +13,13 @@ const GameGrid = ({
   gameData: CardData[];
   sortBy: "newReleases" | "upcomingReleases" | "topRated";
 }) => {
-  if (gameData.length <= 0) return "No results found";
+  if (gameData.length <= 0)
+    return (
+      <div className="text-center">
+        <h2 className="mt-8">No results found</h2>
+        <p>Unfortunately no result match your search.</p>
+      </div>
+    );
 
   return (
     <section>

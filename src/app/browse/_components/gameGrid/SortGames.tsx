@@ -12,7 +12,7 @@ const SortGames = ({
 }) => {
   const dropdownItems = sortBy.map((key) => {
     const sortDetails = SortDetailsFactory.create(key);
-    let href = qs.replace(/(?<=sortBy=).+&/, `${key}&`);
+    let href = qs.replace(/(?<=sortBy=).+?&/, `${key}&`);
     href = href.replace(/(?<=sortDir=)(.+(?=&)|.+$)/, sortDetails.sortDir);
     return (
       <li key={`sort_by_${key}`}>

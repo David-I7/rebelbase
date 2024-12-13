@@ -1,24 +1,39 @@
 "use client";
 import Dialog from "@/_components/dialog/Dialog";
 import { DialogToggleOpen } from "@/_components/dialog/DialogToggle";
-import React, { ReactNode, useRef } from "react";
+import React, { ReactNode, useEffect, useRef } from "react";
 import { MdFilterAlt } from "react-icons/md";
 
-const FilterGamesDialog = ({ children }: { children: ReactNode }) => {
+const FilterGamesDialog = ({
+  children,
+  isOpen,
+  toggle,
+}: {
+  children: ReactNode;
+  isOpen: boolean;
+  toggle: () => void;
+}) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const toggleOpen = () => {
-    dialogRef.current!.showModal();
-  };
+
+  useEffect(() => {
+    if (isOpen) {
+      dialogRef.current!.showModal();
+    } else {
+      dialogRef.current!.close();
+    }
+  }, [isOpen]);
   return (
     <DialogToggleOpen
       style={{ fontSize: "18px", color: "var(--color-primary)" }}
-      toggle={toggleOpen}
+      toggle={toggle}
       label="Filter"
       leadingIcon={<MdFilterAlt size={18} />}
     >
       <Dialog
+        onClose={toggle}
         style={{
-          maxWidth: "500px",
+          maxWidth: "420px",
+          height: "100%",
           width: "100%",
         }}
         ref={dialogRef}

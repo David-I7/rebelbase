@@ -21,7 +21,7 @@ const AboutGameDialog = ({ children }: { children: ReactNode }) => {
         About this game
       </span>
       <Dialog
-        customClass="[@media(max-width:737px)]:mx-6"
+        customClass="[@media(max-width:737px)]:mx-6 scroll-hidden"
         style={{ maxWidth: "689px" }}
         ref={dialogRef}
       >

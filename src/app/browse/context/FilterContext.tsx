@@ -4,14 +4,14 @@ import { createContext, ReactNode, useReducer } from "react";
 
 export type Action = {
   type: (typeof ActionType)[number];
-  payload?: { key: (typeof filterKeys)[number]; value: string };
+  payload?: { key?: (typeof filterKeys)[number]; value: string };
 };
-const ActionType = ["remove", "add", "reset", "filter"] as const;
+const ActionType = ["remove", "add", "reset", "search"] as const;
 const filterKeys = ["genres", "themes", "gameModes", "categories"] as const;
 
 type InitFilterContext = [
   state: { [Key in (typeof filterKeys)[number]]: Set<string> } & {
-    tag: string;
+    keyword: string;
     filterCount: number;
   },
   dispatch: React.Dispatch<Action>
@@ -22,7 +22,7 @@ const initStateValue: InitFilterContext[0] = {
   gameModes: new Set(),
   themes: new Set(),
   genres: new Set(),
-  tag: "",
+  keyword: "",
   filterCount: 0,
 };
 
@@ -39,27 +39,33 @@ function reducer(
 ): InitFilterContext["0"] {
   switch (action.type) {
     case ActionType[0]: {
-      const prevKeyState = state[action.payload!.key];
+      const prevKeyState = state[action.payload!.key!!];
       prevKeyState.delete(action.payload!.value);
       return {
         ...state,
-        [action.payload!.key]: new Set(prevKeyState),
+        [action.payload!.key!!]: new Set(prevKeyState),
         filterCount: state.filterCount - 1,
       };
     }
     case ActionType[1]: {
-      const prevKeyState = state[action.payload!.key];
+      const prevKeyState = state[action.payload!.key!!];
       prevKeyState.add(action.payload!.value);
 
       return {
         ...state,
-        [action.payload!.key]: new Set(prevKeyState),
+        [action.payload!.key!]: new Set(prevKeyState),
         filterCount: state.filterCount + 1,
       };
     }
     case ActionType[2]: {
       return {
         ...initStateValue,
+      };
+    }
+    case ActionType[3]: {
+      return {
+        ...state,
+        keyword: action.payload!.value,
       };
     }
     default:
@@ -83,7 +89,7 @@ function buildFilterQueryState(
 ): InitFilterContext["0"] {
   return {
     genres: createFilterSet(searchParams.genres),
-    tag: searchParams.tag ? searchParams.tag : "",
+    keyword: searchParams.keyword ? searchParams.keyword : "",
     themes: createFilterSet(searchParams.themes),
     categories: createFilterSet(searchParams.categories),
     gameModes: createFilterSet(searchParams.gameModes),
@@ -123,9 +129,9 @@ export function buildQueryString(
   const themes = getQueryStringSegment("themes", state.themes);
   const categories = getQueryStringSegment("categories", state.categories);
   const gameModes = getQueryStringSegment("gameModes", state.gameModes);
-  const tag = getQueryStringSegment("tag", state.tag);
+  const keyword = getQueryStringSegment("keyword", state.keyword);
 
-  return `${pathname}?sortBy=${sort.field}&sortDir=${sort.order}${categories}${gameModes}${themes}${genres}${tag}`;
+  return `${pathname}?sortBy=${sort.field}&sortDir=${sort.order}${keyword}${categories}${gameModes}${themes}${genres}`;
 }
 
 function getFilterCount(searchParams: SearchParamsBrowse) {
@@ -143,10 +149,10 @@ function getFilterCount(searchParams: SearchParamsBrowse) {
   const themesCount = getSegmentCount(searchParams.themes);
   const categoriesCount = getSegmentCount(searchParams.categories);
   const gameModesCount = getSegmentCount(searchParams.gameModes);
-  const tagCount = getSegmentCount(searchParams.tag);
+  const keywordCount = getSegmentCount(searchParams.keyword);
 
   return (
-    genresCount + themesCount + categoriesCount + gameModesCount + tagCount
+    genresCount + themesCount + categoriesCount + gameModesCount + keywordCount
   );
 }
 
