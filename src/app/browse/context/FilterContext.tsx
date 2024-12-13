@@ -66,6 +66,8 @@ function reducer(
       return {
         ...state,
         keyword: action.payload!.value,
+        // fix filtercount bug
+        // filterCount: action.payload!.value ? state.filterCount + 1,
       };
     }
     default:

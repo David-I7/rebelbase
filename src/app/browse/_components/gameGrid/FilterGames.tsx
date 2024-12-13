@@ -69,6 +69,35 @@ const FilterGames = ({
           </div>
         </div>
       </FilterGamesDialog>
+      <div className="w-[320px] [@media(min-width:880px)]:block hidden">
+        <div className="flex text-xl font-semibold text-on-surface-heading-varient items-center border-b border-outline-varient-lowest h-16 justify-between">
+          {state.filterCount > 0 ? `Filters (${state.filterCount})` : "Filters"}
+
+          <div className="flex gap-3">
+            <OutlineButton
+              handleClick={() => {
+                dispatch({ type: "reset" });
+              }}
+              label="Reset"
+            />
+            <FilledButton
+              handleClick={() => {
+                handleFilter();
+                toggleDialog();
+              }}
+              label="Apply"
+            />
+          </div>
+        </div>
+        <div className="">
+          <KeywordSearch
+            dispatch={dispatch}
+            keyword={state.keyword}
+            handleFilter={handleFilter}
+          />
+          <FilterGamesAccordions />
+        </div>
+      </div>
     </div>
   );
 };

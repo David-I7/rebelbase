@@ -24,13 +24,14 @@ const FilterGamesDialog = ({
   }, [isOpen]);
   return (
     <DialogToggleOpen
-      extendedClass="hover:brightness-115 transition-brightness"
+      extendedClass="hover:brightness-115 transition-brightness [@media(min-width:880px)]:hidden"
       style={{ fontSize: "18px", color: "var(--color-primary)" }}
       toggle={toggle}
       label="Filter"
       leadingIcon={<MdFilterAlt size={18} />}
     >
       <Dialog
+        customClass="[@media(min-width:880px)]:hidden"
         onClose={toggle}
         style={{
           maxWidth: "420px",

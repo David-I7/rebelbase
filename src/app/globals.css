@@ -427,6 +427,23 @@ footer {
     grid-area: 2 / 1 / 3 / 2;
     overflow: hidden;
   }
+
+  .filter-grid {
+    column-gap: 3rem;
+    grid-template-rows: 4rem 1fr;
+  }
+
+  .filter-grid > :nth-child(1) {
+    grid-row: span 2;
+  }
+  .filter-grid > :nth-child(2) {
+    justify-self: flex-end;
+    align-self: center;
+  }
+  .filter-grid > :nth-child(3) {
+    grid-column: 2 / -1;
+    min-height: 100%;
+  }
 }
 
 @media (min-width: 1024px) {

@@ -1,11 +1,13 @@
-import React, { ChangeEvent, FormEvent } from "react";
-import { MdSearch } from "react-icons/md";
+import React, { ChangeEvent, FormEvent, MouseEvent } from "react";
+import { MdClose, MdSearch } from "react-icons/md";
+import IconTarget from "../buttons/IconTarget";
 
 type SearchBarProps = {
   placeholder: string;
   onChange: (e: ChangeEvent) => void;
   searchValue: string;
   onSubmit: (e: FormEvent) => void;
+  handleReset: () => void;
 };
 
 const SearchBar = ({
@@ -13,6 +15,7 @@ const SearchBar = ({
   placeholder,
   onChange,
   onSubmit,
+  handleReset,
 }: SearchBarProps) => {
   return (
     <form onSubmit={onSubmit}>
@@ -20,7 +23,7 @@ const SearchBar = ({
         onClick={(e) => {
           (e.currentTarget.children[1] as HTMLInputElement).focus();
         }}
-        className="cursor-text focus-within:outline-primary focus-within:outline-2 focus-within:outline flex gap-1 items-center px-4 h-10 rounded-lg bg-surface-container-high"
+        className="cursor-text focus-within:outline-primary focus-within:outline-2 focus-within:outline flex gap-1 items-center pl-4 pr-1 h-10 rounded-lg bg-surface-container-high"
       >
         <MdSearch size={18} />
         <input
@@ -31,6 +34,11 @@ const SearchBar = ({
           value={searchValue}
           onChange={onChange}
         />
+        {searchValue && (
+          <IconTarget handleClick={handleReset}>
+            <MdClose size={18} />
+          </IconTarget>
+        )}
       </div>
     </form>
   );
