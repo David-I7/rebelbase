@@ -9,6 +9,7 @@ const Toggle = ({
   label,
   toggle,
   style,
+  customClass,
 }: {
   toggle: (e: MouseEvent) => void;
   isOpen: boolean;
@@ -17,13 +18,14 @@ const Toggle = ({
   leadingIcon?: ReactNode;
   children: ReactNode;
   style?: React.CSSProperties;
+  customClass?: string;
 }) => {
   const buttonPadding = leadingIcon ? "px-2" : "pr-2 pl-4";
 
   return (
     <>
       <button
-        className={`${buttonPadding} text-on-surface-heading-varient flex items-center gap-2 font-medium font-body-s`}
+        className={`${buttonPadding} ${customClass} text-on-surface-heading-varient flex items-center gap-2 font-medium font-body-s`}
         onClick={toggle}
         aria-expanded={isOpen}
         aria-controls={ariaControlsId}
@@ -35,7 +37,7 @@ const Toggle = ({
           size={24}
           className={`${
             isOpen ? "-rotate-90" : "rotate-90"
-          } transition-transform`}
+          } transition-transform flex-shrink-0`}
         />
       </button>
       {children}

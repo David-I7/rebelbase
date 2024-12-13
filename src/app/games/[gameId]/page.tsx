@@ -43,7 +43,6 @@ export default async function GamePage({
       />
       <div className="game-grid mt-16 mx-4 md:mx-8 max-w-[1280px] [@media(min-width:1344px)]:mx-auto">
         <MediaSection game={gameData!.result!} />
-
         <AboutGame game={gameData!.result!} />
         <div className="grid gap-12 content-start">
           <SimilarGames similarGames={gameData!.result[0]["similar_games"]} />

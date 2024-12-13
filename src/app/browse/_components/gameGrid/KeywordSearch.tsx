@@ -7,10 +7,12 @@ const KeywordSearch = React.memo(
     keyword,
     dispatch,
     handleFilter,
+    toggleDialog,
   }: {
     keyword: string;
     dispatch: React.Dispatch<Action>;
     handleFilter: () => void;
+    toggleDialog: () => void;
   }) => {
     const handleChange = (e: ChangeEvent) => {
       dispatch({
@@ -21,6 +23,7 @@ const KeywordSearch = React.memo(
 
     const handleSubmit = (e: FormEvent) => {
       e.preventDefault();
+      toggleDialog();
       handleFilter();
     };
 

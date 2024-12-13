@@ -28,12 +28,17 @@ const SortDropDown = ({
 
   return (
     <Toggle
-      style={{ fontSize: "16px" }}
-      leadingIcon={<MdSort size={20} />}
+      customClass="hover:brightness-115"
+      style={{ fontSize: "16px", gap: "0" }}
+      leadingIcon={<MdSort className="flex-shrink-0" size={20} />}
       ariaControlsId={ariaControlsId}
       toggle={toggle}
       isOpen={isOpen}
-      label={selectedSortBy}
+      label={
+        <div className="[@media(min-width:395px)]:block hidden [@media(min-width:395px)]:px-2">
+          {selectedSortBy}
+        </div>
+      }
     >
       <Menu toggle={toggle} id={ariaControlsId} isOpen={isOpen}>
         {dropdownItems}

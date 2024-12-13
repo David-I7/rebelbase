@@ -32,7 +32,7 @@ const SortGames = ({
   });
 
   return (
-    <div className="relative inline-block">
+    <div className="relative">
       <SortDropDown
         selectedSortBy={uiFriendlySortByKeys[selectedSortBy]}
         dropdownItems={dropdownItems}

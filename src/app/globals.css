@@ -390,6 +390,24 @@ footer {
   display: grid;
 }
 
+.filter-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.filter-grid > :nth-child(1) {
+  justify-self: flex-start;
+}
+.filter-grid > :nth-child(2) {
+  justify-self: flex-end;
+  align-self: center;
+}
+.filter-grid > :nth-child(3) {
+  grid-column: span 2;
+}
+
 @media (min-width: 880px) {
   .game-grid {
     grid-template-columns: 1fr 22.5rem;

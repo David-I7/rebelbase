@@ -50,7 +50,7 @@ const Menu = ({
       style={style}
       className={`${extendedClass} ${
         isOpen ? "visible" : "hidden"
-      } absolute rounded-xl bg-surface-container-normal p-1 min-w-full`}
+      } absolute rounded-xl bg-surface-container-normal right-0 p-1 min-w-full`}
     >
       {children}
     </ul>

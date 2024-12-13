@@ -25,28 +25,30 @@ export default async function Browse({ searchParams }: Props) {
   console.log(extractedBrowseFields);
 
   return (
-    <main>
+    <main className="max-w-[1344px] [@media(min-width:1344px)]:mx-auto [@media(min-width:1344px)]:max-w-[1280px]">
       <MutateQueryString qs={extractedBrowseFields.queryString} />
       <PlatformSection />
-      <FilterContextProvider searchParams={extractedBrowseFields.queryParams}>
-        <FilterGames
-          pathName="/browse"
-          qs={extractedBrowseFields.queryString}
-          sort={{
-            field: extractedBrowseFields.queryParams.sortBy,
-            order: extractedBrowseFields.queryParams.sortDir,
-          }}
-        />
-      </FilterContextProvider>
+      <div className="filter-grid mx-4 md:mx-8 [@media(min-width:1344px)]:mx-0">
+        <FilterContextProvider searchParams={extractedBrowseFields.queryParams}>
+          <FilterGames
+            pathName="/browse"
+            qs={extractedBrowseFields.queryString}
+            sort={{
+              field: extractedBrowseFields.queryParams.sortBy,
+              order: extractedBrowseFields.queryParams.sortDir,
+            }}
+          />
+        </FilterContextProvider>
 
-      <SortGames
-        qs={extractedBrowseFields.queryString}
-        selectedSortBy={extractedBrowseFields.queryParams.sortBy}
-      />
-      <GameGrid
-        sortBy={extractedBrowseFields.queryParams.sortBy}
-        gameData={data!}
-      />
+        <SortGames
+          qs={extractedBrowseFields.queryString}
+          selectedSortBy={extractedBrowseFields.queryParams.sortBy}
+        />
+        <GameGrid
+          sortBy={extractedBrowseFields.queryParams.sortBy}
+          gameData={data!}
+        />
+      </div>
     </main>
   );
 }

@@ -24,6 +24,7 @@ const FilterGamesDialog = ({
   }, [isOpen]);
   return (
     <DialogToggleOpen
+      extendedClass="hover:brightness-115 transition-brightness"
       style={{ fontSize: "18px", color: "var(--color-primary)" }}
       toggle={toggle}
       label="Filter"
