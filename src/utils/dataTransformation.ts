@@ -243,25 +243,48 @@ export function getSupportedLanguages(game: GameData): Languages | undefined {
 
 const MAX_TAG_AMOUNT = 6;
 
-export function getGameTags(game: GameData) {
+type GameTag = {
+  id: number;
+  uiName: string;
+  urlName: string;
+  tagType: string;
+};
+
+export function getGameTags(game: GameData): GameTag[] | undefined {
   const themes = game[0]["themes"];
   const genres = game[0]["genres"];
   const keywords = game[0]["keywords"];
 
   if (!themes && !genres && !keywords) return;
 
-  let gameTags: { id: number; name: string; tagType: string }[] = [];
+  let gameTags: GameTag[] = [];
 
   if (themes) {
-    const filteredThemes = themes.filter(
-      (theme) => uiFriendlyThemesKeysBiMap[theme.name]
-    );
-    gameTags = filteredThemes.map((theme) => ({ ...theme, tagType: "themes" }));
+    const filteredThemes: GameTag[] = [];
+    themes.forEach((theme) => {
+      if (uiFriendlyThemesKeysBiMap[theme.name]) {
+        filteredThemes.push({
+          id: theme.id,
+          tagType: "themes",
+          uiName: theme.name,
+          urlName: uiFriendlyThemesKeysBiMap[theme.name],
+        });
+      }
+    });
+    gameTags = filteredThemes.slice(0, MAX_TAG_AMOUNT);
   }
   if (gameTags.length < MAX_TAG_AMOUNT && genres) {
-    const filteredGenres = genres.filter(
-      (genre) => uiFriendlyGenreKeysBiMap[genre.name]
-    );
+    const filteredGenres: GameTag[] = [];
+    genres.forEach((genre) => {
+      if (uiFriendlyGenreKeysBiMap[genre.name]) {
+        filteredGenres.push({
+          id: genre.id,
+          tagType: "genres",
+          uiName: genre.name,
+          urlName: uiFriendlyGenreKeysBiMap[genre.name],
+        });
+      }
+    });
     gameTags.push(
       ...filteredGenres
         .slice(0, MAX_TAG_AMOUNT - gameTags.length)
@@ -269,13 +292,16 @@ export function getGameTags(game: GameData) {
     );
   }
   if (gameTags.length < MAX_TAG_AMOUNT && keywords) {
-    gameTags.push(
-      ...keywords
-        .slice(0, MAX_TAG_AMOUNT - gameTags.length)
-        .map((keyword) => ({ ...keyword, tagType: "keywords" }))
-    );
+    for (let i = 0; i < keywords.length; i++) {
+      gameTags.push({
+        id: keywords[i].id,
+        tagType: "keyword",
+        uiName: keywords[i].name,
+        urlName: keywords[i].name,
+      });
+      if (gameTags.length === MAX_TAG_AMOUNT) return gameTags;
+    }
   }
-
   return gameTags;
 }
 

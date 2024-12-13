@@ -5,7 +5,7 @@ import React from "react";
 
 const AboutGameTags = ({ game }: { game: GameData }) => {
   const gameTags = getGameTags(game);
-  console.log(game);
+  console.log(gameTags);
   if (!gameTags || !gameTags.length) return;
 
   return (
@@ -13,11 +13,11 @@ const AboutGameTags = ({ game }: { game: GameData }) => {
       <ul className="flex flex-wrap gap-x-2 gap-y-4">
         {gameTags.map((tag) => {
           return (
-            <li key={`${tag.tagType}_${tag.name}_${tag.id}`}>
+            <li key={`${tag.tagType}_${tag.uiName}_${tag.id}`}>
               <FilterChipLink
-                pathName="/discover"
-                query={{ [tag.tagType]: tag.name }}
-                label={tag.name}
+                pathName="/browse"
+                query={{ [tag.tagType]: tag.urlName }}
+                label={tag.uiName}
               />
             </li>
           );

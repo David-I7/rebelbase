@@ -25,7 +25,7 @@ export default async function Browse({ searchParams }: Props) {
   console.log(extractedBrowseFields);
 
   return (
-    <main className="max-w-[1344px] [@media(min-width:1344px)]:mx-auto [@media(min-width:1344px)]:max-w-[1280px]">
+    <main className="max-w-[1344px] [@media(min-width:1344px)]:mx-auto [@media(min-width:1344px)]:max-w-[1280px] mt-8">
       <MutateQueryString qs={extractedBrowseFields.queryString} />
       <PlatformSection />
       <div className="filter-grid mx-4 md:mx-8 [@media(min-width:1344px)]:mx-0">
