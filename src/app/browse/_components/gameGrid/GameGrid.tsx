@@ -23,10 +23,10 @@ const GameGrid = ({
 
   return (
     <section>
-      <ul className="grid group [@media(max-width:622px)]:grid-cols-2 grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-x-4 gap-y-6">
+      <ul className="filter-game-grid [@media(max-width:622px)]:grid-cols-2 grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-x-4 gap-y-6">
         {gameData.map((game) => (
           <li
-            className="[@media(min-width:500px)_and_(max-width:622px)]:odd:justify-self-end  max-w-[244px]"
+            className="max-w-[244px]"
             key={`top_rated_vertical_card_${game.id}`}
           >
             <Link prefetch={false} href={`/games/${game.id}`}>

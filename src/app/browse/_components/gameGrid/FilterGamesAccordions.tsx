@@ -136,12 +136,7 @@ const CategoriesAccordion = React.memo(
     dispatch: React.Dispatch<Action>;
   }) => {
     return (
-      <Accordion
-        style={{
-          borderBottom: "1px solid var(--color-outline-varient-lowest)",
-        }}
-        summary="Categories"
-      >
+      <Accordion summary="Categories">
         <ul className=" grid gap-1">
           {categories.map((category) => (
             <FilterListItem

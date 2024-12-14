@@ -386,6 +386,20 @@ footer {
   }
 }
 
+/* GAME GRID */
+
+.filter-game-grid {
+  display: grid;
+  container-name: filter-game-grid;
+  container-type: inline-size;
+}
+
+@container filter-game-grid (min-width:500px) and (max-width:622px) {
+  .filter-game-grid > li:nth-child(odd) {
+    justify-self: end;
+  }
+}
+
 .game-grid {
   display: grid;
 }

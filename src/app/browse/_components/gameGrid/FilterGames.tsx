@@ -4,11 +4,11 @@ import FilterGamesDialog from "./FilterGamesDialog";
 import FilterGamesAccordions from "./FilterGamesAccordions";
 import { FilterContext } from "../../context/FilterContext";
 import FilledButton from "@/_components/buttons/FilledButton";
-import OutlineButton from "@/_components/buttons/OutlineButton";
 import { buildQueryString } from "../../context/FilterContext";
 import { useRouter } from "next/navigation";
 import { DialogToggleClose } from "@/_components/dialog/DialogToggle";
 import KeywordSearch from "./KeywordSearch";
+import TextButton from "@/_components/buttons/TextButton";
 
 const FilterGames = ({
   pathName,
@@ -52,7 +52,8 @@ const FilterGames = ({
             />
             <FilterGamesAccordions />
             <div className="absolute right-6 left-0 bottom-0 bg-surface-container-lowest py-4 flex gap-3 justify-end">
-              <OutlineButton
+              <TextButton
+                style={{ paddingInline: "0.5rem" }}
                 handleClick={() => {
                   dispatch({ type: "reset" });
                 }}
@@ -74,7 +75,8 @@ const FilterGames = ({
           {state.filterCount > 0 ? `Filters (${state.filterCount})` : "Filters"}
 
           <div className="flex gap-3">
-            <OutlineButton
+            <TextButton
+              style={{ paddingInline: "0.5rem" }}
               handleClick={() => {
                 dispatch({ type: "reset" });
               }}
