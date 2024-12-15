@@ -1,10 +1,12 @@
 "use client";
+
 import CardDetails from "@/app/_components/gameRepresentation/CardDetails";
 import CardImage from "@/app/_components/gameRepresentation/verticalCard/CardImage";
 import VerticalCard from "@/app/_components/gameRepresentation/verticalCard/VerticalCard";
+import useScrollEnd from "@/hooks/useScrollEnd";
 import { CardData } from "@/interfaces/igdb";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 
 const GameGrid = ({
   gameData,
@@ -13,6 +15,14 @@ const GameGrid = ({
   gameData: CardData[];
   sortBy: "newReleases" | "upcomingReleases" | "topRated";
 }) => {
+  const [data, setData] = useState(gameData);
+
+  useScrollEnd();
+
+  useEffect(() => {
+    if (data !== gameData) setData(gameData);
+  }, [gameData]);
+
   if (gameData.length <= 0)
     return (
       <div className="text-center">

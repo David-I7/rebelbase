@@ -1,11 +1,15 @@
 import { extractFields } from "@/data/constants/queryFields";
 import PlatformSection from "./_components/platforms/PlatformSection";
-import { getBrowseQueryData } from "@/services/igdb";
-import GameGrid from "./_components/gameGrid/GameGrid";
+import { getQueryData } from "@/services/igdb";
 import SortGames from "./_components/gameGrid/SortGames";
 import MutateQueryString from "../../_components/MutateQueryString";
 import FilterGames from "./_components/gameGrid/FilterGames";
 import { FilterContextProvider } from "./context/FilterContext";
+import { Suspense } from "react";
+import FilterGameGridSkeleton from "@/_components/skeletons/FilterGameGridSkeleton";
+import GameGridServer from "./_components/gameGrid/GameGridServer";
+import QueryProviderWrapper from "@/lib/tanstack/components/QueryProviderWrapper";
+import TestUseInfiniteQuery from "@/_components/test/TestUseInfiniteQuery";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -16,11 +20,7 @@ export default async function Browse({ searchParams }: Props) {
 
   const extractedBrowseFields = extractFields(awaitedSearchParams, "/browse");
 
-  const { data, error } = await getBrowseQueryData(
-    extractedBrowseFields.queryParams
-  );
-
-  if (error) throw error;
+  const browseDataPromise = getQueryData(extractedBrowseFields.queryParams);
 
   console.log(extractedBrowseFields);
 
@@ -35,7 +35,7 @@ export default async function Browse({ searchParams }: Props) {
             qs={extractedBrowseFields.queryString}
             sort={{
               field: extractedBrowseFields.queryParams.sortBy,
-              order: extractedBrowseFields.queryParams.sortDir,
+              order: extractedBrowseFields.queryParams.sort.order,
             }}
           />
         </FilterContextProvider>
@@ -44,10 +44,25 @@ export default async function Browse({ searchParams }: Props) {
           qs={extractedBrowseFields.queryString}
           selectedSortBy={extractedBrowseFields.queryParams.sortBy}
         />
-        <GameGrid
-          sortBy={extractedBrowseFields.queryParams.sortBy}
-          gameData={data!}
-        />
+        <Suspense
+          key={extractedBrowseFields.queryString}
+          fallback={
+            <FilterGameGridSkeleton
+              type={
+                extractedBrowseFields.queryParams.sortBy === "upcomingReleases"
+                  ? "FIRST_RELEASE_DATE"
+                  : "RATING"
+              }
+            />
+          }
+        >
+          <QueryProviderWrapper includeDevtools={true}>
+            <GameGridServer
+              sortBy={extractedBrowseFields.queryParams.sortBy}
+              gameData={browseDataPromise}
+            />
+          </QueryProviderWrapper>
+        </Suspense>
       </section>
     </main>
   );

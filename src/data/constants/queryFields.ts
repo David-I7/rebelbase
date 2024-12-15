@@ -73,8 +73,7 @@ const searchParamsBrowseSchema = z
         z.tuple([z.enum(categories)]).rest(z.enum(categories)),
       ])
       .optional(),
-    limit: z.coerce.number().min(1).int().optional(),
-    offset: z.coerce.number().min(0).int().optional(),
+    page: z.coerce.number().min(1).int().optional().default(1),
   })
   .passthrough();
 
@@ -83,8 +82,8 @@ type SearchParamsBrowseSchema = z.infer<typeof searchParamsBrowseSchema>;
 export type SearchParamsBrowse = {
   where: string[];
   sort: { field: string; order: "asc" | "desc" };
-  limit: number;
-  offset: number;
+  page: number;
+
   sortBy: (typeof sortBy)[number];
   sortDir: "asc" | "desc";
   categories:
@@ -100,21 +99,17 @@ export type SearchParamsBrowse = {
   keyword: string | undefined;
 };
 
-const DEFAULT_FILTER_LIMIT = 40;
-const DEFAULT_FILTER_OFFSET = 0;
-
 export function extractFields(
   searchParams: {
     [key: string]: string | string[] | undefined;
   },
-  pathName: string
+  pathName = "/"
 ): { queryParams: SearchParamsBrowse; queryString: string } {
   const defaultSortDetails = SortDetailsFactory.create("newReleases");
 
   let queryString = buildQueryString(pathName, defaultSortDetails);
   let result: SearchParamsBrowse = {
-    limit: DEFAULT_FILTER_LIMIT,
-    offset: DEFAULT_FILTER_OFFSET,
+    page: 1,
     sort: {
       field: defaultSortDetails.sortBy,
       order: defaultSortDetails.sortDir,
@@ -185,6 +180,7 @@ export function extractFields(
       genres: parsedSearchParams.data.genres,
       keyword: parsedSearchParams.data.keyword,
       themes: parsedSearchParams.data.themes,
+      page: parsedSearchParams.data.page,
     };
   }
 

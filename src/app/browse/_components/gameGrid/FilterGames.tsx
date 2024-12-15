@@ -21,7 +21,7 @@ const FilterGames = ({
 }) => {
   const [state, dispatch] = useContext(FilterContext);
   const router = useRouter();
-
+  console.log(sort);
   const handleFilter = () => {
     const targetqs = buildQueryString(pathName, sort, state);
     if (targetqs === qs) return;
