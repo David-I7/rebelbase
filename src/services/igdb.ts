@@ -467,6 +467,8 @@ export async function getMoreFromCompany(
   }
 }
 
+const DEFAULT_FILTER_LIMIT = 40;
+
 class QueryBuilder {
   private _fields = "";
   private _where = "";
@@ -515,6 +517,14 @@ class QueryBuilder {
     return this;
   }
 
+  paginate(page: number): QueryBuilder {
+    this._limit = `limit ${DEFAULT_FILTER_LIMIT};`;
+    this._offset = `offset ${
+      page * DEFAULT_FILTER_LIMIT - DEFAULT_FILTER_LIMIT
+    };`;
+    return this;
+  }
+
   limit(limit: number): QueryBuilder {
     this._limit = `limit ${limit};`;
     return this;
@@ -532,7 +542,7 @@ class QueryBuilder {
   }
 }
 
-export async function getBrowseQueryData(
+export async function getQueryData(
   queryData: SearchParamsBrowse
 ): Promise<DataOrError<CardData[], Error>> {
   const queryBuilder = new QueryBuilder("/games")
@@ -546,8 +556,7 @@ export async function getBrowseQueryData(
     ])
     .where(queryData.where)
     .sort(queryData.sort.field, queryData.sort.order)
-    .limit(queryData.limit)
-    .offset(queryData.offset);
+    .paginate(queryData.page);
 
   const browseQuery = queryBuilder.buildQuery();
 

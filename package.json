@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.62.7",
     "apicalypse": "^0.3.1",
     "date-fns": "^4.1.0",
     "next": "^15.0.3",
@@ -19,6 +20,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@tanstack/react-query-devtools": "^5.62.7",
     "@types/apicalypse": "^0.1.5",
     "@types/date-fns": "^2.5.3",
     "@types/node": "^20",

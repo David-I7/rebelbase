@@ -66,8 +66,13 @@ function reducer(
       return {
         ...state,
         keyword: action.payload!.value,
-        // fix filtercount bug
-        // filterCount: action.payload!.value ? state.filterCount + 1,
+
+        filterCount:
+          action.payload!.value && state.keyword
+            ? state.filterCount
+            : action.payload!.value && !state.keyword
+            ? state.filterCount + 1
+            : state.filterCount - 1,
       };
     }
     default:
