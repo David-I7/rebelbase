@@ -10,7 +10,6 @@ import OfflineGames from "./_components/sections/OfflineGames";
 import OnlineGames from "./_components/sections/OnlineGames";
 import CasualGames from "./_components/sections/CasualGames";
 import VerticalRay from "@/_components/VerticalRay";
-import Test from "@/_components/test/TestUseQuery";
 
 export default async function Home() {
   const { data: gameData, error: gameError } = await getOrSetCache(
