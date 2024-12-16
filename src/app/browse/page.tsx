@@ -9,7 +9,6 @@ import { Suspense } from "react";
 import FilterGameGridSkeleton from "@/_components/skeletons/FilterGameGridSkeleton";
 import GameGridServer from "./_components/gameGrid/GameGridServer";
 import QueryProviderWrapper from "@/lib/tanstack/components/QueryProviderWrapper";
-import TestUseInfiniteQuery from "@/_components/test/TestUseInfiniteQuery";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -58,6 +57,7 @@ export default async function Browse({ searchParams }: Props) {
         >
           <QueryProviderWrapper includeDevtools={true}>
             <GameGridServer
+              qs={extractedBrowseFields.queryString}
               sortBy={extractedBrowseFields.queryParams.sortBy}
               gameData={browseDataPromise}
             />

@@ -13,13 +13,18 @@ const usePost = () => {
   return useInfiniteQuery({
     queryKey: ["posts"],
     queryFn: async ({ pageParam = 1 }) => {
+      console.log(pageParam);
       return fetch(
         `https://jsonplaceholder.typicode.com/posts/${pageParam}`
       ).then((res) => res.json() as Promise<Post>);
     },
     initialPageParam: 1,
+    initialData: () => ({
+      pageParams: [0],
+      pages: [{ title: "Jibberish", body: "hello world", id: 0 }],
+    }),
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-      return lastPageParam + 1;
+      return lastPageParam < 100 ? lastPageParam + 1 : undefined;
     },
     staleTime: 1000 * 60 * 60,
     enabled: false,
@@ -28,6 +33,8 @@ const usePost = () => {
 
 const TestUseInfiniteQuery = () => {
   const posts = usePost();
+
+  console.log(posts.hasNextPage, posts.isFetching);
 
   if (posts.error) return <h2>Error</h2>;
 

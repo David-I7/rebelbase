@@ -3,6 +3,8 @@ import { ReactNode } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
+
 const QueryProviderWrapper = ({
   children,
   includeDevtools = false,
@@ -10,7 +12,6 @@ const QueryProviderWrapper = ({
   children: ReactNode;
   includeDevtools?: boolean;
 }) => {
-  const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       {children}

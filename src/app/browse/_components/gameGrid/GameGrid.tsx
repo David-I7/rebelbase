@@ -1,26 +1,55 @@
 "use client";
 
+import CardDetailsSkeleton from "@/_components/skeletons/cards/CardDetailsSkeleton";
+import VerticalCardSkeleton from "@/_components/skeletons/cards/VerticalCardSkeleton";
 import CardDetails from "@/app/_components/gameRepresentation/CardDetails";
 import CardImage from "@/app/_components/gameRepresentation/verticalCard/CardImage";
 import VerticalCard from "@/app/_components/gameRepresentation/verticalCard/VerticalCard";
+import useFilterInfiniteQuery from "@/hooks/useFilterInfiniteQuery";
 import useScrollEnd from "@/hooks/useScrollEnd";
 import { CardData } from "@/interfaces/igdb";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import FilterData from "./FilterData";
 
 const GameGrid = ({
   gameData,
   sortBy,
+  qs,
 }: {
   gameData: CardData[];
   sortBy: "newReleases" | "upcomingReleases" | "topRated";
+  qs: string;
 }) => {
   const [data, setData] = useState(gameData);
+  const endReached = useScrollEnd(1024);
+  const {
+    isFetching,
 
-  useScrollEnd();
+    data: filterData,
+    fetchNextPage,
+    hasNextPage,
+  } = useFilterInfiniteQuery([qs], qs, 2, gameData.length === 40 && endReached);
+
+  if (gameData.length === 40 && hasNextPage && !isFetching && endReached) {
+    fetchNextPage();
+  }
+
+  const filterSkeletons = useMemo(
+    () =>
+      Array.from({ length: 40 }, (_, index) => (
+        <VerticalCardSkeleton key={`filter_game_grid_skeleton_${index}`}>
+          <CardDetailsSkeleton type={"RATING"} />
+        </VerticalCardSkeleton>
+      )),
+    [sortBy]
+  );
 
   useEffect(() => {
-    if (data !== gameData) setData(gameData);
+    // soft refresh
+    if (data !== gameData) {
+      setData(gameData);
+    }
   }, [gameData]);
 
   if (gameData.length <= 0)
@@ -54,6 +83,8 @@ const GameGrid = ({
             </Link>
           </li>
         ))}
+        <FilterData sortBy={sortBy} filterData={filterData} />
+        {isFetching && filterSkeletons}
       </ul>
     </section>
   );
