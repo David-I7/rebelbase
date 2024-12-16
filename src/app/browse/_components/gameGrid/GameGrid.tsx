@@ -17,7 +17,7 @@ const GameGrid = ({
 }) => {
   const [data, setData] = useState(gameData);
 
-  useScrollEnd();
+  console.log(useScrollEnd(0));
 
   useEffect(() => {
     if (data !== gameData) setData(gameData);

@@ -1,40 +1,48 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const handleScroll = (e: Event, direction: "x" | "y") => {
-  const evCurrentTarget = e.currentTarget! as HTMLElement | Document;
+const useScrollEnd = (offset: number) => {
+  const [endReached, setEndReached] = useState<boolean>(false);
 
-  if (evCurrentTarget instanceof HTMLElement) {
-    console.log(evCurrentTarget.scrollHeight, evCurrentTarget.offsetHeight);
-  } else {
-    console.log(
-      evCurrentTarget.documentElement.scrollHeight,
-      evCurrentTarget.documentElement.offsetHeight,
-      window.scrollY
-    );
-  }
-};
-
-const useScrollEnd = (
-  direction: "x" | "y" = "y",
-  documentElement = true,
-  elementId?: string
-) => {
   useEffect(() => {
-    const handleScrollWrapper = (e: Event) => handleScroll(e, direction);
+    const handleScroll = () => {
+      console.log(
+        document.documentElement.offsetHeight,
+        window.scrollY + window.innerHeight + offset
+      );
+      if (
+        Math.floor(document.documentElement.offsetHeight) <=
+        window.scrollY + window.innerHeight + offset
+      ) {
+        setEndReached(true);
+      } else {
+        setEndReached(false);
+      }
+    };
 
-    let elementRef = documentElement
-      ? document
-      : document.getElementById(elementId!)!;
+    document.addEventListener("scroll", handleScroll);
 
-    if (!elementRef) return;
+    const handleResize = (entries: ResizeObserverEntry[]) => {
+      const resizedElement = entries[0];
 
-    elementRef.addEventListener("scroll", handleScrollWrapper);
+      if (
+        Math.floor(resizedElement.contentRect.height) >
+        window.scrollY + window.innerHeight + offset
+      ) {
+        setEndReached(false);
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(document.documentElement);
 
     return () => {
-      elementRef.removeEventListener("scroll", handleScrollWrapper);
+      document.removeEventListener("scroll", handleScroll);
+      resizeObserver.disconnect();
     };
   }, []);
+
+  return endReached;
 };
 
 export default useScrollEnd;
