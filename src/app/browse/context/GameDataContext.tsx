@@ -4,31 +4,38 @@ import React, {
   createContext,
   ReactNode,
   SetStateAction,
+  useEffect,
   useMemo,
   useState,
 } from "react";
 
 type InitContextType = {
-  url: string;
-  setUrl: React.Dispatch<SetStateAction<string>>;
+  cacheKey: string;
+  setCacheKey: React.Dispatch<SetStateAction<string>>;
   selectedSortBy: (typeof sortBy)[number];
 };
 
 export const GameDataContext = createContext<InitContextType>({
-  url: "",
-  setUrl: () => {},
+  cacheKey: "",
+  setCacheKey: () => {},
   selectedSortBy: "newReleases",
 });
 
 const useGameDataContext = (URL: string): InitContextType => {
-  console.log(URL);
-  const [url, setUrl] = useState<string>(URL);
-  console.log(url);
+  const [cacheKey, setCacheKey] = useState<string>(URL);
+  console.log(URL, cacheKey);
+  useEffect(() => {
+    if (URL !== cacheKey) setCacheKey(URL);
+  }, [URL]);
+  useEffect(() => {
+    window.history.replaceState(null, "", cacheKey);
+  }, [cacheKey]);
+
   const selectedSortBy = useMemo(
-    () => url.match(/(?<=sortBy=)(.+?)&/)![1] as (typeof sortBy)[number],
-    [url]
+    () => cacheKey.match(/(?<=sortBy=)(.+?)&/)![1] as (typeof sortBy)[number],
+    [cacheKey]
   );
-  return { url, setUrl, selectedSortBy };
+  return { cacheKey, setCacheKey, selectedSortBy };
 };
 
 export const GameDataContextProvider = ({
