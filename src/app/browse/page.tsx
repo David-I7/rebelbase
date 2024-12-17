@@ -10,6 +10,7 @@ import FilterGameGridSkeleton from "@/_components/skeletons/FilterGameGridSkelet
 import GameGridServer from "./_components/gameGrid/GameGridServer";
 import QueryProviderWrapper from "@/lib/tanstack/components/QueryProviderWrapper";
 import TestUseInfiniteQuery from "@/_components/test/TestUseInfiniteQuery";
+import { GameDataContextProvider } from "./context/GameDataContext";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -26,47 +27,40 @@ export default async function Browse({ searchParams }: Props) {
 
   return (
     <main className="max-w-[1344px] [@media(min-width:1344px)]:mx-auto [@media(min-width:1344px)]:max-w-[1280px] mt-8">
-      <MutateQueryString qs={extractedBrowseFields.queryString} />
       <PlatformSection />
       <section className="filter-grid mx-4 md:mx-8 [@media(min-width:1344px)]:mx-0">
         <QueryProviderWrapper includeDevtools={true}>
-          <FilterContextProvider
-            searchParams={extractedBrowseFields.queryParams}
-          >
-            <FilterGames
-              pathName="/browse"
-              qs={extractedBrowseFields.queryString}
-              sort={{
-                field: extractedBrowseFields.queryParams.sortBy,
-                order: extractedBrowseFields.queryParams.sort.order,
-              }}
-            />
-          </FilterContextProvider>
-
-          <SortGames
-            qs={extractedBrowseFields.queryString}
-            selectedSortBy={extractedBrowseFields.queryParams.sortBy}
-          />
-          <Suspense
-            key={extractedBrowseFields.queryString}
-            fallback={
-              <FilterGameGridSkeleton
-                type={
-                  extractedBrowseFields.queryParams.sortBy ===
-                  "upcomingReleases"
-                    ? "FIRST_RELEASE_DATE"
-                    : "RATING"
-                }
+          <GameDataContextProvider qs={extractedBrowseFields.queryString}>
+            <FilterContextProvider
+              searchParams={extractedBrowseFields.queryParams}
+            >
+              <FilterGames
+                pathName="/browse"
+                sort={{
+                  field: extractedBrowseFields.queryParams.sortBy,
+                  order: extractedBrowseFields.queryParams.sort.order,
+                }}
               />
-            }
-          >
-            <GameGridServer
-              qs={extractedBrowseFields.queryString}
-              sortBy={extractedBrowseFields.queryParams.sortBy}
-              gameData={browseDataPromise}
-            />
-            {/* <TestUseInfiniteQuery /> */}
-          </Suspense>
+            </FilterContextProvider>
+
+            <SortGames />
+            <Suspense
+              key={extractedBrowseFields.queryString}
+              fallback={
+                <FilterGameGridSkeleton
+                  type={
+                    extractedBrowseFields.queryParams.sortBy ===
+                    "upcomingReleases"
+                      ? "FIRST_RELEASE_DATE"
+                      : "RATING"
+                  }
+                />
+              }
+            >
+              <GameGridServer gameData={browseDataPromise} />
+              {/* <TestUseInfiniteQuery /> */}
+            </Suspense>
+          </GameDataContextProvider>
         </QueryProviderWrapper>
       </section>
     </main>

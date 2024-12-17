@@ -9,23 +9,32 @@ import { useRouter } from "next/navigation";
 import { DialogToggleClose } from "@/_components/dialog/DialogToggle";
 import KeywordSearch from "./KeywordSearch";
 import TextButton from "@/_components/buttons/TextButton";
+import { GameDataContext } from "../../context/GameDataContext";
+import { useQueryClient } from "@tanstack/react-query";
 
 const FilterGames = ({
   pathName,
-  qs,
   sort,
 }: {
   pathName: string;
-  qs: string;
   sort: { field: string; order: "asc" | "desc" };
 }) => {
   const [state, dispatch] = useContext(FilterContext);
+  const queryClient = useQueryClient();
+  const { QS, setQS } = useContext(GameDataContext);
   const router = useRouter();
-  console.log(sort);
+
   const handleFilter = () => {
-    const targetqs = buildQueryString(pathName, sort, state);
-    if (targetqs === qs) return;
-    router.push(targetqs);
+    const targetQS = buildQueryString(pathName, sort, state);
+    if (targetQS === QS) return;
+
+    if (queryClient.getQueryData([targetQS])) {
+      //cache hit
+      setQS(targetQS);
+    } else {
+      router.push(targetQS);
+      setQS(targetQS);
+    }
   };
   console.log(state);
 
@@ -85,7 +94,6 @@ const FilterGames = ({
             <FilledButton
               handleClick={() => {
                 handleFilter();
-                toggleDialog();
               }}
               label="Apply"
             />
