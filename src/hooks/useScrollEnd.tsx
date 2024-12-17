@@ -31,7 +31,7 @@ const useScrollEnd = (offset: number, onEndReached?: () => void): boolean => {
         Math.floor(resizedElement.contentRect.height) >
         window.scrollY + window.innerHeight + offset
       ) {
-        setEndReached(false);
+        if (endReached) setEndReached(false);
       }
     };
 

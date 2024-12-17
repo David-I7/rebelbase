@@ -21,19 +21,18 @@ const GameGrid = ({
   sortBy: "newReleases" | "upcomingReleases" | "topRated";
   qs: string;
 }) => {
-  const [data, setData] = useState(gameData);
   const endReached = useScrollEnd(1024);
-  const {
-    isFetching,
-
-    data: filterData,
-    fetchNextPage,
-    hasNextPage,
-  } = useFilterInfiniteQuery([qs], qs, 2, gameData.length === 40 && endReached);
+  const { isFetching, data, fetchNextPage, hasNextPage } =
+    useFilterInfiniteQuery([qs], qs, gameData.length === 40 ? 2 : undefined, {
+      pages: [gameData],
+      pageParams: [1],
+    });
 
   if (gameData.length === 40 && hasNextPage && !isFetching && endReached) {
     fetchNextPage();
   }
+
+  console.log(hasNextPage, isFetching, endReached);
 
   const filterSkeletons = useMemo(
     () =>
@@ -44,13 +43,6 @@ const GameGrid = ({
       )),
     [sortBy]
   );
-
-  useEffect(() => {
-    // soft refresh
-    if (data !== gameData) {
-      setData(gameData);
-    }
-  }, [gameData]);
 
   if (gameData.length <= 0)
     return (
@@ -63,27 +55,7 @@ const GameGrid = ({
   return (
     <section>
       <ul className="filter-game-grid [@media(max-width:622px)]:grid-cols-2 grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-x-4 gap-y-6">
-        {gameData.map((game) => (
-          <li
-            className="max-w-[244px]"
-            key={`top_rated_vertical_card_${game.id}`}
-          >
-            <Link prefetch={false} href={`/games/${game.id}`}>
-              <VerticalCard>
-                <CardImage gameName={game.name} imgId={game.cover?.image_id} />
-                <CardDetails
-                  game={game}
-                  lastRow={
-                    sortBy === "upcomingReleases"
-                      ? "FIRST_RELEASE_DATE"
-                      : "RATING"
-                  }
-                />
-              </VerticalCard>
-            </Link>
-          </li>
-        ))}
-        <FilterData sortBy={sortBy} filterData={filterData} />
+        <FilterData sortBy={sortBy} filterData={data} />
         {isFetching && filterSkeletons}
       </ul>
     </section>
