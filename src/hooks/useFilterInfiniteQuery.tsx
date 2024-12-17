@@ -21,6 +21,10 @@ const useFilterInfiniteQuery = (
 
   useMemo(() => {
     //set initialdata manually
+    console.log("memo running", gameData);
+    if (queryClient.getQueryData([qs])) {
+      return;
+    }
     queryClient.setQueryData([qs], initialData);
   }, [gameData]);
 

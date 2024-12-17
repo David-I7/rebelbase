@@ -1,0 +1,76 @@
+import FilterGameGridSkeleton from "@/_components/skeletons/FilterGameGridSkeleton";
+import FilterGames from "@/app/browse/_components/gameGrid/FilterGames";
+import GameGridServer from "@/app/browse/_components/gameGrid/GameGridServer";
+import SortGames from "@/app/browse/_components/gameGrid/SortGames";
+import { FilterContextProvider } from "@/app/browse/context/FilterContext";
+import { GameDataContextProvider } from "@/app/browse/context/GameDataContext";
+import {
+  convertedPlatformsKeys,
+  platforms,
+  uiFriendlyPlatformsMap,
+} from "@/data/constants/filterEnums";
+import { extractFields } from "@/data/constants/queryFields";
+import { getQueryData } from "@/services/igdb";
+import { Suspense } from "react";
+
+type Props = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export default async function PS5({ searchParams }: Props) {
+  const awaitedSearchParams = await searchParams;
+  const extractedBrowseFields = extractFields(
+    awaitedSearchParams,
+    "/platforms/ps5"
+  );
+
+  extractedBrowseFields.queryParams.where.push(
+    `platforms = ${convertedPlatformsKeys[platforms[1]]}`
+  );
+
+  const browseDataPromise = getQueryData(extractedBrowseFields.queryParams);
+
+  return (
+    <main className="max-w-[1344px] [@media(min-width:1344px)]:mx-auto [@media(min-width:1344px)]:max-w-[1280px] mt-8">
+      <div className="mx-4 md:mx-8 [@media(min-width:1344px)]:mx-0">
+        <h1 className="mb-4">{uiFriendlyPlatformsMap[platforms[1]]} Games</h1>
+        <p className="max-w-[70ch] text-pretty">
+          Find your next favorite game in our extensive collection of PS5 games.
+          Start browsing today and enjoy countless hours of fun and excitement
+          right on your PS5.
+        </p>
+      </div>
+      <GameDataContextProvider URL={extractedBrowseFields.queryString}>
+        <section className="filter-grid mx-4 md:mx-8 [@media(min-width:1344px)]:mx-0">
+          <FilterContextProvider
+            searchParams={extractedBrowseFields.queryParams}
+          >
+            <FilterGames
+              pathName="/platforms/ps5"
+              sort={{
+                field: extractedBrowseFields.queryParams.sortBy,
+                order: extractedBrowseFields.queryParams.sort.order,
+              }}
+            />
+          </FilterContextProvider>
+          <SortGames />
+          <Suspense
+            key={extractedBrowseFields.queryString}
+            fallback={
+              <FilterGameGridSkeleton
+                type={
+                  extractedBrowseFields.queryParams.sortBy ===
+                  "upcomingReleases"
+                    ? "FIRST_RELEASE_DATE"
+                    : "RATING"
+                }
+              />
+            }
+          >
+            <GameGridServer gameData={browseDataPromise} />
+          </Suspense>
+        </section>
+      </GameDataContextProvider>
+    </main>
+  );
+}

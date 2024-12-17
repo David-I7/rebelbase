@@ -24,9 +24,12 @@ const GameGrid = ({ gameData }: { gameData: CardData[] }) => {
       gameData
     );
 
-  useEffect(() => {
-    window.history.replaceState(null, "", url);
-  }, [gameData]);
+  console.log(gameData);
+
+  // useEffect(() => {
+  //   console.log("re-running?");
+  //   window.history.replaceState(null, "", url);
+  // }, [gameData]);
 
   if (gameData.length === 40 && hasNextPage && !isFetching && endReached) {
     fetchNextPage();

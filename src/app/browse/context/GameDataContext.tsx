@@ -21,7 +21,9 @@ export const GameDataContext = createContext<InitContextType>({
 });
 
 const useGameDataContext = (URL: string): InitContextType => {
+  console.log(URL);
   const [url, setUrl] = useState<string>(URL);
+  console.log(url);
   const selectedSortBy = useMemo(
     () => url.match(/(?<=sortBy=)(.+?)&/)![1] as (typeof sortBy)[number],
     [url]
