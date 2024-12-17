@@ -21,22 +21,21 @@ const FilterGames = ({
 }) => {
   const [state, dispatch] = useContext(FilterContext);
   const queryClient = useQueryClient();
-  const { url, setUrl } = useContext(GameDataContext);
+  const { cacheKey, setCacheKey } = useContext(GameDataContext);
   const router = useRouter();
 
   const handleFilter = () => {
     const targetUrl = buildQueryString(pathName, sort, state);
-    if (targetUrl === url) return;
+    if (targetUrl === cacheKey) return;
 
     if (queryClient.getQueryData([targetUrl])) {
       //cache hit
-      setUrl(targetUrl);
+      setCacheKey(targetUrl);
     } else {
       router.push(targetUrl);
-      setUrl(targetUrl);
     }
   };
-  console.log(state);
+  // console.log(state);
 
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
   const toggleDialog = useCallback(() => {

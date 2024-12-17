@@ -515,3 +515,7 @@ Which leads to one extra child
     transform: scaleY(0);
   }
 }
+
+.platforms svg {
+  width: 100%;
+}

@@ -12,7 +12,8 @@ import ErrorFactory from "@/lib/errors/errorFactory";
 import type {
   CasualGames,
   MostAnticipated,
-  OfflineAndOnlineGames,
+  OfflineGames,
+  OnlineGames,
   Popularity_Source_Response,
   TopNewReleases,
   TopRated,
@@ -29,7 +30,8 @@ export type HomeMultiqueryDataResponse = [
   { name: HomeSections.topNewReleases; result: TopNewReleases[] },
   { name: HomeSections.mostAnticipated; result: MostAnticipated[] },
   { name: HomeSections.topRated; result: TopRated[] },
-  { name: HomeSections.offlineAndOnlineGames; result: OfflineAndOnlineGames[] },
+  { name: HomeSections.offlineGames; result: OfflineGames[] },
+  { name: HomeSections.onlineGames; result: OnlineGames[] },
   { name: HomeSections.casualGames; result: CasualGames[] },
   { name: HomeSections.upcomingReleases; result: UpcomingReleases[] }
 ];
@@ -37,12 +39,8 @@ export type HomeDataResponse = {
   topNewReleases: { result: TopNewReleases[] };
   mostAnticipated: { result: MostAnticipated[] };
   topRated: { result: TopRated[] };
-  offlineAndOnlineGames: {
-    result: {
-      offlineGames: OfflineAndOnlineGames[];
-      onlineGames: OfflineAndOnlineGames[];
-    };
-  };
+  offlineGames: { result: OfflineGames[] };
+  onineGames: { result: OnlineGames[] };
   casualGames: { result: CasualGames[] };
   upcomingReleases: { result: UpcomingReleases[] };
 };
@@ -51,10 +49,6 @@ export type HomeMultiqueryPopularityResponse = [
   { name: HomeSections.topNewReleases; result: Popularity_Source_Response[] },
   { name: HomeSections.mostAnticipated; result: Popularity_Source_Response[] },
   { name: HomeSections.topRated; result: Popularity_Source_Response[] },
-  {
-    name: HomeSections.offlineAndOnlineGames;
-    result: Popularity_Source_Response[];
-  },
   { name: HomeSections.upcomingReleases; result: Popularity_Source_Response[] }
 ];
 export async function getHomeData(): Promise<
@@ -105,17 +99,23 @@ export async function getHomeData(): Promise<
  limit 50;
   };
 
-  query games "offlineAndOnlineGames" {
+  query games "onlineGames" {
  fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
- where genres.id =(36,5,10,14,12,4) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes.id != null;
+ where genres = (4,5,16,12,11,14,36) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes = (2,6);
  sort rating desc;
- limit 100;
+ limit ${DEFAULT_SECTION_RESULTS};
   };
-
+  query games "offlineGames" {
+ fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
+ where genres =(32,33,16,31,26,24,2) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes.id = (1);
+ sort first_release_date desc;
+ limit ${DEFAULT_SECTION_RESULTS};
+  };
+  
   query games "casualGames" {
 fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
-where keywords.id = 101 & cover.image_id !=null & genres.id = (9,15,26,31)  & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} ;
-sort first_release_date desc; 
+where cover.image_id !=null & genres = (9,15,26,35) & rating_count != null & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} ;
+sort firt_release_date desc; 
  limit ${DEFAULT_SECTION_RESULTS};
   };
 
@@ -153,14 +153,11 @@ limit 100;
     const topNewReleasesIds: number[] = [];
     const mostAnticipatedIds: number[] = [];
     const topRatedIds: number[] = [];
-    const offlineAndOnlineGamesIds: number[] = [];
     const upcomingReleasesIds: number[] = [];
 
     const topNewReleasesMap: Map<number, TopNewReleases> = new Map();
     const mostAnticipatedMap: Map<number, MostAnticipated> = new Map();
     const topRatedMap: Map<number, TopRated> = new Map();
-    const offlineAndOnlineGamesMap: Map<number, OfflineAndOnlineGames> =
-      new Map();
     const upcomingReleasesMap: Map<number, UpcomingReleases> = new Map();
     for (let i = 0; i < 100; i++) {
       if (dataResponse[0].result[i]) {
@@ -184,19 +181,11 @@ limit 100;
           dataResponse[2].result[i]
         );
       }
-      if (dataResponse[3].result[i]) {
-        offlineAndOnlineGamesIds.push(dataResponse[3].result[i].id);
-        offlineAndOnlineGamesMap.set(
-          dataResponse[3].result[i].id,
-          dataResponse[3].result[i]
-        );
-      }
-
-      if (dataResponse[5].result[i]) {
-        upcomingReleasesIds.push(dataResponse[5].result[i].id);
+      if (dataResponse[6].result[i]) {
+        upcomingReleasesIds.push(dataResponse[6].result[i].id);
         upcomingReleasesMap.set(
-          dataResponse[5].result[i].id,
-          dataResponse[5].result[i]
+          dataResponse[6].result[i].id,
+          dataResponse[6].result[i]
         );
       }
     }
@@ -221,13 +210,6 @@ limit 100;
    where popularity_type = 4 & game_id = (${topRatedIds.join()});
    sort value desc;
    limit ${DEFAULT_SECTION_RESULTS};
-    };
-  
-    query popularity_primitives "offlineAndOnlineGames" {
-  fields game_id, value; 
-  where popularity_type = 3 & game_id = (${offlineAndOnlineGamesIds.join()});
-  sort value desc;
-  limit 100;
     };
   
     query popularity_primitives "upcomingReleases" {
@@ -263,22 +245,12 @@ limit 100;
     const topNewReleasesResult: TopNewReleases[] = [];
     const mostAnticipatedResult: MostAnticipated[] = [];
     const topRatedResult: TopRated[] = [];
-    const offlineAndOnlineGamesResult: {
-      offlineGames: OfflineAndOnlineGames[];
-      onlineGames: OfflineAndOnlineGames[];
-    } = { offlineGames: [], onlineGames: [] };
-    const casualGamesResult: CasualGames[] = dataResponse[4].result;
+    const offlineGames: OfflineGames[] = dataResponse[3].result;
+    const onlineGames: OnlineGames[] = dataResponse[4].result;
+    const casualGamesResult: CasualGames[] = dataResponse[5].result;
     const upcomingReleasesResult: UpcomingReleases[] = [];
 
-    for (let i = 0; i < 100; i++) {
-      if (
-        offlineAndOnlineGamesResult.offlineGames.length >=
-          DEFAULT_SECTION_RESULTS &&
-        offlineAndOnlineGamesResult.onlineGames.length >=
-          DEFAULT_SECTION_RESULTS
-      )
-        break;
-
+    for (let i = 0; i < DEFAULT_SECTION_RESULTS; i++) {
       if (i < popularityResponse[0].result.length) {
         topNewReleasesResult.push(
           topNewReleasesMap.get(popularityResponse[0].result[i].game_id)!
@@ -294,32 +266,10 @@ limit 100;
           topRatedMap.get(popularityResponse[2].result[i].game_id)!
         );
       }
-      if (i < popularityResponse[4].result.length) {
-        upcomingReleasesResult.push(
-          upcomingReleasesMap.get(popularityResponse[4].result[i].game_id)!
-        );
-      }
       if (i < popularityResponse[3].result.length) {
-        const unCategorizedGame = offlineAndOnlineGamesMap.get(
-          popularityResponse[3].result[i].game_id!
-        )!;
-        const id = getOnlineOrOfflineGameId(unCategorizedGame);
-        if (!id) continue;
-        if (id === 1) {
-          if (
-            offlineAndOnlineGamesResult.offlineGames.length >=
-            DEFAULT_SECTION_RESULTS
-          )
-            continue;
-          offlineAndOnlineGamesResult.offlineGames.push(unCategorizedGame);
-        } else if (id === 2) {
-          if (
-            offlineAndOnlineGamesResult.onlineGames.length >=
-            DEFAULT_SECTION_RESULTS
-          )
-            continue;
-          offlineAndOnlineGamesResult.onlineGames.push(unCategorizedGame);
-        }
+        upcomingReleasesResult.push(
+          upcomingReleasesMap.get(popularityResponse[3].result[i].game_id)!
+        );
       }
     }
 
@@ -327,7 +277,8 @@ limit 100;
       topNewReleases: { result: topNewReleasesResult },
       mostAnticipated: { result: mostAnticipatedResult },
       topRated: { result: topRatedResult },
-      offlineAndOnlineGames: { result: offlineAndOnlineGamesResult },
+      offlineGames: { result: offlineGames },
+      onineGames: { result: onlineGames },
       casualGames: { result: casualGamesResult },
       upcomingReleases: { result: upcomingReleasesResult },
     };
@@ -335,27 +286,6 @@ limit 100;
     return { data: homeData, error: undefined };
   } catch (err) {
     return { data: undefined, error: err as Error };
-  }
-}
-
-function getOnlineOrOfflineGameId(
-  unCategorizedGame: OfflineAndOnlineGames
-): GameModes[number]["id"] | undefined {
-  if (
-    !unCategorizedGame["game_modes"] ||
-    !unCategorizedGame["game_modes"].length
-  )
-    return;
-
-  if (unCategorizedGame["game_modes"][0].id === 1) {
-    return 1;
-  } else if (unCategorizedGame["game_modes"][0].id === 2) {
-    return 2;
-  } else if (
-    unCategorizedGame["game_modes"][0].id === 1 &&
-    unCategorizedGame["game_modes"][1]?.id === 2
-  ) {
-    return 2;
   }
 }
 

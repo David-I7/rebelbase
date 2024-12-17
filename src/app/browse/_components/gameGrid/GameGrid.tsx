@@ -10,12 +10,12 @@ import FilterData from "./FilterData";
 import { GameDataContext } from "../../context/GameDataContext";
 
 const GameGrid = ({ gameData }: { gameData: CardData[] }) => {
-  const { url, selectedSortBy } = useContext(GameDataContext);
+  const { cacheKey, selectedSortBy } = useContext(GameDataContext);
   const endReached = useScrollEnd(1024);
   const { isFetching, data, fetchNextPage, hasNextPage } =
     useFilterInfiniteQuery(
-      [url],
-      url,
+      [cacheKey],
+      cacheKey,
       gameData.length === 40 ? 2 : undefined,
       {
         pages: [gameData],
@@ -24,17 +24,10 @@ const GameGrid = ({ gameData }: { gameData: CardData[] }) => {
       gameData
     );
 
-  console.log(gameData);
-
-  // useEffect(() => {
-  //   console.log("re-running?");
-  //   window.history.replaceState(null, "", url);
-  // }, [gameData]);
-
   if (gameData.length === 40 && hasNextPage && !isFetching && endReached) {
     fetchNextPage();
   }
-
+  console.log(gameData);
   console.log(hasNextPage, isFetching, endReached);
 
   const filterSkeletons = useMemo(

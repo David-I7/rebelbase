@@ -204,29 +204,29 @@ export const convertedPlatformsKeys: Record<
   number
 > = {
   windows: 6,
+  mac: 14,
+  browser: 82,
   ps5: 167,
-  xboxSeriesXS: 169,
   android: 34,
   ios: 39,
   ps4: 48,
   xboxOne: 49,
-  mac: 14,
 };
 export const platforms = [
   "windows",
+  "mac",
+  "browser",
   "ps5",
-  "xboxSeriesXS",
   "android",
   "ios",
   "ps4",
   "xboxOne",
-  "mac",
 ] as const;
 
 export const uiFriendlyPlatformsMap: { [key: string]: string } = {
   windows: "Windows",
   ps5: "PlayStation 5",
-  xboxSeriesXS: "Xbox Series X|S",
+  browser: "Web Browser",
   android: "Android",
   ios: "iOS",
   ps4: "PlayStation 4",

@@ -129,13 +129,15 @@ export enum HomeSections {
   mostAnticipated = "mostAnticipated",
   topRated = "topRated",
   casualGames = "casualGames",
-  offlineAndOnlineGames = "offlineAndOnlineGames",
+  onlineGames = "onlineGames",
+  offlineGames = "offlineGames",
   upcomingReleases = "upcomingReleases",
 }
 
 export type TopNewReleases = CardData;
 export type MostAnticipated = CardData;
 export type TopRated = CardData;
-export type OfflineAndOnlineGames = CardData & { game_modes: GameModes };
-export type CasualGames = CardData & { game_modes: GameModes };
+export type OnlineGames = CardData;
+export type OfflineGames = CardData;
+export type CasualGames = CardData;
 export type UpcomingReleases = CardData;
