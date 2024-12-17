@@ -107,15 +107,17 @@ export async function getHomeData(): Promise<
 
   query games "offlineAndOnlineGames" {
  fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
- where genres.id =(36,5,10,14,12,4) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes.id != null;
+ where genres =(36,5,10,14,12,4) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes.id != null;
  sort rating desc;
  limit 100;
   };
+  
+
 
   query games "casualGames" {
 fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
-where keywords.id = 101 & cover.image_id !=null & genres.id = (9,15,26,31)  & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} ;
-sort first_release_date desc; 
+where cover.image_id !=null & genres = (9,15,26,35) & rating_count != null & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} ;
+sort firt_release_date desc; 
  limit ${DEFAULT_SECTION_RESULTS};
   };
 
