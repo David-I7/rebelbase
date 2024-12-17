@@ -2,13 +2,11 @@ import { extractFields } from "@/data/constants/queryFields";
 import PlatformSection from "./_components/platforms/PlatformSection";
 import { getQueryData } from "@/services/igdb";
 import SortGames from "./_components/gameGrid/SortGames";
-import MutateQueryString from "../../_components/MutateQueryString";
 import FilterGames from "./_components/gameGrid/FilterGames";
 import { FilterContextProvider } from "./context/FilterContext";
 import { Suspense } from "react";
 import FilterGameGridSkeleton from "@/_components/skeletons/FilterGameGridSkeleton";
 import GameGridServer from "./_components/gameGrid/GameGridServer";
-import QueryProviderWrapper from "@/lib/tanstack/components/QueryProviderWrapper";
 import TestUseInfiniteQuery from "@/_components/test/TestUseInfiniteQuery";
 import { GameDataContextProvider } from "./context/GameDataContext";
 
@@ -28,41 +26,39 @@ export default async function Browse({ searchParams }: Props) {
   return (
     <main className="max-w-[1344px] [@media(min-width:1344px)]:mx-auto [@media(min-width:1344px)]:max-w-[1280px] mt-8">
       <PlatformSection />
-      <section className="filter-grid mx-4 md:mx-8 [@media(min-width:1344px)]:mx-0">
-        <QueryProviderWrapper includeDevtools={true}>
-          <GameDataContextProvider qs={extractedBrowseFields.queryString}>
-            <FilterContextProvider
-              searchParams={extractedBrowseFields.queryParams}
-            >
-              <FilterGames
-                pathName="/browse"
-                sort={{
-                  field: extractedBrowseFields.queryParams.sortBy,
-                  order: extractedBrowseFields.queryParams.sort.order,
-                }}
-              />
-            </FilterContextProvider>
+      <GameDataContextProvider URL={extractedBrowseFields.queryString}>
+        <section className="filter-grid mx-4 md:mx-8 [@media(min-width:1344px)]:mx-0">
+          <FilterContextProvider
+            searchParams={extractedBrowseFields.queryParams}
+          >
+            <FilterGames
+              pathName="/browse"
+              sort={{
+                field: extractedBrowseFields.queryParams.sortBy,
+                order: extractedBrowseFields.queryParams.sort.order,
+              }}
+            />
+          </FilterContextProvider>
 
-            <SortGames />
-            <Suspense
-              key={extractedBrowseFields.queryString}
-              fallback={
-                <FilterGameGridSkeleton
-                  type={
-                    extractedBrowseFields.queryParams.sortBy ===
-                    "upcomingReleases"
-                      ? "FIRST_RELEASE_DATE"
-                      : "RATING"
-                  }
-                />
-              }
-            >
-              <GameGridServer gameData={browseDataPromise} />
-              {/* <TestUseInfiniteQuery /> */}
-            </Suspense>
-          </GameDataContextProvider>
-        </QueryProviderWrapper>
-      </section>
+          <SortGames />
+          <Suspense
+            key={extractedBrowseFields.queryString}
+            fallback={
+              <FilterGameGridSkeleton
+                type={
+                  extractedBrowseFields.queryParams.sortBy ===
+                  "upcomingReleases"
+                    ? "FIRST_RELEASE_DATE"
+                    : "RATING"
+                }
+              />
+            }
+          >
+            <GameGridServer gameData={browseDataPromise} />
+            {/* <TestUseInfiniteQuery /> */}
+          </Suspense>
+        </section>
+      </GameDataContextProvider>
     </main>
   );
 }

@@ -5,17 +5,17 @@ import VerticalCardSkeleton from "@/_components/skeletons/cards/VerticalCardSkel
 import useFilterInfiniteQuery from "@/hooks/useFilterInfiniteQuery";
 import useScrollEnd from "@/hooks/useScrollEnd";
 import { CardData } from "@/interfaces/igdb";
-import { useContext, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import FilterData from "./FilterData";
 import { GameDataContext } from "../../context/GameDataContext";
 
 const GameGrid = ({ gameData }: { gameData: CardData[] }) => {
-  const { QS, selectedSortBy } = useContext(GameDataContext);
+  const { url, selectedSortBy } = useContext(GameDataContext);
   const endReached = useScrollEnd(1024);
   const { isFetching, data, fetchNextPage, hasNextPage } =
     useFilterInfiniteQuery(
-      [QS],
-      QS,
+      [url],
+      url,
       gameData.length === 40 ? 2 : undefined,
       {
         pages: [gameData],
@@ -23,6 +23,10 @@ const GameGrid = ({ gameData }: { gameData: CardData[] }) => {
       },
       gameData
     );
+
+  useEffect(() => {
+    window.history.replaceState(null, "", url);
+  }, [gameData]);
 
   if (gameData.length === 40 && hasNextPage && !isFetching && endReached) {
     fetchNextPage();

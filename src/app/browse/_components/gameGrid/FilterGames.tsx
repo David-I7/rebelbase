@@ -21,19 +21,19 @@ const FilterGames = ({
 }) => {
   const [state, dispatch] = useContext(FilterContext);
   const queryClient = useQueryClient();
-  const { QS, setQS } = useContext(GameDataContext);
+  const { url, setUrl } = useContext(GameDataContext);
   const router = useRouter();
 
   const handleFilter = () => {
-    const targetQS = buildQueryString(pathName, sort, state);
-    if (targetQS === QS) return;
+    const targetUrl = buildQueryString(pathName, sort, state);
+    if (targetUrl === url) return;
 
-    if (queryClient.getQueryData([targetQS])) {
+    if (queryClient.getQueryData([targetUrl])) {
       //cache hit
-      setQS(targetQS);
+      setUrl(targetUrl);
     } else {
-      router.push(targetQS);
-      setQS(targetQS);
+      router.push(targetUrl);
+      setUrl(targetUrl);
     }
   };
   console.log(state);

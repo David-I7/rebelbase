@@ -8,13 +8,13 @@ import { GameDataContext } from "../../context/GameDataContext";
 import { useRouter } from "next/navigation";
 
 const SortGames = () => {
-  const { QS, setQS, selectedSortBy } = useContext(GameDataContext);
+  const { url, setUrl, selectedSortBy } = useContext(GameDataContext);
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const dropdownItems = sortBy.map((key) => {
     const sortDetails = SortDetailsFactory.create(key);
-    let href = QS.replace(/(?<=sortBy=).+?&/, `${key}&`);
+    let href = url.replace(/(?<=sortBy=).+?&/, `${key}&`);
     href = href.replace(/(?<=sortDir=)(.+(?=&)|.+$)/, sortDetails.sortDir);
     return (
       <li key={`sort_by_${key}`}>
@@ -22,10 +22,10 @@ const SortGames = () => {
           onClick={() => {
             if (queryClient.getQueryData([href])) {
               //cache hit
-              setQS(href);
+              setUrl(href);
             } else {
               router.push(href);
-              setQS(href);
+              setUrl(href);
             }
           }}
           className={`${

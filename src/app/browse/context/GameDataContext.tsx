@@ -9,35 +9,35 @@ import React, {
 } from "react";
 
 type InitContextType = {
-  QS: string;
-  setQS: React.Dispatch<SetStateAction<string>>;
+  url: string;
+  setUrl: React.Dispatch<SetStateAction<string>>;
   selectedSortBy: (typeof sortBy)[number];
 };
 
 export const GameDataContext = createContext<InitContextType>({
-  QS: "",
-  setQS: () => {},
+  url: "",
+  setUrl: () => {},
   selectedSortBy: "newReleases",
 });
 
-const useGameDataContext = (qs: string): InitContextType => {
-  const [QS, setQS] = useState<string>(qs);
+const useGameDataContext = (URL: string): InitContextType => {
+  const [url, setUrl] = useState<string>(URL);
   const selectedSortBy = useMemo(
-    () => QS.match(/(?<=sortBy=)(.+?)&/)![1] as (typeof sortBy)[number],
-    [QS]
+    () => url.match(/(?<=sortBy=)(.+?)&/)![1] as (typeof sortBy)[number],
+    [url]
   );
-  return { QS, setQS, selectedSortBy };
+  return { url, setUrl, selectedSortBy };
 };
 
 export const GameDataContextProvider = ({
   children,
-  qs,
+  URL,
 }: {
   children: ReactNode;
-  qs: string;
+  URL: string;
 }) => {
   return (
-    <GameDataContext.Provider value={useGameDataContext(qs)}>
+    <GameDataContext.Provider value={useGameDataContext(URL)}>
       {children}
     </GameDataContext.Provider>
   );

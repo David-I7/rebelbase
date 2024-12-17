@@ -3,6 +3,7 @@ import { Inter, Poppins, Rubik_Mono_One } from "next/font/google";
 import "./globals.css";
 import Header from "./_layout/Header";
 import Footer from "./_layout/Footer";
+import QueryProviderWrapper from "@/lib/tanstack/components/QueryProviderWrapper";
 
 const rubik_mono_one = Rubik_Mono_One({
   weight: ["400"],
@@ -36,7 +37,10 @@ export default function RootLayout({
         className={`${rubik_mono_one.variable} ${inter.variable} ${poppins.variable} font-body`}
       >
         <Header />
-        {children}
+        <QueryProviderWrapper includeDevtools={true}>
+          {children}
+        </QueryProviderWrapper>
+
         <Footer />
       </body>
     </html>
