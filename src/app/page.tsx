@@ -30,13 +30,9 @@ export default async function Home() {
       </div>
       <div className="max-w-[1280px] [@media(min-width:1344px)]:mx-auto ml-4 md:ml-8">
         <VerticalListSection>
-          <OfflineGames
-            gameData={gameData?.offlineAndOnlineGames.result.offlineGames}
-          />
+          <OfflineGames gameData={gameData?.offlineGames.result} />
           <VerticalRay />
-          <OnlineGames
-            gameData={gameData?.offlineAndOnlineGames.result.onlineGames}
-          />
+          <OnlineGames gameData={gameData?.onineGames.result} />
           <VerticalRay />
           <CasualGames gameData={gameData?.casualGames.result} />
         </VerticalListSection>
