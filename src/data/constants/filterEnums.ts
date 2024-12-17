@@ -198,3 +198,38 @@ export const categories = [
 ] as const;
 
 export const sortBy = ["newReleases", "upcomingReleases", "topRated"] as const;
+
+export const convertedPlatformsKeys: Record<
+  (typeof platforms)[number],
+  number
+> = {
+  windows: 6,
+  ps5: 167,
+  xboxSeriesXS: 169,
+  android: 34,
+  ios: 39,
+  ps4: 48,
+  xboxOne: 49,
+  mac: 14,
+};
+export const platforms = [
+  "windows",
+  "ps5",
+  "xboxSeriesXS",
+  "android",
+  "ios",
+  "ps4",
+  "xboxOne",
+  "mac",
+] as const;
+
+export const uiFriendlyPlatformsMap: { [key: string]: string } = {
+  windows: "Windows",
+  ps5: "PlayStation 5",
+  xboxSeriesXS: "Xbox Series X|S",
+  android: "Android",
+  ios: "iOS",
+  ps4: "PlayStation 4",
+  xboxOne: "Xbox One",
+  mac: "Mac",
+};

@@ -83,7 +83,6 @@ export type SearchParamsBrowse = {
   where: string[];
   sort: { field: string; order: "asc" | "desc" };
   page: number;
-
   sortBy: (typeof sortBy)[number];
   sortDir: "asc" | "desc";
   categories:

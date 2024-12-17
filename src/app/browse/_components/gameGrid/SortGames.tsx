@@ -1,32 +1,41 @@
+"use client";
 import { sortBy, uiFriendlySortByKeys } from "@/data/constants/filterEnums";
 import SortDropDown from "./SortDropDown";
-import Link from "next/link";
 import { SortDetailsFactory } from "@/data/constants/queryFields";
+import { useQueryClient } from "@tanstack/react-query";
+import { useContext } from "react";
+import { GameDataContext } from "../../context/GameDataContext";
+import { useRouter } from "next/navigation";
 
-const SortGames = ({
-  selectedSortBy,
-  qs,
-}: {
-  selectedSortBy: (typeof sortBy)[number];
-  qs: string;
-}) => {
+const SortGames = () => {
+  const { url, setUrl, selectedSortBy } = useContext(GameDataContext);
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
   const dropdownItems = sortBy.map((key) => {
     const sortDetails = SortDetailsFactory.create(key);
-    let href = qs.replace(/(?<=sortBy=).+?&/, `${key}&`);
+    let href = url.replace(/(?<=sortBy=).+?&/, `${key}&`);
     href = href.replace(/(?<=sortDir=)(.+(?=&)|.+$)/, sortDetails.sortDir);
     return (
       <li key={`sort_by_${key}`}>
-        <Link
-          prefetch={false}
+        <button
+          onClick={() => {
+            if (queryClient.getQueryData([href])) {
+              //cache hit
+              setUrl(href);
+            } else {
+              router.push(href);
+              setUrl(href);
+            }
+          }}
           className={`${
             selectedSortBy === key
               ? "bg-surface-container-high font-medium text-on-surface-heading-varient"
               : ""
-          } flex items-center px-2 font-body-s min-w-max h-10 rounded-lg hover:bg-surface-container-high justify-between transition-colors`}
-          href={href}
+          } flex items-center px-2 font-body-s min-w-max w-full h-10 rounded-lg hover:bg-surface-container-high justify-between transition-colors`}
         >
           {uiFriendlySortByKeys[key]}
-        </Link>
+        </button>
       </li>
     );
   });

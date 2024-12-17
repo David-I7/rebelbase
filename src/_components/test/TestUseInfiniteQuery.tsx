@@ -18,13 +18,13 @@ const usePost = () => {
         `https://jsonplaceholder.typicode.com/posts/${pageParam}`
       ).then((res) => res.json() as Promise<Post>);
     },
-    initialPageParam: 1,
+    initialPageParam: undefined,
     initialData: () => ({
       pageParams: [0],
       pages: [{ title: "Jibberish", body: "hello world", id: 0 }],
     }),
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-      return lastPageParam < 100 ? lastPageParam + 1 : undefined;
+      return undefined;
     },
     staleTime: 1000 * 60 * 60,
     enabled: false,

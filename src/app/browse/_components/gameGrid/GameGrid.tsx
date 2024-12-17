@@ -2,38 +2,40 @@
 
 import CardDetailsSkeleton from "@/_components/skeletons/cards/CardDetailsSkeleton";
 import VerticalCardSkeleton from "@/_components/skeletons/cards/VerticalCardSkeleton";
-import CardDetails from "@/app/_components/gameRepresentation/CardDetails";
-import CardImage from "@/app/_components/gameRepresentation/verticalCard/CardImage";
-import VerticalCard from "@/app/_components/gameRepresentation/verticalCard/VerticalCard";
 import useFilterInfiniteQuery from "@/hooks/useFilterInfiniteQuery";
 import useScrollEnd from "@/hooks/useScrollEnd";
 import { CardData } from "@/interfaces/igdb";
-import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import FilterData from "./FilterData";
+import { GameDataContext } from "../../context/GameDataContext";
 
-const GameGrid = ({
-  gameData,
-  sortBy,
-  qs,
-}: {
-  gameData: CardData[];
-  sortBy: "newReleases" | "upcomingReleases" | "topRated";
-  qs: string;
-}) => {
-  const [data, setData] = useState(gameData);
+const GameGrid = ({ gameData }: { gameData: CardData[] }) => {
+  const { url, selectedSortBy } = useContext(GameDataContext);
   const endReached = useScrollEnd(1024);
-  const {
-    isFetching,
+  const { isFetching, data, fetchNextPage, hasNextPage } =
+    useFilterInfiniteQuery(
+      [url],
+      url,
+      gameData.length === 40 ? 2 : undefined,
+      {
+        pages: [gameData],
+        pageParams: [1],
+      },
+      gameData
+    );
 
-    data: filterData,
-    fetchNextPage,
-    hasNextPage,
-  } = useFilterInfiniteQuery([qs], qs, 2, gameData.length === 40 && endReached);
+  console.log(gameData);
+
+  // useEffect(() => {
+  //   console.log("re-running?");
+  //   window.history.replaceState(null, "", url);
+  // }, [gameData]);
 
   if (gameData.length === 40 && hasNextPage && !isFetching && endReached) {
     fetchNextPage();
   }
+
+  console.log(hasNextPage, isFetching, endReached);
 
   const filterSkeletons = useMemo(
     () =>
@@ -42,15 +44,8 @@ const GameGrid = ({
           <CardDetailsSkeleton type={"RATING"} />
         </VerticalCardSkeleton>
       )),
-    [sortBy]
+    [selectedSortBy]
   );
-
-  useEffect(() => {
-    // soft refresh
-    if (data !== gameData) {
-      setData(gameData);
-    }
-  }, [gameData]);
 
   if (gameData.length <= 0)
     return (
@@ -63,27 +58,7 @@ const GameGrid = ({
   return (
     <section>
       <ul className="filter-game-grid [@media(max-width:622px)]:grid-cols-2 grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-x-4 gap-y-6">
-        {gameData.map((game) => (
-          <li
-            className="max-w-[244px]"
-            key={`top_rated_vertical_card_${game.id}`}
-          >
-            <Link prefetch={false} href={`/games/${game.id}`}>
-              <VerticalCard>
-                <CardImage gameName={game.name} imgId={game.cover?.image_id} />
-                <CardDetails
-                  game={game}
-                  lastRow={
-                    sortBy === "upcomingReleases"
-                      ? "FIRST_RELEASE_DATE"
-                      : "RATING"
-                  }
-                />
-              </VerticalCard>
-            </Link>
-          </li>
-        ))}
-        <FilterData sortBy={sortBy} filterData={filterData} />
+        <FilterData sortBy={selectedSortBy} filterData={data} />
         {isFetching && filterSkeletons}
       </ul>
     </section>

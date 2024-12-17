@@ -11,7 +11,7 @@ const CardImage = ({ imgId, gameName }: CardImageProps) => {
     <div
       className={`${
         imgId ? "" : "bg-surface-container-low"
-      } max-w-[244px] aspect-[3/4] rounded-xl overflow-hidden mb-3`}
+      } max-w-[244px] aspect-[3/4] rounded-xl overflow-hidden mb-3 grid place-content-center`}
     >
       {imgId && (
         <img

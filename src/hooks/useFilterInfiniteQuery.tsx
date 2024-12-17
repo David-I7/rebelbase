@@ -1,7 +1,8 @@
 import { filterApi } from "@/data/baseUrls";
 import { CardData } from "@/interfaces/igdb";
 import ErrorFactory from "@/lib/errors/errorFactory";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useMemo } from "react";
 
 const STALE_TIME = 1000 * 60 * 60; //60 mins
 type FilterData = CardData[];
@@ -10,19 +11,35 @@ const useFilterInfiniteQuery = (
   queryKey: string[],
   qs: string,
   initialPageParam: number | undefined,
-  enabled: boolean
+  initialData: {
+    pageParams: number[];
+    pages: [FilterData];
+  },
+  gameData: FilterData
 ) => {
+  const queryClient = useQueryClient();
+
+  useMemo(() => {
+    //set initialdata manually
+    console.log("memo running", gameData);
+    if (queryClient.getQueryData([qs])) {
+      return;
+    }
+    queryClient.setQueryData([qs], initialData);
+  }, [gameData]);
+
   return useInfiniteQuery<FilterData>({
     queryKey,
     queryFn: ({ pageParam = 2 }) => getFilterQuery(pageParam as number, qs),
     initialPageParam: initialPageParam,
+    initialData: () => initialData,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
       if (Array.isArray(lastPage) && lastPage.length === 40) {
         return allPages.length + 2;
       } else return undefined;
     },
     staleTime: STALE_TIME,
-    enabled: enabled,
+    enabled: false,
   });
 };
 
