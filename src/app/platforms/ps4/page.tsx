@@ -25,7 +25,7 @@ export default async function Windows({ searchParams }: Props) {
   );
 
   extractedBrowseFields.queryParams.where.push(
-    `release_dates.platform = ${convertedPlatformsKeys[platforms[6]]}`
+    `release_dates.platform = ${convertedPlatformsKeys[platforms[7]]}`
   );
 
   const browseDataPromise = getQueryData(extractedBrowseFields.queryParams);
@@ -33,7 +33,7 @@ export default async function Windows({ searchParams }: Props) {
   return (
     <main className="max-w-[1344px] [@media(min-width:1344px)]:mx-auto [@media(min-width:1344px)]:max-w-[1280px] mt-8">
       <div className="mx-4 md:mx-8 [@media(min-width:1344px)]:mx-0">
-        <h1 className="mb-4">{uiFriendlyPlatformsMap[platforms[6]]} Games</h1>
+        <h1 className="mb-4">{uiFriendlyPlatformsMap[platforms[7]]} Games</h1>
         <p className="max-w-[70ch] text-pretty">
           Find your next favorite game in our extensive collection of PS4 games.
           Start browsing today and enjoy countless hours of fun and excitement
