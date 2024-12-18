@@ -1,5 +1,5 @@
 "use client";
-import { SearchParamsBrowse } from "@/data/constants/queryFields";
+import { SearchParamsBrowse } from "@/lib/validation/queryFieldsValidation";
 import { createContext, ReactNode, useReducer } from "react";
 
 export type Action = {

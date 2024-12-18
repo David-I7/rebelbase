@@ -18,23 +18,25 @@ const FilterData = React.memo(
 
     return filterData.pages
       .flatMap((page) => page)
-      .map((game) => (
-        <li className="max-w-[244px]" key={`filter_vertical_card_${game.id}`}>
-          <Link prefetch={false} href={`/games/${game.id}`}>
-            <VerticalCard>
-              <CardImage gameName={game.name} imgId={game.cover?.image_id} />
-              <CardDetails
-                game={game}
-                lastRow={
-                  sortBy === "upcomingReleases"
-                    ? "FIRST_RELEASE_DATE"
-                    : "RATING"
-                }
-              />
-            </VerticalCard>
-          </Link>
-        </li>
-      ));
+      .map((game) => {
+        return (
+          <li className="max-w-[244px]" key={`filter_vertical_card_${game.id}`}>
+            <Link prefetch={false} href={`/games/${game.id}`}>
+              <VerticalCard>
+                <CardImage gameName={game.name} imgId={game.cover?.image_id} />
+                <CardDetails
+                  game={game}
+                  lastRow={
+                    sortBy === "upcomingReleases"
+                      ? "FIRST_RELEASE_DATE"
+                      : "RATING"
+                  }
+                />
+              </VerticalCard>
+            </Link>
+          </li>
+        );
+      });
   }
 );
 

@@ -1,7 +1,6 @@
 import React from "react";
 import FullLogo from "../../_components/logo/FullLogo";
 import NavBar from "./NavBar";
-import SearchBar from "./SearchBar";
 
 const Footer = () => {
   return (
@@ -11,8 +10,6 @@ const Footer = () => {
         <div className="flex font-body-s mt-6 mb-16">
           <div className="flex-1 flex flex-col gap-3">
             <span className="pl-8">Search</span>
-
-            <SearchBar />
           </div>
           <div className="flex flex-col">
             <span className="pl-4">Links</span>

@@ -1,7 +1,7 @@
 "use client";
 import { sortBy, uiFriendlySortByKeys } from "@/data/constants/filterEnums";
 import SortDropDown from "./SortDropDown";
-import { SortDetailsFactory } from "@/data/constants/queryFields";
+import { SortDetailsFactory } from "@/lib/validation/queryFieldsValidation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import { GameDataContext } from "../../context/GameDataContext";

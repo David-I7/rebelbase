@@ -9,7 +9,7 @@ import {
   platforms,
   uiFriendlyPlatformsMap,
 } from "@/data/constants/filterEnums";
-import { extractFields } from "@/data/constants/queryFields";
+import { extractFields } from "@/lib/validation/queryFieldsValidation";
 import { getQueryData } from "@/services/igdb";
 import { Suspense } from "react";
 
@@ -25,7 +25,7 @@ export default async function Windows({ searchParams }: Props) {
   );
 
   extractedBrowseFields.queryParams.where.push(
-    `platforms = ${convertedPlatformsKeys[platforms[0]]}`
+    `release_dates.platform = ${convertedPlatformsKeys[platforms[0]]}`
   );
 
   const browseDataPromise = getQueryData(extractedBrowseFields.queryParams);

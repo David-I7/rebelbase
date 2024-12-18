@@ -1,6 +1,7 @@
 //There is a rate limit of 4 requests per second.
 const DEFAULT_SECTION_RESULTS = 15;
 const DEFAULT_HERO_RESULTS = 8;
+const DEFAULT_SEARCH_RESULTS = 5;
 
 import { getOrSetToCacheDynamicExpiration } from "@/lib/redis/controllers";
 ("@/lib/redis/controllers");
@@ -24,7 +25,7 @@ import type {
   GameData,
   InvolvedCompanies,
 } from "../interfaces/igdb";
-import { SearchParamsBrowse } from "@/data/constants/queryFields";
+import { SearchParamsBrowse } from "@/lib/validation/queryFieldsValidation";
 
 export type HomeMultiqueryDataResponse = [
   { name: HomeSections.topNewReleases; result: TopNewReleases[] },
@@ -101,13 +102,13 @@ export async function getHomeData(): Promise<
 
   query games "onlineGames" {
  fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
- where genres = (4,5,16,12,11,14,36) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes = (2,6);
+ where genres = (4,5,16,12,11,14,36) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes = (2,6);
  sort rating desc;
  limit ${DEFAULT_SECTION_RESULTS};
   };
   query games "offlineGames" {
  fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
- where genres =(32,33,16,31,26,24,2) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes.id = (1);
+ where genres =(32,33,16,31,26,24,2) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes.id = 1;
  sort first_release_date desc;
  limit ${DEFAULT_SECTION_RESULTS};
   };
@@ -280,7 +281,11 @@ limit 100;
       offlineGames: { result: offlineGames },
       onineGames: { result: onlineGames },
       casualGames: { result: casualGamesResult },
-      upcomingReleases: { result: upcomingReleasesResult },
+      upcomingReleases: {
+        result: upcomingReleasesResult.sort(
+          (a, b) => a.first_release_date! - b.first_release_date!
+        ),
+      },
     };
 
     return { data: homeData, error: undefined };
@@ -390,6 +395,46 @@ export async function getMoreFromCompany(
 
     return {
       data: moreGamesFromCompanyRes,
+      error: undefined,
+    };
+  } catch (err) {
+    return { data: undefined, error: err as Error };
+  }
+}
+
+export async function search(
+  query: string
+): Promise<DataOrError<CardData[], Error>> {
+  const { data: twitchAccessToken, error: err } =
+    await getOrSetToCacheDynamicExpiration(
+      CACHE_KEYS.twitchAccessToken,
+      getIGDBAccessToken
+    );
+
+  if (err) return { data: undefined, error: err };
+
+  try {
+    const searchData: CardData[] = await fetch(IGDB_BASE_URL + "/games", {
+      ...IGDBRequestOptions,
+      headers: {
+        ...IGDBRequestOptions.headers,
+        Authorization: `bearer ${twitchAccessToken!.access_token}`,
+      },
+      body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;search "${query}"; limit ${DEFAULT_SEARCH_RESULTS};`,
+    }).then(async (res) => {
+      if (res.status >= 400) {
+        throw ErrorFactory.createFetchError(
+          res.status,
+          res.statusText,
+          JSON.stringify(await res.json())
+        );
+      }
+
+      return await res.json();
+    });
+
+    return {
+      data: searchData,
       error: undefined,
     };
   } catch (err) {

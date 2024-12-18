@@ -21,7 +21,7 @@ const FullScreenDialogMenu = () => {
         aria-controls={ariaControlsId}
         aria-expanded={isOpen}
         onClick={toggle}
-        className="md:hidden text-on-surface-heading-varient rounded-full bg-surface hover:bg-surface-container-normal transition-colors place-content-center grid h-10 w-10"
+        className="sm:hidden text-on-surface-heading-varient rounded-full bg-surface hover:bg-surface-container-normal transition-colors place-content-center grid h-10 w-10"
       >
         <MdMenu size={24} />
       </button>

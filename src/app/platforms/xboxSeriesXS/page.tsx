@@ -9,7 +9,7 @@ import {
   platforms,
   uiFriendlyPlatformsMap,
 } from "@/data/constants/filterEnums";
-import { extractFields } from "@/data/constants/queryFields";
+import { extractFields } from "@/lib/validation/queryFieldsValidation";
 import { getQueryData } from "@/services/igdb";
 import { Suspense } from "react";
 
@@ -21,11 +21,11 @@ export default async function XboxSeriesXS({ searchParams }: Props) {
   const awaitedSearchParams = await searchParams;
   const extractedBrowseFields = extractFields(
     awaitedSearchParams,
-    "/platforms/xboxOne"
+    "/platforms/xboxSeriesXS"
   );
 
   extractedBrowseFields.queryParams.where.push(
-    `platforms = ${convertedPlatformsKeys[platforms[7]]}`
+    `release_dates.platform = ${convertedPlatformsKeys[platforms[4]]}`
   );
 
   const browseDataPromise = getQueryData(extractedBrowseFields.queryParams);
@@ -33,11 +33,11 @@ export default async function XboxSeriesXS({ searchParams }: Props) {
   return (
     <main className="max-w-[1344px] [@media(min-width:1344px)]:mx-auto [@media(min-width:1344px)]:max-w-[1280px] mt-8">
       <div className="mx-4 md:mx-8 [@media(min-width:1344px)]:mx-0">
-        <h1 className="mb-4">{uiFriendlyPlatformsMap[platforms[7]]} Games</h1>
+        <h1 className="mb-4">{uiFriendlyPlatformsMap[platforms[4]]} Games</h1>
         <p className="max-w-[70ch] text-pretty">
-          Find your next favorite game in our extensive collection of Xbox One
-          games. Start browsing today and enjoy countless hours of fun and
-          excitement right on your Xbox One.
+          Find your next favorite game in our extensive collection of games.
+          Start browsing today and enjoy countless hours of fun and excitement
+          right on your Xbox.
         </p>
       </div>
       <GameDataContextProvider URL={extractedBrowseFields.queryString}>
@@ -46,7 +46,7 @@ export default async function XboxSeriesXS({ searchParams }: Props) {
             searchParams={extractedBrowseFields.queryParams}
           >
             <FilterGames
-              pathName="/platforms/xboxOne"
+              pathName="/platforms/xboxSeriesXS"
               sort={{
                 field: extractedBrowseFields.queryParams.sortBy,
                 order: extractedBrowseFields.queryParams.sort.order,

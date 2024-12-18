@@ -1,4 +1,4 @@
-import { extractFields } from "@/data/constants/queryFields";
+import { extractFields } from "@/lib/validation/queryFieldsValidation";
 import PlatformSection from "./_components/platforms/PlatformSection";
 import { getQueryData } from "@/services/igdb";
 import SortGames from "./_components/gameGrid/SortGames";

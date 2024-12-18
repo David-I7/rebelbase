@@ -5,7 +5,7 @@ import VerticalCardSkeleton from "@/_components/skeletons/cards/VerticalCardSkel
 import useFilterInfiniteQuery from "@/hooks/useFilterInfiniteQuery";
 import useScrollEnd from "@/hooks/useScrollEnd";
 import { CardData } from "@/interfaces/igdb";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useMemo } from "react";
 import FilterData from "./FilterData";
 import { GameDataContext } from "../../context/GameDataContext";
 
@@ -27,7 +27,7 @@ const GameGrid = ({ gameData }: { gameData: CardData[] }) => {
   if (gameData.length === 40 && hasNextPage && !isFetching && endReached) {
     fetchNextPage();
   }
-  console.log(gameData);
+
   console.log(hasNextPage, isFetching, endReached);
 
   const filterSkeletons = useMemo(
