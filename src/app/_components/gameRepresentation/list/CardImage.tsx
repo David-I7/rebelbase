@@ -10,10 +10,11 @@ const CardImage = ({ imgId, gameName }: CardImageProps) => {
     <div
       className={`${
         imgId ? "" : "bg-surface-container-low"
-      } aspect-[3/4] rounded-lg overflow-hidden flex-shrink-0`}
+      } aspect-[3/4] rounded-lg overflow-hidden flex-shrink-0 `}
     >
       {imgId && (
         <img
+          className="h-full"
           width="64px"
           height="85px"
           loading="lazy"

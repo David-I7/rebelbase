@@ -489,17 +489,17 @@ Which leads to one extra child
   }
 }
 
-.fullScreenDialogOpen {
+.dialogOpen {
   transform-origin: top;
-  animation: fullScreenDialogOpen 400ms forwards ease-out;
+  animation: dialogOpen 300ms forwards ease-out;
 }
 
-.fullScreenDialogClose {
+.dialogClose {
   transform-origin: top;
-  animation: fullScreenDialogClose 200ms forwards ease-in;
+  animation: dialogClose 150ms forwards ease-in;
 }
 
-@keyframes fullScreenDialogOpen {
+@keyframes dialogOpen {
   from {
     transform: scaleY(0);
   }
@@ -507,7 +507,7 @@ Which leads to one extra child
     transform: scaleY(1);
   }
 }
-@keyframes fullScreenDialogClose {
+@keyframes dialogClose {
   from {
     transform: scaleY(1);
   }

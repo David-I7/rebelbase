@@ -1,9 +1,11 @@
+"use client";
 import LogoType from "../../_components/logo/LogoType";
 import FullLogo from "../../_components/logo/FullLogo";
 import NavBar from "./NavBar";
 import FullScreenDialogMenu from "./menu/FullScreenDialogMenu";
 import FullScreenDialogSearch from "./FullScreenDialogSearch";
 import { SearchContextProvider } from "./context/SearchContext";
+import DialogSearch from "./search/DialogSearch";
 
 const Header = () => {
   return (
@@ -20,6 +22,7 @@ const Header = () => {
       </div>
       <SearchContextProvider>
         <FullScreenDialogSearch />
+        <DialogSearch />
       </SearchContextProvider>
     </header>
   );
