@@ -1,6 +1,7 @@
 //There is a rate limit of 4 requests per second.
 const DEFAULT_SECTION_RESULTS = 15;
 const DEFAULT_HERO_RESULTS = 8;
+const DEFAULT_SEARCH_RESULTS = 5;
 
 import { getOrSetToCacheDynamicExpiration } from "@/lib/redis/controllers";
 ("@/lib/redis/controllers");
@@ -394,6 +395,46 @@ export async function getMoreFromCompany(
 
     return {
       data: moreGamesFromCompanyRes,
+      error: undefined,
+    };
+  } catch (err) {
+    return { data: undefined, error: err as Error };
+  }
+}
+
+export async function search(
+  query: string
+): Promise<DataOrError<CardData[], Error>> {
+  const { data: twitchAccessToken, error: err } =
+    await getOrSetToCacheDynamicExpiration(
+      CACHE_KEYS.twitchAccessToken,
+      getIGDBAccessToken
+    );
+
+  if (err) return { data: undefined, error: err };
+
+  try {
+    const searchData: CardData[] = await fetch(IGDB_BASE_URL + "/games", {
+      ...IGDBRequestOptions,
+      headers: {
+        ...IGDBRequestOptions.headers,
+        Authorization: `bearer ${twitchAccessToken!.access_token}`,
+      },
+      body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;search "${query}"; limit ${DEFAULT_SEARCH_RESULTS};`,
+    }).then(async (res) => {
+      if (res.status >= 400) {
+        throw ErrorFactory.createFetchError(
+          res.status,
+          res.statusText,
+          JSON.stringify(await res.json())
+        );
+      }
+
+      return await res.json();
+    });
+
+    return {
+      data: searchData,
       error: undefined,
     };
   } catch (err) {
