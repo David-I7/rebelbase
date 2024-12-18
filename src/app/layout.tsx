@@ -36,8 +36,9 @@ export default function RootLayout({
       <body
         className={`${rubik_mono_one.variable} ${inter.variable} ${poppins.variable} font-body`}
       >
-        <Header />
         <QueryProviderWrapper includeDevtools={true}>
+          <Header />
+
           {children}
         </QueryProviderWrapper>
 

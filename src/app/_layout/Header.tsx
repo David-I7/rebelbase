@@ -1,28 +1,26 @@
-import { MdSearch, MdMenu } from "react-icons/md";
 import LogoType from "../../_components/logo/LogoType";
 import FullLogo from "../../_components/logo/FullLogo";
-import IconTarget from "../../_components/buttons/IconTarget";
 import NavBar from "./NavBar";
-import SearchBar from "./SearchBar";
 import FullScreenDialogMenu from "./menu/FullScreenDialogMenu";
+import FullScreenDialogSearch from "./FullScreenDialogSearch";
+import { SearchContextProvider } from "./context/SearchContext";
 
 const Header = () => {
   return (
-    <header className="flex relative items-center justify-between  md:justify-between h-20 px-4 lg:px-8 bg-surface">
+    <header className="flex relative items-center justify-between  md:justify-normal h-20 px-4 lg:px-8 bg-surface">
       <div className="md:flex-initial">
         <LogoType responsive={true} />
         <FullLogo responsive={true} />
       </div>
-      <div className="-order-1 sm:order-2">
+      <div className="-order-1 sm:order-none sm:flex-1 flex justify-end">
         <FullScreenDialogMenu />
-        <NavBar customClass="flex items-center" responsive={true} />
+        <div className="hidden sm:block">
+          <NavBar customClass="flex items-center" />
+        </div>
       </div>
-      <div className="sm:flex-1 max-w-[600px]">
-        <IconTarget customClass="text-on-surface-heading-varient ml-4 sm:hidden rounded-full hover:bg-surface-container-normal transition-colors">
-          <MdSearch size={24} />
-        </IconTarget>
-        <SearchBar responsive={true} />
-      </div>
+      <SearchContextProvider>
+        <FullScreenDialogSearch />
+      </SearchContextProvider>
     </header>
   );
 };

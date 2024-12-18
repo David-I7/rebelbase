@@ -4,17 +4,15 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 type NavBarProps = {
-  responsive?: boolean;
   customClass?: string;
 };
 
-const NavBar = ({ responsive = false, customClass }: NavBarProps) => {
+const NavBar = ({ customClass }: NavBarProps) => {
   const currentPath = usePathname();
-  const responsiveStyles = responsive ? "hidden md:block" : "block";
   const selectedStyles = "text-primary after:bg-primary";
 
   return (
-    <nav className={responsiveStyles}>
+    <nav>
       <ul className={customClass}>
         <li>
           <Link
