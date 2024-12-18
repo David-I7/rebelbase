@@ -1,14 +1,19 @@
-export function debounce<T extends CallableFunction, U>(
-  cb: T,
-  delayMS: number,
-  ...args: U[]
-) {
+export function debounceAsync<T, U>(
+  cb: (props: T) => Promise<U>,
+  delayMS: number
+): (props: T) => Promise<U> {
   let timer!: NodeJS.Timeout;
 
-  return () => {
+  return async (props: T) => {
     clearTimeout(timer);
-    timer = setTimeout(() => {
-      return cb(args);
-    }, delayMS);
+    return await new Promise((res, rej) => {
+      timer = setTimeout(async () => {
+        try {
+          return res(await cb(props));
+        } catch (error) {
+          throw error;
+        }
+      }, delayMS);
+    });
   };
 }
