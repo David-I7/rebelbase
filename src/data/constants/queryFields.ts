@@ -4,9 +4,11 @@ import {
   convertedCategoryKeys,
   convertedGameModeKeys,
   convertedGenresKeys,
+  convertedPlatformsKeys,
   convertedThemesKeys,
   gameModes,
   genres,
+  platforms,
   sortBy,
   themes,
 } from "./filterEnums";
@@ -74,6 +76,7 @@ const searchParamsBrowseSchema = z
       ])
       .optional(),
     page: z.coerce.number().min(1).int().optional().default(1),
+    platform: z.enum(platforms).optional(),
   })
   .passthrough();
 
@@ -96,6 +99,7 @@ export type SearchParamsBrowse = {
     | (typeof gameModes)[number][]
     | undefined;
   keyword: string | undefined;
+  platform: string | undefined;
 };
 
 export function extractFields(
@@ -106,7 +110,7 @@ export function extractFields(
 ): { queryParams: SearchParamsBrowse; queryString: string } {
   const defaultSortDetails = SortDetailsFactory.create("newReleases");
 
-  let queryString = buildQueryString(pathName, defaultSortDetails);
+  let queryString = buildUIQueryString(pathName, defaultSortDetails);
   let result: SearchParamsBrowse = {
     page: 1,
     sort: {
@@ -121,6 +125,7 @@ export function extractFields(
     themes: undefined,
     genres: undefined,
     gameModes: undefined,
+    platform: undefined,
   };
 
   const parsedSearchParams = searchParamsBrowseSchema.safeParse(searchParams);
@@ -150,12 +155,18 @@ export function extractFields(
       parsedSearchParams.data.genres,
       convertedGenresKeys
     );
+    const platformCondition = getWhereCondition(
+      "release_dates.platform",
+      parsedSearchParams.data.platform,
+      convertedPlatformsKeys
+    );
 
     categoriesCondition ? where.push(categoriesCondition) : null;
     gameModesCondition ? where.push(gameModesCondition) : null;
     themesCondition ? where.push(themesCondition) : null;
     genresCondition ? where.push(genresCondition) : null;
     keywordCondition ? where.push(keywordCondition) : null;
+    platformCondition ? where.push(platformCondition) : null;
 
     const sortDetails = SortDetailsFactory.create(
       parsedSearchParams.data.sortBy
@@ -163,7 +174,7 @@ export function extractFields(
 
     where.push(sortDetails.whereCondition);
 
-    queryString = buildQueryString(pathName, sortDetails, parsedSearchParams);
+    queryString = buildUIQueryString(pathName, sortDetails, parsedSearchParams);
     result = {
       ...result,
       where,
@@ -180,6 +191,7 @@ export function extractFields(
       keyword: parsedSearchParams.data.keyword,
       themes: parsedSearchParams.data.themes,
       page: parsedSearchParams.data.page,
+      platform: parsedSearchParams.data.platform,
     };
   }
 
@@ -206,7 +218,7 @@ function getWhereCondition(
   }
 }
 
-function buildQueryString(
+function buildUIQueryString(
   pathName: string,
   sortByDetails: SortDetails,
   parsedSearchParams?: z.SafeParseSuccess<SearchParamsBrowseSchema>

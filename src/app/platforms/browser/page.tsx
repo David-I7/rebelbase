@@ -25,7 +25,7 @@ export default async function Windows({ searchParams }: Props) {
   );
 
   extractedBrowseFields.queryParams.where.push(
-    `platforms = ${convertedPlatformsKeys[platforms[2]]}`
+    `release_dates.platform = ${convertedPlatformsKeys[platforms[2]]}`
   );
 
   const browseDataPromise = getQueryData(extractedBrowseFields.queryParams);

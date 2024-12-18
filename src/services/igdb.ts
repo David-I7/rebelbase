@@ -101,13 +101,13 @@ export async function getHomeData(): Promise<
 
   query games "onlineGames" {
  fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
- where genres = (4,5,16,12,11,14,36) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes = (2,6);
+ where genres = (4,5,16,12,11,14,36) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes = (2,6);
  sort rating desc;
  limit ${DEFAULT_SECTION_RESULTS};
   };
   query games "offlineGames" {
  fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
- where genres =(32,33,16,31,26,24,2) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes.id = (1);
+ where genres =(32,33,16,31,26,24,2) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes.id = 1;
  sort first_release_date desc;
  limit ${DEFAULT_SECTION_RESULTS};
   };
@@ -280,7 +280,11 @@ limit 100;
       offlineGames: { result: offlineGames },
       onineGames: { result: onlineGames },
       casualGames: { result: casualGamesResult },
-      upcomingReleases: { result: upcomingReleasesResult },
+      upcomingReleases: {
+        result: upcomingReleasesResult.sort(
+          (a, b) => a.first_release_date! - b.first_release_date!
+        ),
+      },
     };
 
     return { data: homeData, error: undefined };

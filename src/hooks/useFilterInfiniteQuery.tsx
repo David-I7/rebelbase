@@ -49,8 +49,12 @@ async function getFilterQuery(
   pageParam: number,
   qs: string
 ): Promise<FilterData> {
-  const filterQs = qs.replace(/.*\/.*\?/, "");
-
+  let filterQs = qs.replace(/.*\/.*\?/, "");
+  const platform = qs.match(/(?<=platforms\/)(.*)\?/);
+  if (platform) {
+    filterQs += `&platform=${platform[1]}`;
+  }
+  console.log(filterQs);
   return fetch(`${filterApi}?${filterQs}&page=${pageParam}`).then(
     async (res) => {
       if (res.status >= 400) {

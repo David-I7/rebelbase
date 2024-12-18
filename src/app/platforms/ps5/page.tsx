@@ -25,7 +25,7 @@ export default async function PS5({ searchParams }: Props) {
   );
 
   extractedBrowseFields.queryParams.where.push(
-    `platforms = ${convertedPlatformsKeys[platforms[3]]}`
+    `release_dates.platform = ${convertedPlatformsKeys[platforms[3]]}`
   );
 
   const browseDataPromise = getQueryData(extractedBrowseFields.queryParams);

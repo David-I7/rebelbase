@@ -7,7 +7,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   console.log(Object.fromEntries(searchParams));
 
   const { queryParams } = extractFields(Object.fromEntries(searchParams));
-
+  console.log(queryParams);
   const { data, error } = await getQueryData(queryParams);
 
   if (error)

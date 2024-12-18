@@ -25,7 +25,7 @@ export default async function XboxSeriesXS({ searchParams }: Props) {
   );
 
   extractedBrowseFields.queryParams.where.push(
-    `platforms = ${convertedPlatformsKeys[platforms[7]]}`
+    `release_dates.platform = ${convertedPlatformsKeys[platforms[7]]}`
   );
 
   const browseDataPromise = getQueryData(extractedBrowseFields.queryParams);
