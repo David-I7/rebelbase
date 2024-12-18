@@ -19,6 +19,9 @@ const Dialog = React.forwardRef(
     return (
       <dialog
         style={style}
+        onMouseLeave={(e) => {
+          console.log(e);
+        }}
         onClick={(e) => {
           const dialogPosition = e.currentTarget.getBoundingClientRect();
 
@@ -33,7 +36,7 @@ const Dialog = React.forwardRef(
           }
         }}
         ref={ref}
-        className={`${customClass} bg-surface-container-lowest rounded-3xl backdrop:bg-[rgba(0,0,0,0.38)] backdrop:backdrop-blur-sm text-inherit`}
+        className={`${customClass} bg-surface-container-lowest rounded-3xl backdrop:bg-[rgba(0,0,0,0.38)] backdrop:backdrop-blur-sm text-inherit backdrop:top-20`}
       >
         {children}
       </dialog>

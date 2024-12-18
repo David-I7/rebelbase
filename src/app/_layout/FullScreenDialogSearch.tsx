@@ -1,10 +1,10 @@
 "use client";
 import IconTarget from "@/_components/buttons/IconTarget";
 import FullScreenDialog from "@/_components/dialog/FullScreenDialog";
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 import SearchBar from "./search/SearchBar";
-import SearchResults from "./search/SearchResults";
+import SearchResultsMemoized from "./search/SearchResultsMemoized";
 
 const FullScreenDialogSearch = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -12,8 +12,9 @@ const FullScreenDialogSearch = () => {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
+  console.log("re-render?");
   return (
-    <div>
+    <div className="lg:hidden">
       <button
         aria-controls={ariaControlsId}
         aria-expanded={isOpen}
@@ -36,7 +37,7 @@ const FullScreenDialogSearch = () => {
           </IconTarget>
         </div>
         <SearchBar />
-        <SearchResults />
+        <SearchResultsMemoized />
       </FullScreenDialog>
     </div>
   );

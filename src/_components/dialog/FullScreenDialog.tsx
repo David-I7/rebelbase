@@ -14,25 +14,21 @@ const FullScreenDialog = ({
   children,
   style,
 }: FullScreenDialogProps) => {
-  const initialRender = useRef<boolean>(true);
-
   useEffect(() => {
-    initialRender.current = false;
-    if (isOpen) document.documentElement.style.overflow = "hidden";
-    else document.documentElement.style.overflow = "auto";
+    if (isOpen) {
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.documentElement.style.overflow = "auto";
+    }
   }, [isOpen]);
 
   return (
     <section
       style={style}
       id={id}
-      className={`h-dvh w-dvw scale-0 fixed bg-surface-container-lowest overflow-y-auto z-20 top-0 left-0 ${
-        initialRender.current
-          ? ""
-          : isOpen
-          ? "fullScreenDialogOpen"
-          : "fullScreenDialogClose"
-      }`}
+      className={`${
+        isOpen ? "h-dvh duration-[350ms]" : "h-0 duration-200"
+      } transition-[height]  w-dvw fixed bg-surface-container-lowest overflow-y-auto z-20 top-0 left-0`}
     >
       {children}
     </section>

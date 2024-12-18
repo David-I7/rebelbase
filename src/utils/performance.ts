@@ -17,3 +17,17 @@ export function debounceAsync<T, U>(
     });
   };
 }
+export function debounce<T, U>(
+  cb: (props: T) => U,
+  delayMS: number
+): (props: T) => undefined {
+  let timer!: NodeJS.Timeout;
+
+  return (props: T) => {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      cb(props);
+    }, delayMS);
+  };
+}
