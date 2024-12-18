@@ -24,7 +24,7 @@ import type {
   GameData,
   InvolvedCompanies,
 } from "../interfaces/igdb";
-import { SearchParamsBrowse } from "@/data/constants/queryFields";
+import { SearchParamsBrowse } from "@/lib/validation/queryFieldsValidation";
 
 export type HomeMultiqueryDataResponse = [
   { name: HomeSections.topNewReleases; result: TopNewReleases[] },

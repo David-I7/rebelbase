@@ -11,7 +11,7 @@ import {
   platforms,
   sortBy,
   themes,
-} from "./filterEnums";
+} from "../../data/constants/filterEnums";
 
 class SortDetails {
   public sortBy!: string;

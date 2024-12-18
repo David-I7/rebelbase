@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { extractFields } from "@/data/constants/queryFields";
+import { extractFields } from "@/lib/validation/queryFieldsValidation";
 import { getQueryData } from "@/services/igdb";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const searchParams = req.nextUrl.searchParams;
-  console.log(Object.fromEntries(searchParams));
 
   const { queryParams } = extractFields(Object.fromEntries(searchParams));
-  console.log(queryParams);
+
   const { data, error } = await getQueryData(queryParams);
 
   if (error)
