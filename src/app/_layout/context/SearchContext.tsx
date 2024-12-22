@@ -44,6 +44,7 @@ const useSearchContext = (): InitSearchType => {
   }, []);
   const handleReset = useCallback(() => {
     setSearchValue("");
+    setDeferredSearchValue("");
   }, []);
 
   useEffect(() => {

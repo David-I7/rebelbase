@@ -12,7 +12,7 @@ const FullScreenDialogSearch = () => {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-  console.log("re-render?");
+
   return (
     <div className="lg:hidden">
       <button
