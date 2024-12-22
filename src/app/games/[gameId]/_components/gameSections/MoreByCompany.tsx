@@ -17,6 +17,14 @@ const MoreByCompany = async ({
 
   if (gameDataError) return;
 
+  if (
+    !gameData ||
+    !gameData.length ||
+    (gameData[0].id === gameId && gameData.length === 1)
+  )
+    return;
+  console.log(gameData);
+
   return (
     <section className="flex flex-col flex-1">
       <h2 className="flex items-center gap-2 mb-4 text-2xl">

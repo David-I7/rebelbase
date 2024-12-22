@@ -1,5 +1,5 @@
 import React from "react";
-import FullLogo from "../../_components/logo/FullLogo";
+import FullLogo from "../../_components/primitives/logo/FullLogo";
 import NavBar from "./NavBar";
 
 const Footer = () => {

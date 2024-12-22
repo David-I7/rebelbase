@@ -1,4 +1,4 @@
-import IconTarget from "@/_components/buttons/IconTarget";
+import IconTarget from "@/_components/primitives/buttons/IconTarget";
 import React, { useContext, useEffect, useRef } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 import { SearchContext } from "../context/SearchContext";

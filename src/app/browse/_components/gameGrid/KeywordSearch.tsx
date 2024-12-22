@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent } from "react";
 import { Action } from "../../context/FilterContext";
-import SearchBar from "@/_components/search/SearchBar";
+import SearchBar from "@/_components/primitives/search/SearchBar";
 
 const KeywordSearch = React.memo(
   ({

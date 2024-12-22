@@ -3,7 +3,7 @@ import { CardData } from "@/interfaces/igdb";
 import React, { ReactElement, useRef, useState } from "react";
 import HeroCard from "./HeroCard";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import Carouselndicator from "@/_components/buttons/carousel/Carouselndicator";
+import Carouselndicator from "@/_components/primitives/buttons/carousel/Carouselndicator";
 import HeroImageB from "./HeroImageB";
 import HeroCardDetailsB from "./HeroCardDetailsB";
 import Link from "next/link";

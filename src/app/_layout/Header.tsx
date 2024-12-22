@@ -1,6 +1,6 @@
 "use client";
-import LogoType from "../../_components/logo/LogoType";
-import FullLogo from "../../_components/logo/FullLogo";
+import LogoType from "../../_components/primitives/logo/LogoType";
+import FullLogo from "../../_components/primitives/logo/FullLogo";
 import NavBar from "./NavBar";
 import FullScreenDialogMenu from "./menu/FullScreenDialogMenu";
 import FullScreenDialogSearch from "./FullScreenDialogSearch";

@@ -2,9 +2,10 @@
 import React from "react";
 import { MdClose } from "react-icons/md";
 
-const CloseGameDialog = () => {
+const CloseGameDialog = ({ style }: { style?: React.CSSProperties }) => {
   return (
     <button
+      style={style}
       onClick={(e) => {
         const gameDialog = e.currentTarget.parentElement!
           .parentElement as HTMLDialogElement;
