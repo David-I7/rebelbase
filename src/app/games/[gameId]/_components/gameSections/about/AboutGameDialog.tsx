@@ -18,7 +18,7 @@ const AboutGameDialog = ({ children }: { children: ReactNode }) => {
           About this game
         </h2>
         <MdChevronRight
-          className="flex-shrink-0 text-on-surface-heading-varient"
+          className="flex-shrink-0 text-on-surface-heading"
           size={32}
         />
       </button>

@@ -2,9 +2,9 @@ import Dot from "@/_components/Dot";
 import React from "react";
 
 const CardDetailsSkeleton = ({
-  type,
+  type = "RATING",
 }: {
-  type: "RATING" | "FIRST_RELEASE_DATE" | undefined;
+  type?: "RATING" | "FIRST_RELEASE_DATE" | "";
 }) => {
   return (
     <div>

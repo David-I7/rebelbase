@@ -25,14 +25,19 @@ const SectionDialog = ({
 
   return (
     <DialogToggleOpen
-      style={{ padding: 0 }}
-      extendedClass="text-nowrap mb-4 hover:gap-4 transition-[gap]"
+      style={{
+        padding: 0,
+        height: "auto",
+        position: "relative",
+        display: "inline",
+      }}
+      extendedClass="text-start mb-4"
       toggle={toggle}
       label={label}
       trailingIcon={
         <MdChevronRight
           size={32}
-          className="flex-shrink-0 text-on-surface-heading-varient"
+          className="absolute right-0 top-2/4 -translate-y-2/4 hover:translate-x-1 transition-transform flex-shrink-0 text-on-surface-heading"
         />
       }
     >

@@ -8,6 +8,7 @@ import HeroSection from "./_components/gameSections/HeroSection";
 import MediaSection from "./_components/gameSections/media/MediaSection";
 import AboutGame from "./_components/gameSections/about/AboutGame";
 import { Suspense } from "react";
+import VerticalListSkeleton from "@/_components/skeletons/list/VerticalListItemSkeleton";
 
 export default async function GamePage({
   params,
@@ -47,7 +48,7 @@ export default async function GamePage({
         <AboutGame game={gameData!.result!} />
         <div className="grid gap-12 content-start">
           <SimilarGames similarGames={gameData!.result[0]["similar_games"]} />
-          <Suspense fallback={<></>}>
+          <Suspense fallback={<VerticalListSkeleton />}>
             <MoreByCompany
               data={companyData}
               gameId={gameData!.result[0].id}

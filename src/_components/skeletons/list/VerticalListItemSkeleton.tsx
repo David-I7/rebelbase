@@ -1,37 +1,38 @@
-import CardImage from "@/app/_components/gameRepresentation/verticalCard/CardImage";
 import CardDetailsSkeleton from "../cards/CardDetailsSkeleton";
+import CardListItemSkeleton from "./CardListItemSkeleton";
+import { ReactElement } from "react";
 
-const VerticalList = ({
-  gameData,
-  sectionName,
-  gameId,
+type VerticalListSkeletonProps = {
+  listItemCount?: number;
+};
+
+const LIST_ITEM_QUANTITY = 5;
+
+const VerticalListSkeleton = ({
   listItemCount = LIST_ITEM_QUANTITY,
-}: VerticalListCarouselProps) => {
+}: VerticalListSkeletonProps) => {
   const listItems: ReactElement[] = [];
   let itemCount = 0;
-  for (let i = 0; i < gameData.length; i++) {
-    if (itemCount === listItemCount) break;
-    if (gameData[i].id === gameId) continue;
+  for (let i = 0; i < listItemCount; i++) {
     listItems.push(
-      <li
-        key={`${sectionName}_vertical_card_list_item_${gameData[i].id}`}
-        className=""
-      >
-        <CardListItem>
-          <CardImage
-            gameName={gameData[i].name}
-            imgId={gameData[i].cover?.image_id}
-          />
-          <CardDetailsSkeleton lastRow="" />
-        </CardListItem>
+      <li key={`vertical_card_list_item_skeleton_${i}`} className="">
+        <CardListItemSkeleton>
+          <div className="w-12 lg:w-16 aspect-[3/4] rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-normal"></div>
+          <div className="max-w-md">
+            <CardDetailsSkeleton type="" />
+          </div>
+        </CardListItemSkeleton>
       </li>
     );
     itemCount++;
   }
 
   return (
-    <ul className="grid grid-cols-[minmax(256px,1fr)] w-full">{listItems}</ul>
+    <div className="grid gap-4">
+      <div className="max-w-80 w-full h-8 rounded bg-surface-container-normal"></div>
+      <ul className="grid grid-cols-[minmax(256px,1fr)] w-full">{listItems}</ul>
+    </div>
   );
 };
 
-export default VerticalList;
+export default VerticalListSkeleton;
