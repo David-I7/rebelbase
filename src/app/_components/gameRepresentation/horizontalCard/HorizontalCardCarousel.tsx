@@ -4,8 +4,8 @@ import HorizontalCard from "./HorizontalCard";
 import CardImage from "./CardImage";
 import CardDetails from "../CardDetails";
 import { CardData } from "@/interfaces/igdb";
-import PrevButton from "@/_components/buttons/carousel/PrevButton";
-import NextButton from "@/_components/buttons/carousel/NextButton";
+import PrevButton from "@/_components/primitives/buttons/carousel/PrevButton";
+import NextButton from "@/_components/primitives/buttons/carousel/NextButton";
 import { handleCarouselScroll } from "@/utils/eventHandlers";
 
 export type HorizontalCardCarouselProps = {

@@ -1,6 +1,6 @@
 "use client";
-import IconTarget from "@/_components/buttons/IconTarget";
-import FullScreenDialog from "@/_components/dialog/FullScreenDialog";
+import IconTarget from "@/_components/primitives/buttons/IconTarget";
+import FullScreenDialog from "@/_components/primitives/dialog/FullScreenDialog";
 import React, { useState } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 import SearchBar from "./search/SearchBar";
@@ -12,7 +12,7 @@ const FullScreenDialogSearch = () => {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-  console.log("re-render?");
+
   return (
     <div className="lg:hidden">
       <button

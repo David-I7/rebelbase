@@ -62,14 +62,14 @@ export const ageRatingImages: {
   },
 };
 
-import Website from "@/_components/icons/Website";
-import Facebook from "@/_components/icons/Facebook";
-import X from "@/_components/icons/X";
-import Twitch from "@/_components/icons/Twitch";
-import Instagram from "@/_components/icons/Instagram";
-import Youtube from "@/_components/icons/Youtube";
-import Reddit from "@/_components/icons/Reddit";
-import Discord from "@/_components/icons/Discord";
+import Website from "@/_components/primitives/icons/Website";
+import Facebook from "@/_components/primitives/icons/Facebook";
+import X from "@/_components/primitives/icons/X";
+import Twitch from "@/_components/primitives/icons/Twitch";
+import Instagram from "@/_components/primitives/icons/Instagram";
+import Youtube from "@/_components/primitives/icons/Youtube";
+import Reddit from "@/_components/primitives/icons/Reddit";
+import Discord from "@/_components/primitives/icons/Discord";
 
 export const socialLinksIcons = {
   1: <Website />,

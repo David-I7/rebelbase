@@ -1,6 +1,6 @@
 "use client";
-import Dialog from "@/_components/dialog/Dialog";
-import { DialogToggleOpen } from "@/_components/dialog/DialogToggle";
+import Dialog from "@/_components/primitives/dialog/Dialog";
+import { DialogToggleOpen } from "@/_components/primitives/dialog/DialogToggle";
 import { RelevantVideoData } from "@/utils/dataTransformation";
 import React, { useEffect, useRef, useState } from "react";
 import { MdPlayArrow } from "react-icons/md";

@@ -1,7 +1,7 @@
 "use client";
 import React, { ReactNode, useEffect, useRef } from "react";
-import PrevButton from "@/_components/buttons/carousel/PrevButton";
-import NextButton from "@/_components/buttons/carousel/NextButton";
+import PrevButton from "@/_components/primitives/buttons/carousel/PrevButton";
+import NextButton from "@/_components/primitives/buttons/carousel/NextButton";
 import { handleCarouselScroll } from "@/utils/eventHandlers";
 
 type VerticalListSectionProps = {

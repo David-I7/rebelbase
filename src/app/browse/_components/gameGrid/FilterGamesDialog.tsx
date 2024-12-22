@@ -1,6 +1,6 @@
 "use client";
-import Dialog from "@/_components/dialog/Dialog";
-import { DialogToggleOpen } from "@/_components/dialog/DialogToggle";
+import Dialog from "@/_components/primitives/dialog/Dialog";
+import { DialogToggleOpen } from "@/_components/primitives/dialog/DialogToggle";
 import React, { ReactNode, useEffect, useRef } from "react";
 import { MdFilterAlt } from "react-icons/md";
 

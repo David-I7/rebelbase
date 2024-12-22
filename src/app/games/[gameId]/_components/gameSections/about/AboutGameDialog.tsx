@@ -1,7 +1,7 @@
 "use client";
-import Dialog from "@/_components/dialog/Dialog";
+import Dialog from "@/_components/primitives/dialog/Dialog";
 
-import React, { ReactNode, useRef, useState } from "react";
+import React, { ReactNode, useRef } from "react";
 import { MdChevronRight } from "react-icons/md";
 
 const AboutGameDialog = ({ children }: { children: ReactNode }) => {
@@ -12,14 +12,20 @@ const AboutGameDialog = ({ children }: { children: ReactNode }) => {
         onClick={() => {
           dialogRef.current!.showModal();
         }}
-        className="grid grid-cols-[repeat(2,auto)] text-nowrap gap-2 [@media(min-width:880px)]:hidden"
+        className="grid grid-cols-[repeat(2,auto)] text-nowrap gap-2 [@media(min-width:880px)]:hidden hover:gap-4 transition-[gap]"
       >
-        About this game
-        <MdChevronRight className="flex-shrink-0" size={32} />
+        <h2 className="flex items-center gap-2 mb-4 text-2xl ">
+          About this game
+        </h2>
+        <MdChevronRight
+          className="flex-shrink-0 text-on-surface-heading"
+          size={32}
+        />
       </button>
-      <span className="hidden [@media(min-width:880px)]:inline">
+
+      <h2 className="items-center gap-2 mb-4 text-2xl hidden [@media(min-width:880px)]:flex">
         About this game
-      </span>
+      </h2>
       <Dialog
         customClass="[@media(max-width:737px)]:mx-6 scroll-hidden"
         style={{ maxWidth: "689px" }}

@@ -15,7 +15,7 @@ const AboutAccordion = ({ children }: { children: React.ReactNode }) => {
     <div className="">
       <div
         ref={accordionRef}
-        className="h-60 [@media(min-width:880px)]:h-auto [@media(min-width:880px)]:after:hidden relative overflow-hidden transition-section"
+        className="h-[280px] [@media(min-width:880px)]:h-auto [@media(min-width:880px)]:after:hidden relative overflow-hidden transition-section"
       >
         {children}
       </div>

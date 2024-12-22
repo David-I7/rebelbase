@@ -1,6 +1,6 @@
 "use client";
-import NextButton from "@/_components/buttons/carousel/NextButton";
-import PrevButton from "@/_components/buttons/carousel/PrevButton";
+import NextButton from "@/_components/primitives/buttons/carousel/NextButton";
+import PrevButton from "@/_components/primitives/buttons/carousel/PrevButton";
 import { handleCarouselScroll } from "@/utils/eventHandlers";
 import React, { ReactNode, useRef } from "react";
 

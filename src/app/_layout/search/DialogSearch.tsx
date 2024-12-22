@@ -1,5 +1,5 @@
-import Dialog from "@/_components/dialog/Dialog";
-import { DialogToggleOpen } from "@/_components/dialog/DialogToggle";
+import Dialog from "@/_components/primitives/dialog/Dialog";
+import { DialogToggleOpen } from "@/_components/primitives/dialog/DialogToggle";
 import React, { useEffect, useRef, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import SearchBar from "./SearchBar";

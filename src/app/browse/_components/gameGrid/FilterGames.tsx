@@ -3,12 +3,12 @@ import React, { useCallback, useContext, useState } from "react";
 import FilterGamesDialog from "./FilterGamesDialog";
 import FilterGamesAccordions from "./FilterGamesAccordions";
 import { FilterContext } from "../../context/FilterContext";
-import FilledButton from "@/_components/buttons/FilledButton";
+import FilledButton from "@/_components/primitives/buttons/FilledButton";
 import { buildQueryString } from "../../context/FilterContext";
 import { useRouter } from "next/navigation";
-import { DialogToggleClose } from "@/_components/dialog/DialogToggle";
+import { DialogToggleClose } from "@/_components/primitives/dialog/DialogToggle";
 import KeywordSearch from "./KeywordSearch";
-import TextButton from "@/_components/buttons/TextButton";
+import TextButton from "@/_components/primitives/buttons/TextButton";
 import { GameDataContext } from "../../context/GameDataContext";
 import { useQueryClient } from "@tanstack/react-query";
 

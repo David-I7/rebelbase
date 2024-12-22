@@ -1,5 +1,5 @@
 "use client";
-import Accordion from "@/_components/accordion/Accordion";
+import Accordion from "@/_components/primitives/accordion/Accordion";
 import {
   categories,
   gameModes,

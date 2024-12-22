@@ -1,8 +1,8 @@
 "use client";
 import React, { ReactNode, useRef } from "react";
 import { handleCarouselScroll } from "@/utils/eventHandlers";
-import PrevButton from "@/_components/buttons/carousel/PrevButton";
-import NextButton from "@/_components/buttons/carousel/NextButton";
+import PrevButton from "@/_components/primitives/buttons/carousel/PrevButton";
+import NextButton from "@/_components/primitives/buttons/carousel/NextButton";
 
 type VerticalCardCarouselProps = {
   children: ReactNode;

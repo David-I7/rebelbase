@@ -1,6 +1,6 @@
 "use client";
-import Menu from "@/_components/dropdown/Menu";
-import Toggle from "@/_components/dropdown/Toggle";
+import Menu from "@/_components/primitives/dropdown/Menu";
+import Toggle from "@/_components/primitives/dropdown/Toggle";
 import { MouseEvent, useEffect, useState } from "react";
 import { MdSort } from "react-icons/md";
 

@@ -1,6 +1,6 @@
 "use client";
-import IconTarget from "@/_components/buttons/IconTarget";
-import FullScreenDialog from "@/_components/dialog/FullScreenDialog";
+import IconTarget from "@/_components/primitives/buttons/IconTarget";
+import FullScreenDialog from "@/_components/primitives/dialog/FullScreenDialog";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";

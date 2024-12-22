@@ -28,8 +28,6 @@ const GameGrid = ({ gameData }: { gameData: CardData[] }) => {
     fetchNextPage();
   }
 
-  console.log(hasNextPage, isFetching, endReached);
-
   const filterSkeletons = useMemo(
     () =>
       Array.from({ length: 40 }, (_, index) => (

@@ -1,4 +1,4 @@
-import FilterChipLink from "@/_components/chips/filterchip/FilterChipLink";
+import FilterChipLink from "@/_components/primitives/chips/filterchip/FilterChipLink";
 import { GameData } from "@/interfaces/igdb";
 import { getGameTags } from "@/utils/dataTransformation";
 import React from "react";

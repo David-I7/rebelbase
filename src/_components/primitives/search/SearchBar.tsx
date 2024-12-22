@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, MouseEvent } from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 import IconTarget from "../buttons/IconTarget";
 

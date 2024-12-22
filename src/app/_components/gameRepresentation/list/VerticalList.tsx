@@ -9,6 +9,7 @@ type VerticalListCarouselProps = {
   gameData: CardData[];
   sectionName: string;
   gameId?: number;
+  listItemCount?: number;
 };
 
 const LIST_ITEM_QUANTITY = 5;
@@ -17,11 +18,12 @@ const VerticalList = ({
   gameData,
   sectionName,
   gameId,
+  listItemCount = LIST_ITEM_QUANTITY,
 }: VerticalListCarouselProps) => {
   const listItems: ReactElement[] = [];
   let itemCount = 0;
   for (let i = 0; i < gameData.length; i++) {
-    if (itemCount === LIST_ITEM_QUANTITY) break;
+    if (itemCount === listItemCount) break;
     if (gameData[i].id === gameId) continue;
     listItems.push(
       <li
