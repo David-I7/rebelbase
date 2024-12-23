@@ -11,6 +11,7 @@ import OnlineGames from "./_components/sections/OnlineGames";
 import CasualGames from "./_components/sections/CasualGames";
 import VerticalRay from "@/_components/VerticalRay";
 import Test from "@/_components/test/TestUseQuery";
+import TestUseEffect from "@/_components/test/TestUseEffect";
 
 export default async function Home() {
   const { data: gameData, error: gameError } = await getOrSetCache(

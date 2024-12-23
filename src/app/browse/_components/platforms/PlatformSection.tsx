@@ -42,7 +42,9 @@ const PlatformSection = () => {
     <section className="ml-4 md:ml-8 [@media(min-width:1344px)]:ml-0">
       <h1 className="mb-6">Platforms</h1>
       <PlatformCardCarousel>
-        <ul className="inline-flex gap-4 platforms">{platformsJSX}</ul>
+        <ul className="inline-flex gap-4 platforms  pr-4 lg:pr-8 [@media(min-width:1280px)]:pr-0">
+          {platformsJSX}
+        </ul>
       </PlatformCardCarousel>
     </section>
   );

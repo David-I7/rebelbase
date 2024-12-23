@@ -19,7 +19,7 @@ const HeroSection = ({
   return (
     <>
       <section className={`bg-surface-container-low relative`}>
-        <div className="py-8 md:pb-8 md:pt-0 relative max-w-[1280px] max-h-[80svh] md:flex md:justify-end [@media(min-width:1280px)]:mx-auto">
+        <div className="py-8 md:pb-8 md:pt-0 relative max-w-[1280px] max-h-[75svh] md:flex md:justify-end [@media(min-width:1280px)]:mx-auto">
           <HeroCard
             hasHeroVideo={heroVideo ? true : false}
             developerCompanyName={developerCompanyName}

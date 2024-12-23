@@ -29,15 +29,16 @@ const SectionDialog = ({
         padding: 0,
         height: "auto",
         position: "relative",
-        display: "inline",
+        alignSelf: "start",
+        borderRadius: "0.25rem",
       }}
-      extendedClass="text-start mb-4"
+      extendedClass="text-start mb-4 group mr-8"
       toggle={toggle}
       label={label}
       trailingIcon={
         <MdChevronRight
           size={32}
-          className="absolute right-0 top-2/4 -translate-y-2/4 hover:translate-x-1 transition-transform flex-shrink-0 text-on-surface-heading"
+          className="absolute right-0 top-2/4 -translate-y-2/4 group-hover:translate-x-[calc(100%_+_0.25rem)] translate-x-full  transition-transform flex-shrink-0 text-on-surface-heading"
         />
       }
     >

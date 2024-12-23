@@ -12,7 +12,7 @@ const AboutGameDialog = ({ children }: { children: ReactNode }) => {
         onClick={() => {
           dialogRef.current!.showModal();
         }}
-        className="grid grid-cols-[repeat(2,auto)] text-nowrap gap-2 [@media(min-width:880px)]:hidden hover:gap-4 transition-[gap]"
+        className="grid grid-cols-[repeat(2,auto)] text-nowrap gap-0 [@media(min-width:880px)]:hidden hover:gap-2 transition-[gap]"
       >
         <h2 className="flex items-center gap-2 mb-4 text-2xl ">
           About this game

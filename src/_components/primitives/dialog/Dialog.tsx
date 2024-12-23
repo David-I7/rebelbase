@@ -19,9 +19,6 @@ const Dialog = React.forwardRef(
     return (
       <dialog
         style={style}
-        onMouseLeave={(e) => {
-          console.log(e);
-        }}
         onClick={(e) => {
           const dialogPosition = e.currentTarget.getBoundingClientRect();
 
