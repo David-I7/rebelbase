@@ -35,7 +35,7 @@ const MoreByCompany = async ({
         }
       >
         <header className="sticky px-6 py-6 top-0 z-10 bg-surface-container-lowest ">
-          <div className="text-2xl text-on-surface-heading text-center mr-12 font-semibold">
+          <div className="text-2xl text-on-surface-heading  text-center mr-12 font-semibold">
             More by {developerCompanyName}
           </div>
 
