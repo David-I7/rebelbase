@@ -54,7 +54,6 @@ const MediaCarouselContent = React.memo(
             >
               <DialogToggleOpen
                 toggle={() => {
-                  console.log(index);
                   if (inRangeMedium) {
                     toggleIndex(index);
                   } else {

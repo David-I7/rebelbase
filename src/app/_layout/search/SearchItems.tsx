@@ -1,3 +1,4 @@
+import Spinner from "@/_components/primitives/loading/Spinner";
 import CardDetails from "@/app/_components/gameRepresentation/CardDetails";
 import CardImage from "@/app/_components/gameRepresentation/list/CardImage";
 import CardListItem from "@/app/_components/gameRepresentation/list/CardListItem";
@@ -9,18 +10,32 @@ const SearchItems = React.memo(
   ({
     gameData,
     isLoading,
+    deferredSearchValue,
   }: {
     gameData: CardData[] | undefined;
     isLoading: boolean;
+    deferredSearchValue: string;
   }) => {
-    if (!gameData || !gameData.length) return;
+    if (deferredSearchValue === "") return;
+
+    if (!gameData || !gameData.length) {
+      if (isLoading) {
+        return (
+          <div className="flex justify-center mt-6">
+            <Spinner />
+          </div>
+        );
+      }
+      return;
+    }
+
     return (
       <ul className={`${isLoading ? "opacity-50" : ""} mt-6`}>
         {gameData.map((game) => {
           return (
             <li key={`search_vertical_card_list_item_${game.id}`} className="">
               <Link prefetch={false} href={`/games/${game.id}`}>
-                <CardListItem>
+                <CardListItem align="lg:items-center items-start">
                   <CardImage
                     gameName={game.name}
                     imgId={game.cover?.image_id}
