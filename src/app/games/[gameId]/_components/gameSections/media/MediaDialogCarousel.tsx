@@ -2,10 +2,10 @@
 
 import Dialog from "@/_components/primitives/dialog/Dialog";
 import { Media, RelevantVideoData } from "@/utils/dataTransformation";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import MediaThumbnail from "./MediaThumbnail";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import { useWindowSizeRangeSSRTrue } from "@/hooks/useWindowSizeRange";
+
 import { MediaCarouselDialogContext } from "../../../context/MediaCarouselDialogContext";
 
 const MediaDialogCarousel = React.forwardRef(
@@ -37,8 +37,8 @@ const MediaDialogCarousel = React.forwardRef(
         style={{
           width: "100%",
           maxWidth: "1024px",
-          background: "transparent",
           overflow: "unset",
+          background: "transparent",
         }}
       >
         <div
@@ -100,7 +100,7 @@ const MediaDialogCarousel = React.forwardRef(
                 e.stopPropagation();
                 handlePrev();
               }}
-              className="z-10 grid place-content-center rounded-full h-14 w-14 absolute left-0 sm:left-[28px] [@media(min-width:1098px)]:-left-4 vertical-center text-white backdrop-blur-sm bg-background-blur-light"
+              className="z-10 grid place-content-center rounded-full h-14 w-14 absolute left-0 sm:left-[28px] [@media(min-width:1098px)]:-left-4 vertical-center text-white backdrop-blur-sm bg-background-blur-dark"
             >
               <MdChevronLeft size={40} />
             </button>
@@ -111,7 +111,7 @@ const MediaDialogCarousel = React.forwardRef(
                 e.stopPropagation();
                 handleNext();
               }}
-              className="z-10 grid place-content-center rounded-full h-14 w-14 absolute right-0 sm:-right[28px] [@media(min-width:1098px)]:-right-4 vertical-center text-white backdrop-blur-sm bg-background-blur-light"
+              className="z-10 grid place-content-center rounded-full h-14 w-14 absolute right-0 sm:right-[28px] [@media(min-width:1098px)]:-right-4 vertical-center text-white backdrop-blur-sm bg-background-blur-dark"
             >
               <MdChevronRight size={40} />
             </button>

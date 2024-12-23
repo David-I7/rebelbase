@@ -1,5 +1,11 @@
 import { useWindowSizeRangeSSRTrue } from "@/hooks/useWindowSizeRange";
-import { createContext, useCallback, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 type InitContextValue = ReturnType<typeof useContext>;
 
@@ -14,13 +20,7 @@ const InitContextValue: InitContextValue = {
 
 export const MediaCarouselDialogContext = createContext(InitContextValue);
 
-const useContext = ({
-  itemCount,
-  hasHeroVideo,
-}: {
-  itemCount: number;
-  hasHeroVideo: boolean;
-}) => {
+const useContext = ({ itemCount, hasHeroVideo }: Props) => {
   const inRangeMedium = useWindowSizeRangeSSRTrue(
     768,
     Number.POSITIVE_INFINITY,
@@ -67,3 +67,22 @@ const useContext = ({
     totalItems,
   };
 };
+
+type Props = {
+  itemCount: number;
+  hasHeroVideo: boolean;
+};
+
+export function MediaCarouselDialogContextProvider({
+  children,
+  itemCount,
+  hasHeroVideo,
+}: Props & { children: ReactNode }) {
+  return (
+    <MediaCarouselDialogContext.Provider
+      value={useContext({ itemCount, hasHeroVideo })}
+    >
+      {children}
+    </MediaCarouselDialogContext.Provider>
+  );
+}
