@@ -20,7 +20,7 @@ const HeroCard = ({
       <div
         className={`${
           imgId ? "" : "bg-surface-container-low"
-        } max-h-[533px] h-[50vh] relative aspect-[3/4] rounded-xl overflow-hidden darken-image md:after:hidden select-none mx-auto md:mx-0 md:mr-4`}
+        } max-h-[533px] h-[50vh] relative aspect-[3/4] rounded-xl overflow-hidden after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:to-surface-container-low after:from-[50%] after:to-[95%] md:after:hidden select-none mx-auto md:mx-0 md:mr-4`}
       >
         {imgId && (
           <img

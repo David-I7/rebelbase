@@ -30,7 +30,7 @@ image {
   --state-disabled: ;
   --state-on-disabled: ;
   --state-background-blur-dark: rgba(0, 0, 0, 0.68);
-  --state-background-blur-light: rgba(255, 255, 255, 0.68);
+  --state-background-blur-light: rgba(255, 255, 255, 0.38);
 
   /* COLORS */
   /* TEXT | ICONS | BUTTONS */
@@ -272,8 +272,8 @@ footer {
 .darken-image::after {
   content: "";
   position: absolute;
-  z-index: 0;
   inset: 0;
+  z-index: 10;
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0) 40%,
@@ -323,12 +323,6 @@ footer {
 @media (min-width: 768px) {
   .transiton-carousel-item {
     transition: transform 300ms ease-out, filter 300ms ease-out;
-  }
-  .hero-card {
-    min-width: 400px;
-  }
-  .hero-carousel {
-    height: 533px;
   }
 }
 

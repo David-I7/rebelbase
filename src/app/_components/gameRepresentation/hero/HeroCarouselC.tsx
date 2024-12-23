@@ -85,7 +85,7 @@ const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
               className += "[transform:translateX(-50%)_scale(1)] z-30";
             } else {
               className +=
-                "opacity-0 pointer-events-none [transform:translateX(-50%)_scale(1)]";
+                "opacity-0 pointer-events-none transition-opacity [transform:translateX(-50%)_scale(1)]";
             }
             return (
               <li

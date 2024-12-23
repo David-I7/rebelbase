@@ -8,26 +8,10 @@ const SearchBar = () => {
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.target === searchRef.current && e.code === "Tab") {
-        searchContainerRef.current!.classList.add("focus-within:outline");
-      }
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
   return (
     <div
       ref={searchContainerRef}
-      onKeyDown={(e) => {
-        console.log(e);
-      }}
       onClick={(e) => {
-        console.log(e);
         if (!e?.clientX && !e?.clientY) {
           searchContainerRef.current!.classList.add("focus-within:outline");
         } else {
@@ -35,7 +19,7 @@ const SearchBar = () => {
         }
         (e.currentTarget.children[1] as HTMLInputElement).focus();
       }}
-      className="cursor-text outline-primary focus-within:outline outline-2 pl-2 pr-1 h-14 rounded-lg gap-2 flex items-center text-on-surface-body-varient-low"
+      className="cursor-text outline-primary outline-2 pl-2 pr-1 h-14 rounded-lg gap-2 flex items-center text-on-surface-body-varient-low"
     >
       <MdSearch size={24} />
       <input
@@ -46,7 +30,11 @@ const SearchBar = () => {
         placeholder="Search game..."
         value={searchValue}
         onChange={handleChange}
-        onFocus={(e) => console.log(e)}
+        onFocus={(e) => {
+          if (e.relatedTarget) {
+            searchContainerRef.current!.classList.add("focus-within:outline");
+          }
+        }}
       />
       {searchValue && (
         <IconTarget

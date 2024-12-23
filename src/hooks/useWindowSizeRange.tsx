@@ -25,3 +25,28 @@ export default function useWindowSizeRange(
 
   return inRange;
 }
+export function useWindowSizeRangeSSRTrue(
+  start: number,
+  end: number,
+  initialValue: boolean
+): boolean {
+  const [inRange, setInRange] = useState<boolean>(initialValue);
+
+  const handleResize = () => {
+    if (window.innerWidth >= start && window.innerWidth < end) {
+      if (!inRange) setInRange(true);
+    } else {
+      if (inRange) setInRange(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return inRange;
+}

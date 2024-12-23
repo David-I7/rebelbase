@@ -11,13 +11,13 @@ const MediaThumbnail = ({
   mediaType: string;
 }) => {
   return (
-    <div className="rounded-xl overflow-hidden max-w-[308px] lg:max-w-[565px]">
+    <div className="rounded-xl overflow-hidden">
       <img
         className="aspect-video w-full"
         width="308px"
         height="547px"
         loading="lazy"
-        src={`${imagesMap.baseUrl}${imagesMap.horizontalCardLarge}/${imgId}.jpg`}
+        src={`${imagesMap.baseUrl}${imagesMap.horizontalCardLarge}_2x/${imgId}.jpg`}
         alt={`${gameName} ${mediaType}`}
       />
     </div>
