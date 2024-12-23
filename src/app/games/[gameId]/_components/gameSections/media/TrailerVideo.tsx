@@ -9,7 +9,7 @@ const TrailerVideo = ({
   gameName: string;
 }) => {
   return (
-    <div className="rounded-xl overflow-hidden max-w-[308px] md:hidden">
+    <div className="rounded-xl overflow-hidden max-w-[308px]">
       <iframe
         loading="lazy"
         className="aspect-video w-full"

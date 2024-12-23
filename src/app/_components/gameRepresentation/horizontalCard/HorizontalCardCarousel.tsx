@@ -1,9 +1,5 @@
 "use client";
-import React, { ReactNode, UIEvent, useRef } from "react";
-import HorizontalCard from "./HorizontalCard";
-import CardImage from "./CardImage";
-import CardDetails from "../CardDetails";
-import { CardData } from "@/interfaces/igdb";
+import React, { ReactNode, useRef } from "react";
 import PrevButton from "@/_components/primitives/buttons/carousel/PrevButton";
 import NextButton from "@/_components/primitives/buttons/carousel/NextButton";
 import { handleCarouselScroll } from "@/utils/eventHandlers";

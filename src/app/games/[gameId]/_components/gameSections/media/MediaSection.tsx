@@ -13,11 +13,11 @@ const MediaSection = ({ game }: { game: GameData }) => {
     <section className="">
       <MediaCarousel>
         <ul className="inline-flex gap-4">
-          <li className="flex-shrink-0">
-            {heroVideo && (
+          {heroVideo && (
+            <li className="flex-shrink-0 md:hidden">
               <TrailerVideo heroVideo={heroVideo} gameName={game[0].name} />
-            )}
-          </li>
+            </li>
+          )}
           {media?.screenshots.length &&
             media.screenshots.map((screenshot) => (
               <li

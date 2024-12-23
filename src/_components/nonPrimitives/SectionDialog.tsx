@@ -30,6 +30,7 @@ const SectionDialog = ({
         height: "auto",
         position: "relative",
         alignSelf: "start",
+        borderRadius: "0.25rem",
       }}
       extendedClass="text-start mb-4 group mr-8"
       toggle={toggle}
