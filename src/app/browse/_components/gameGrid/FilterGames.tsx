@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import FilterGamesDialog from "./FilterGamesDialog";
 import FilterGamesAccordions from "./FilterGamesAccordions";
 import { FilterContext } from "../../context/FilterContext";
@@ -35,11 +35,21 @@ const FilterGames = ({
       router.push(targetUrl);
     }
   };
-  // console.log(state);
 
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
   const toggleDialog = useCallback(() => {
     setDialogIsOpen(!dialogIsOpen);
+  }, [dialogIsOpen]);
+
+  useEffect(() => {
+    const handleResize = (e: Event) => {
+      if (window.innerWidth >= 880) {
+        if (dialogIsOpen) setDialogIsOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, [dialogIsOpen]);
   return (
     <div>
