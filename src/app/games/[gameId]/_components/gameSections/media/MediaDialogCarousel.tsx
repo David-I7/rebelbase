@@ -2,10 +2,11 @@
 
 import Dialog from "@/_components/primitives/dialog/Dialog";
 import { Media, RelevantVideoData } from "@/utils/dataTransformation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MediaThumbnail from "./MediaThumbnail";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { useWindowSizeRangeSSRTrue } from "@/hooks/useWindowSizeRange";
+import { MediaCarouselDialogContext } from "../../../context/MediaCarouselDialogContext";
 
 const MediaDialogCarousel = React.forwardRef(
   (
@@ -24,38 +25,9 @@ const MediaDialogCarousel = React.forwardRef(
     },
     dialogRef: React.ForwardedRef<HTMLDialogElement>
   ) => {
-    const inRangeMedium = useWindowSizeRangeSSRTrue(
-      768,
-      Number.POSITIVE_INFINITY,
-      true
+    const { handleNext, handlePrev, index, totalItems } = useContext(
+      MediaCarouselDialogContext
     );
-    const [totalItems, setTotalItems] = useState(
-      (media?.artworks?.length || 0) +
-        (media?.screenshots?.length || 0) +
-        (heroVideo ? 1 : 0)
-    );
-    const [index, setIndex] = useState<number>(0);
-
-    const handleNext = () => {
-      setIndex((prevIndex) => (prevIndex + 1) % totalItems);
-    };
-    const handlePrev = () => {
-      setIndex((prevIndex) =>
-        prevIndex === 0 ? totalItems - 1 : (prevIndex - 1) % totalItems
-      );
-    };
-
-    useEffect(() => {
-      if (heroVideo && inRangeMedium) {
-        setTotalItems(
-          (media?.artworks?.length || 0) + (media?.screenshots?.length || 0)
-        );
-      } else if (heroVideo && !inRangeMedium) {
-        setTotalItems(
-          (media?.artworks?.length || 0) + (media?.screenshots?.length || 0) + 1
-        );
-      }
-    }, [inRangeMedium]);
 
     return (
       <Dialog
@@ -73,7 +45,7 @@ const MediaDialogCarousel = React.forwardRef(
           onClick={(e) => {
             if (e.target === e.currentTarget) toggle();
           }}
-          className="relative sm:mx-14 lg:mx-0"
+          className="relative sm:px-14"
         >
           <div className="overflow-hidden">
             <ul
@@ -128,7 +100,7 @@ const MediaDialogCarousel = React.forwardRef(
                 e.stopPropagation();
                 handlePrev();
               }}
-              className="z-10 grid place-content-center rounded-full h-14 w-14 absolute left-0 sm:-left-[24px] lg:-left-20 vertical-center text-white backdrop-blur-sm bg-background-blur-light"
+              className="z-10 grid place-content-center rounded-full h-14 w-14 absolute left-0 sm:left-[28px] [@media(min-width:1098px)]:-left-4 vertical-center text-white backdrop-blur-sm bg-background-blur-light"
             >
               <MdChevronLeft size={40} />
             </button>
@@ -139,7 +111,7 @@ const MediaDialogCarousel = React.forwardRef(
                 e.stopPropagation();
                 handleNext();
               }}
-              className="z-10 grid place-content-center rounded-full h-14 w-14 absolute right-0 sm:-right-[24px] lg:-right-20 vertical-center text-white backdrop-blur-sm bg-background-blur-light"
+              className="z-10 grid place-content-center rounded-full h-14 w-14 absolute right-0 sm:-right[28px] [@media(min-width:1098px)]:-right-4 vertical-center text-white backdrop-blur-sm bg-background-blur-light"
             >
               <MdChevronRight size={40} />
             </button>

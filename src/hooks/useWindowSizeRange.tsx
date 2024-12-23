@@ -21,7 +21,7 @@ export default function useWindowSizeRange(
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  });
+  }, [inRange]);
 
   return inRange;
 }
@@ -46,7 +46,7 @@ export function useWindowSizeRangeSSRTrue(
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [inRange]);
 
   return inRange;
 }

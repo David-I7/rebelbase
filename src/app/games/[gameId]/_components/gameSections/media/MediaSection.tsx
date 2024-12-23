@@ -34,7 +34,7 @@ const MediaSection = ({ game }: { game: GameData }) => {
       <MediaCarousel>
         <ul className="inline-flex gap-4">
           {heroVideo && (
-            <li className="flex-shrink-0 md:hidden relative">
+            <li className="flex-shrink-0 md:hidden aspect-video w-full max-w-[308px] relative">
               <DialogToggleOpen
                 toggle={toggleDialog}
                 label=""
@@ -56,7 +56,6 @@ const MediaSection = ({ game }: { game: GameData }) => {
                 className="flex-shrink-0 relative max-w-[308px] lg:max-w-[565px]"
                 key={`media_screenshot_${screenshot.imgId}`}
               >
-                {" "}
                 <DialogToggleOpen
                   toggle={toggleDialog}
                   label=""
