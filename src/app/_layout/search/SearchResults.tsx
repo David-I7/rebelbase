@@ -9,14 +9,22 @@ const STALE_TIME = 1000 * 60 * 60; // 60 mins
 
 const SearchResults = React.memo(
   ({ deferredSearchValue }: { deferredSearchValue: string }) => {
-    const { data, isFetching } = useQuery({
+    const { data, isFetching, isError, error } = useQuery({
       queryKey: [deferredSearchValue],
       queryFn: () => search({ query: deferredSearchValue }),
       placeholderData: (prev) => prev,
       staleTime: STALE_TIME,
     });
 
-    return <SearchItems gameData={data!} isLoading={isFetching} />;
+    if (isError) throw error;
+
+    return (
+      <SearchItems
+        deferredSearchValue={deferredSearchValue}
+        gameData={data!}
+        isLoading={isFetching}
+      />
+    );
   }
 );
 

@@ -9,6 +9,7 @@ import MediaSection from "./_components/gameSections/media/MediaSection";
 import AboutGame from "./_components/gameSections/about/AboutGame";
 import { Suspense } from "react";
 import VerticalListSkeleton from "@/_components/skeletons/list/VerticalListItemSkeleton";
+import PageTransition from "@/_components/primitives/loading/PageTransition";
 
 export default async function GamePage({
   params,
@@ -57,6 +58,7 @@ export default async function GamePage({
           </Suspense>
         </div>
       </div>
+      <PageTransition />
     </main>
   );
 }

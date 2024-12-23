@@ -30,7 +30,7 @@ image {
   --state-disabled: ;
   --state-on-disabled: ;
   --state-background-blur-dark: rgba(0, 0, 0, 0.68);
-  --state-background-blur-light: rgba(255, 255, 255, 0.38);
+  --state-background-blur-light: rgba(255, 255, 255, 0.25);
 
   /* COLORS */
   /* TEXT | ICONS | BUTTONS */
@@ -518,4 +518,11 @@ Which leads to one extra child
 
 .platforms svg {
   width: 100%;
+}
+
+div.page-transition {
+  transition: backdrop-filter 250ms ease-out, background-color 250ms ease-out;
+  backdrop-filter: blur(4px);
+  background-color: var(--state-background-blur-light);
+  pointer-events: all;
 }

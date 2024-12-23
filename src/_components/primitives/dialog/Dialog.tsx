@@ -33,7 +33,7 @@ const Dialog = React.forwardRef(
           }
         }}
         ref={ref}
-        className={`${customClass} bg-surface-container-lowest rounded-3xl backdrop:bg-[rgba(0,0,0,0.38)] backdrop:backdrop-blur-sm text-inherit`}
+        className={`${customClass} bg-surface-container-lowest rounded-3xl backdrop:bg-[rgba(0,0,0,0.68)] backdrop:backdrop-blur-sm text-inherit`}
       >
         {children}
       </dialog>

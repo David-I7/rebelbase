@@ -7,8 +7,8 @@ import { FilterContextProvider } from "./context/FilterContext";
 import { Suspense } from "react";
 import FilterGameGridSkeleton from "@/_components/skeletons/FilterGameGridSkeleton";
 import GameGridServer from "./_components/gameGrid/GameGridServer";
-import TestUseInfiniteQuery from "@/_components/test/TestUseInfiniteQuery";
 import { GameDataContextProvider } from "./context/GameDataContext";
+import PageTransition from "@/_components/primitives/loading/PageTransition";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -55,10 +55,10 @@ export default async function Browse({ searchParams }: Props) {
             }
           >
             <GameGridServer gameData={browseDataPromise} />
-            {/* <TestUseInfiniteQuery /> */}
           </Suspense>
         </section>
       </GameDataContextProvider>
+      <PageTransition />
     </main>
   );
 }
