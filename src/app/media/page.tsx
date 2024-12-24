@@ -1,12 +1,12 @@
-import CACHE_KEYS from "@/data/constants/cacheKeys";
-import getOrSetCache from "@/lib/redis/controllers";
-import { getGameNews } from "@/services/worldNewsApi";
+import { Suspense } from "react";
+import GameNewsData from "./_components/gameNews/GameNewsData";
 
-export default async function Media() {
-  const { data, error } = await getOrSetCache(CACHE_KEYS.gameNews, getGameNews);
-  if (error) throw error;
-
-  console.log(data);
-
-  return <main>hello Media</main>;
+export default function Media() {
+  return (
+    <main className="mx-4 md:mx-8 [@media(min-width:1344px)]:mx-auto">
+      <Suspense fallback={<>loading...</>}>
+        <GameNewsData />
+      </Suspense>
+    </main>
+  );
 }
