@@ -1,7 +1,19 @@
 import React, { ReactNode } from "react";
 
-const RegularArticle = ({ children }: { children: ReactNode }) => {
-  return <article className="flex gap-2 items-start">{children}</article>;
+const RegularArticle = ({
+  children,
+  customClass,
+}: {
+  children: ReactNode;
+  customClass?: string;
+}) => {
+  return (
+    <article
+      className={`${customClass} flex gap-2 sm:gap-4 items-start min-w-0`}
+    >
+      {children}
+    </article>
+  );
 };
 
 export default RegularArticle;

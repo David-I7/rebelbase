@@ -12,3 +12,8 @@ export const worldNewsApiRequestOptions: RequestInit = {
     "x-api-key": process.env.WORLD_NEWS_API_KEY!,
   },
 };
+export const apiLeagueRequestOptions: RequestInit = {
+  headers: {
+    "x-api-key": process.env.API_LEAGUE_API_KEY!,
+  },
+};
