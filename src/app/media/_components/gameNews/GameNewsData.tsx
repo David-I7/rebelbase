@@ -16,9 +16,10 @@ const GameNewsData = async () => {
     titleSet.add(article.title);
     return true;
   });
+  console.log(data);
 
   return (
-    <section>
+    <section className="mt-[104px]">
       <HeroNews gameNews={filteredData} />
       <RegularNews gameNews={filteredData} />
     </section>

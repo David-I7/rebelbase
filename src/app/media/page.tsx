@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import GameNewsData from "./_components/gameNews/GameNewsData";
 import HeroNewsSkeleton from "@/_components/skeletons/gameNews/HeroNewsSkeleton";
 import RegularNewsSkeleton from "@/_components/skeletons/gameNews/RegularNewsSkeleton";
+import TopGamingChannels from "./_components/youtube/TopGamingChannels";
 
 export default function Media() {
   return (
@@ -16,10 +17,9 @@ export default function Media() {
       >
         <GameNewsData />
       </Suspense>
-      <section>
-        <HeroNewsSkeleton />
-        <RegularNewsSkeleton />
-      </section>
+      <Suspense fallback={<>Loading...</>}>
+        <TopGamingChannels />
+      </Suspense>
     </main>
   );
 }
