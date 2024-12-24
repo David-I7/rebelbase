@@ -1,45 +1,42 @@
 import { GameNews } from "@/services/worldNewsApi";
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import RegularArticle from "./Regular/RegularArticle";
 import ArticleImage from "./Regular/ArticleImage";
 import NewsSummary from "./NewsSummary";
-import { GameNewsContext } from "./context/GameNewsContext";
 
 const renderCount = 4;
-const smallstart = 1;
-const mediumstart = 2;
 const largestart = 3;
 
-const RegularNews = ({ gameNews }: { gameNews: GameNews }) => {
-  const state = useContext(GameNewsContext);
-
+const RegularNews = ({ gameNews }: { gameNews: GameNews["news"] }) => {
   const RegularNewsArticles = useMemo(() => {
-    const start = state.isSmall
-      ? smallstart
-      : state.isMedium
-      ? mediumstart
-      : largestart;
     const Articles: React.JSX.Element[] = [];
-    for (let i = start; i < start + renderCount; i++) {
+    for (let i = largestart; i < largestart + renderCount; i++) {
       Articles.push(
-        <RegularArticle key={`regular_game_article_${gameNews.news[i].id}`}>
-          <ArticleImage imgSrc={gameNews.news[i].image} />
+        <RegularArticle
+          customClass={
+            i === largestart
+              ? "my-0"
+              : i === largestart + 1
+              ? "[@media(min-width:960px)]:my-0 my-4"
+              : "my-4"
+          }
+          key={`regular_game_article_${gameNews[i].id}`}
+        >
+          <ArticleImage imgSrc={gameNews[i].image} />
           <NewsSummary
             orientation="landscape"
-            details={gameNews.news[i].text}
-            summary={gameNews.news[i].title}
+            details={gameNews[i].text}
+            summary={gameNews[i].title}
           />
         </RegularArticle>
       );
     }
     return Articles;
-  }, [state]);
+  }, [gameNews]);
 
   return (
     <section
-      className={`grid gap-x-6 gap-y-4 mt-12 ${
-        state.isLarge ? "grid-cols-2" : ""
-      }`}
+      className={`grid gap-x-6 mt-12 [@media(min-width:960px)]:grid-cols-2 [@media(min-width:960px)]:grid-rows-[1fr_1fr_0_0_0] grid-rows-[1fr_1fr_1fr_1fr_0_0_0]`}
     >
       {RegularNewsArticles}
     </section>

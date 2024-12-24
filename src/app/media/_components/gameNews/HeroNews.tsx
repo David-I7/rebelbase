@@ -1,40 +1,34 @@
-import React, { useContext, useMemo } from "react";
-import { GameNewsContext } from "./context/GameNewsContext";
+import React, { useMemo } from "react";
 import { GameNews } from "@/services/worldNewsApi";
 import HeroArticle from "./Hero/HeroArticle";
 import ArticleImage from "./Hero/ArticleImage";
 import NewsSummary from "./NewsSummary";
 
-const smallCount = 1;
-const mediumCount = 2;
 const largeCount = 3;
 
-const HeroNews = ({ gameNews }: { gameNews: GameNews }) => {
-  const state = useContext(GameNewsContext);
-
+const HeroNews = ({ gameNews }: { gameNews: GameNews["news"] }) => {
   const HeroNewsArticles = useMemo(() => {
-    const count = state.isSmall
-      ? smallCount
-      : state.isMedium
-      ? mediumCount
-      : largeCount;
     const Articles: React.JSX.Element[] = [];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < largeCount; i++) {
       Articles.push(
-        <HeroArticle key={`hero_game_article_${gameNews.news[i].id}`}>
-          <ArticleImage imgSrc={gameNews.news[i].image} />
+        <HeroArticle key={`hero_game_article_${gameNews[i].id}`}>
+          <ArticleImage imgSrc={gameNews[i].image} />
           <NewsSummary
             orientation="portrait"
-            details={gameNews.news[i].text}
-            summary={gameNews.news[i].title}
+            details={gameNews[i].text}
+            summary={gameNews[i].title}
           />
         </HeroArticle>
       );
     }
     return Articles;
-  }, [state]);
+  }, [gameNews]);
 
-  return <section className="flex gap-6">{HeroNewsArticles}</section>;
+  return (
+    <section className="grid grid-rows-[1fr_0_0] overflow-hidden sm:grid-cols-2 [@media(min-width:960px)]:grid-cols-3 gap-6 gap-y-0">
+      {HeroNewsArticles}
+    </section>
+  );
 };
 
 export default HeroNews;

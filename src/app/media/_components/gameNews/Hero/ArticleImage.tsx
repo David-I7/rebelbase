@@ -1,12 +1,15 @@
 import React from "react";
 
 const ArticleImage = ({ imgSrc }: { imgSrc: string | undefined }) => {
-  if (!imgSrc) return <div></div>;
+  if (!imgSrc)
+    return (
+      <div className="min-w-[275px] rounded bg-surface-container-normal aspect-video"></div>
+    );
 
   return (
-    <div className="rounded aspect-video grid place-content-center overflow-hidden min-w-[288px]">
+    <div className="rounded aspect-video grid place-content-center overflow-hidden ">
       <img
-        className="w-full"
+        className="w-full object-cover aspect-video"
         alt="Article thumbnail"
         src={imgSrc}
         loading="eager"
