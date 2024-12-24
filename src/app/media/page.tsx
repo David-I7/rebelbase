@@ -3,6 +3,7 @@ import GameNewsData from "./_components/gameNews/GameNewsData";
 import HeroNewsSkeleton from "@/_components/skeletons/gameNews/HeroNewsSkeleton";
 import RegularNewsSkeleton from "@/_components/skeletons/gameNews/RegularNewsSkeleton";
 import TopGamingChannels from "./_components/youtube/TopGamingChannels";
+import GamingMemes from "./_components/memes/GamingMemes";
 
 export default function Media() {
   return (
@@ -19,6 +20,9 @@ export default function Media() {
       </Suspense>
       <Suspense fallback={<>Loading...</>}>
         <TopGamingChannels />
+      </Suspense>
+      <Suspense fallback={<>Loading...</>}>
+        <GamingMemes />
       </Suspense>
     </main>
   );
