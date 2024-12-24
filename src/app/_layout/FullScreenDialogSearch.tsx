@@ -1,7 +1,7 @@
 "use client";
 import IconTarget from "@/_components/primitives/buttons/IconTarget";
 import FullScreenDialog from "@/_components/primitives/dialog/FullScreenDialog";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 import SearchBar from "./search/SearchBar";
 import SearchResultsMemoized from "./search/SearchResultsMemoized";
@@ -9,9 +9,9 @@ import SearchResultsMemoized from "./search/SearchResultsMemoized";
 const FullScreenDialogSearch = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const ariaControlsId = "search_fullscreen_dialog";
-  const toggle = () => {
+  const toggle = useCallback(() => {
     setIsOpen(!isOpen);
-  };
+  }, [isOpen]);
 
   return (
     <div className="lg:hidden">
@@ -37,7 +37,7 @@ const FullScreenDialogSearch = () => {
           </IconTarget>
         </div>
         <SearchBar />
-        <SearchResultsMemoized />
+        <SearchResultsMemoized toggleDialog={toggle} />
       </FullScreenDialog>
     </div>
   );

@@ -1,6 +1,6 @@
 import Dialog from "@/_components/primitives/dialog/Dialog";
 import { DialogToggleOpen } from "@/_components/primitives/dialog/DialogToggle";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import SearchBar from "./SearchBar";
 import SearchResultsMemoized from "./SearchResultsMemoized";
@@ -13,14 +13,16 @@ const DialogSearch = () => {
   useEffect(() => {
     if (isOpen) {
       dialogRef.current!.showModal();
+      document.documentElement.style.overflow = "hidden";
     } else {
       dialogRef.current!.close();
+      document.documentElement.style.overflow = "auto";
     }
   }, [isOpen]);
 
-  const toggleDialog = () => {
+  const toggleDialog = useCallback(() => {
     setIsOpen(!isOpen);
-  };
+  }, [isOpen]);
 
   return (
     <div className="hidden lg:block">
@@ -37,7 +39,7 @@ const DialogSearch = () => {
         >
           <div className="max-w-screen-lg mx-auto my-6 px-6">
             <SearchBar />
-            <SearchResultsMemoized />
+            <SearchResultsMemoized toggleDialog={toggleDialog} />
           </div>
         </CustomSearchDialog>
       </DialogToggleOpen>

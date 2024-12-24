@@ -12,6 +12,7 @@ import CasualGames from "./_components/sections/CasualGames";
 import VerticalRay from "@/_components/VerticalRay";
 import Test from "@/_components/test/TestUseQuery";
 import TestUseEffect from "@/_components/test/TestUseEffect";
+import PageTransition from "@/_components/primitives/loading/PageTransition";
 
 export default async function Home() {
   const { data: gameData, error: gameError } = await getOrSetCache(
@@ -41,6 +42,7 @@ export default async function Home() {
       <div className="[@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)] ml-4 md:ml-8">
         <UpcomingReleases gameData={gameData?.upcomingReleases.result} />
       </div>
+      <PageTransition />
     </main>
   );
 }
