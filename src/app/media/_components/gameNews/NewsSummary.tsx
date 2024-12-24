@@ -10,10 +10,10 @@ const NewsSummary = ({
   details: string;
 }) => {
   return (
-    <div>
+    <div className="flex-1">
       <h2
         className={`${
-          orientation === "landscape" ? "text-xl mb-3" : "text-base mb-2"
+          orientation === "landscape" ? "text-base mb-2" : "text-xl mb-3"
         } text-ellipsis line-clamp-2`}
       >
         {summary}
