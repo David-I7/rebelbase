@@ -14,7 +14,7 @@ const NewsSummarySkeleton = ({
     bodySkeletons.push(
       <div
         key={`body_skeleton_${i}`}
-        className="h-[17px] rounded bg-surface-container-normal w-full"
+        className="h-[15px] rounded bg-surface-container-normal w-full last:w-2/4"
       ></div>
     );
   }
@@ -25,16 +25,20 @@ const NewsSummarySkeleton = ({
       <div
         key={`heading_skeleton_${i}`}
         className={`${
-          orientation === "landscape" ? "h-5" : "h-6"
-        } rounded bg-surface-container-normal w-full`}
+          orientation === "landscape" ? "h-5" : "h-7"
+        } rounded bg-surface-container-normal w-full last:w-2/4`}
       ></div>
     );
   }
 
   return (
-    <div className="flex-1">
+    <div
+      className={`${
+        orientation === "landscape" ? "gap-4" : "gap-3"
+      } flex-1 flex-col flex`}
+    >
       <div className={"flex flex-col gap-1"}>{headingSkeletons}</div>
-      <div className="flex flex-col gap-1">{bodySkeletons}</div>
+      <div className="flex flex-col gap-2">{bodySkeletons}</div>
     </div>
   );
 };
