@@ -40,80 +40,104 @@ const FullScreenDialogMenu = () => {
         </div>
 
         <ul>
-          <li
-            onMouseEnter={(e) => {
-              const chevronRightRef = e.currentTarget
-                .children[1]! as HTMLElement;
-              chevronRightRef.style.opacity = "1";
-            }}
-            onMouseLeave={(e) => {
-              const chevronRightRef = e.currentTarget
-                .children[1]! as HTMLElement;
-              chevronRightRef.style.opacity = "0";
-            }}
-            className={`${
-              pathName === "/"
-                ? selectedStyles
-                : "text-on-surface-heading-varient"
-            } text-2xl cursor-pointer justify-between font-semibold min-h-10 flex items-center`}
-          >
-            <Link onClick={toggle} href={`/`}>
+          <li>
+            <Link
+              onMouseEnter={(e) => {
+                const chevronRightRef = e.currentTarget
+                  .children[0]! as HTMLElement;
+                chevronRightRef.style.opacity = "1";
+              }}
+              onMouseLeave={(e) => {
+                const chevronRightRef = e.currentTarget
+                  .children[0]! as HTMLElement;
+                chevronRightRef.style.opacity = "0";
+              }}
+              className={`${
+                pathName === "/"
+                  ? selectedStyles
+                  : "text-on-surface-heading-varient"
+              } text-2xl cursor-pointer justify-between font-semibold min-h-10 flex items-center`}
+              onClickCapture={(e) => {
+                if (pathName === "/") {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+                toggle();
+              }}
+              href={`/`}
+            >
               Home
+              <MdChevronRight
+                className="opacity-0 transition-opacity"
+                size={32}
+              />
             </Link>
-            <MdChevronRight
-              className="opacity-0 transition-opacity"
-              size={32}
-            />
           </li>
-          <li
-            onMouseEnter={(e) => {
-              const chevronRightRef = e.currentTarget
-                .children[1]! as HTMLElement;
-              chevronRightRef.style.opacity = "1";
-            }}
-            onMouseLeave={(e) => {
-              const chevronRightRef = e.currentTarget
-                .children[1]! as HTMLElement;
-              chevronRightRef.style.opacity = "0";
-            }}
-            className={`${
-              pathName === "/browse"
-                ? selectedStyles
-                : "text-on-surface-heading-varient"
-            } text-2xl cursor-pointer justify-between font-semibold min-h-10 flex items-center`}
-          >
-            <Link onClick={toggle} href={`/browse`}>
+          <li>
+            <Link
+              onMouseEnter={(e) => {
+                const chevronRightRef = e.currentTarget
+                  .children[0]! as HTMLElement;
+                chevronRightRef.style.opacity = "1";
+              }}
+              onMouseLeave={(e) => {
+                const chevronRightRef = e.currentTarget
+                  .children[0]! as HTMLElement;
+                chevronRightRef.style.opacity = "0";
+              }}
+              className={`${
+                pathName === "/browse"
+                  ? selectedStyles
+                  : "text-on-surface-heading-varient"
+              } text-2xl cursor-pointer justify-between font-semibold min-h-10 flex items-center`}
+              onClickCapture={(e) => {
+                if (pathName === "/browse") {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+                toggle();
+              }}
+              href={`/browse`}
+            >
               Browse
+              <MdChevronRight
+                className="opacity-0 transition-opacity"
+                size={32}
+              />
             </Link>
-            <MdChevronRight
-              className="opacity-0 transition-opacity"
-              size={32}
-            />
           </li>
-          <li
-            onMouseEnter={(e) => {
-              const chevronRightRef = e.currentTarget
-                .children[1]! as HTMLElement;
-              chevronRightRef.style.opacity = "1";
-            }}
-            onMouseLeave={(e) => {
-              const chevronRightRef = e.currentTarget
-                .children[1]! as HTMLElement;
-              chevronRightRef.style.opacity = "0";
-            }}
-            className={`${
-              pathName === "/media"
-                ? selectedStyles
-                : "text-on-surface-heading-varient"
-            } text-2xl cursor-pointer justify-between font-semibold min-h-10 flex items-center`}
-          >
-            <Link onClick={toggle} href={`/media`}>
+          <li>
+            <Link
+              onMouseEnter={(e) => {
+                const chevronRightRef = e.currentTarget
+                  .children[0]! as HTMLElement;
+                chevronRightRef.style.opacity = "1";
+              }}
+              onMouseLeave={(e) => {
+                const chevronRightRef = e.currentTarget
+                  .children[0]! as HTMLElement;
+                chevronRightRef.style.opacity = "0";
+              }}
+              className={`${
+                pathName === "/media"
+                  ? selectedStyles
+                  : "text-on-surface-heading-varient"
+              } text-2xl cursor-pointer justify-between font-semibold min-h-10 flex items-center`}
+              onClickCapture={(e) => {
+                if (pathName === "/media") {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+                toggle();
+              }}
+              href={`/media`}
+            >
               Media
+              <MdChevronRight
+                className="opacity-0 transition-opacity"
+                size={32}
+              />
             </Link>
-            <MdChevronRight
-              className="opacity-0 transition-opacity"
-              size={32}
-            />
           </li>
         </ul>
       </FullScreenDialog>

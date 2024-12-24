@@ -30,7 +30,7 @@ image {
   --state-disabled: ;
   --state-on-disabled: ;
   --state-background-blur-dark: rgba(0, 0, 0, 0.68);
-  --state-background-blur-light: rgba(255, 255, 255, 0.25);
+  --state-background-blur-light: rgba(255, 255, 255, 0.18);
 
   /* COLORS */
   /* TEXT | ICONS | BUTTONS */
@@ -522,7 +522,30 @@ Which leads to one extra child
 
 div.page-transition {
   transition: backdrop-filter 250ms ease-out, background-color 250ms ease-out;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(2px);
   background-color: var(--state-background-blur-light);
   pointer-events: all;
+}
+
+div.loading-indicator {
+  transform-origin: left center;
+  animation: loading-indicator 1000ms infinite ease-in-out;
+}
+
+@keyframes loading-indicator {
+  0% {
+    transform: scaleX(0);
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+  50.1% {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
 }

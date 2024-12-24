@@ -24,9 +24,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 function getSearchParams(searchParams: URLSearchParams): {
   [key: string]: string | string[] | undefined;
 } {
+  const URLSearchParamsIterator = searchParams.entries();
   const res: ReturnType<typeof getSearchParams> = {};
 
-  searchParams.entries().forEach(([key, val]) => {
+  for (const [key, val] of URLSearchParamsIterator) {
     if (res[key]) {
       if (Array.isArray(res[key])) {
         res[key].push(val);
@@ -36,7 +37,7 @@ function getSearchParams(searchParams: URLSearchParams): {
     } else {
       res[key] = val;
     }
-  });
+  }
 
   return res;
 }

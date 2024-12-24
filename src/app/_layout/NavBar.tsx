@@ -16,6 +16,12 @@ const NavBar = ({ customClass }: NavBarProps) => {
       <ul className={customClass}>
         <li>
           <Link
+            onClickCapture={(e) => {
+              if (currentPath === "/") {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            }}
             className={`${
               currentPath === "/"
                 ? selectedStyles
@@ -28,6 +34,12 @@ const NavBar = ({ customClass }: NavBarProps) => {
         </li>
         <li>
           <Link
+            onClickCapture={(e) => {
+              if (currentPath === "/browse") {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            }}
             className={`${
               currentPath === "/browse"
                 ? selectedStyles
@@ -40,6 +52,12 @@ const NavBar = ({ customClass }: NavBarProps) => {
         </li>
         <li>
           <Link
+            onClickCapture={(e) => {
+              if (currentPath === "/media") {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            }}
             className={`${
               currentPath === "/media"
                 ? selectedStyles

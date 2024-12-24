@@ -8,7 +8,13 @@ import SearchItems from "./SearchItems";
 const STALE_TIME = 1000 * 60 * 60; // 60 mins
 
 const SearchResults = React.memo(
-  ({ deferredSearchValue }: { deferredSearchValue: string }) => {
+  ({
+    deferredSearchValue,
+    toggleDialog,
+  }: {
+    deferredSearchValue: string;
+    toggleDialog: () => void;
+  }) => {
     const { data, isFetching, isError, error } = useQuery({
       queryKey: [deferredSearchValue],
       queryFn: () => search({ query: deferredSearchValue }),
@@ -20,11 +26,15 @@ const SearchResults = React.memo(
 
     return (
       <SearchItems
+        toggleDialog={toggleDialog}
         deferredSearchValue={deferredSearchValue}
         gameData={data!}
         isLoading={isFetching}
       />
     );
+  },
+  (prevProps, nextProps) => {
+    return prevProps.deferredSearchValue === nextProps.deferredSearchValue;
   }
 );
 

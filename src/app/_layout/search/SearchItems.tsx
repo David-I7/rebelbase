@@ -11,10 +11,12 @@ const SearchItems = React.memo(
     gameData,
     isLoading,
     deferredSearchValue,
+    toggleDialog,
   }: {
     gameData: CardData[] | undefined;
     isLoading: boolean;
     deferredSearchValue: string;
+    toggleDialog: () => void;
   }) => {
     if (deferredSearchValue === "") return;
 
@@ -34,7 +36,11 @@ const SearchItems = React.memo(
         {gameData.map((game) => {
           return (
             <li key={`search_vertical_card_list_item_${game.id}`} className="">
-              <Link prefetch={false} href={`/games/${game.id}`}>
+              <Link
+                onClick={toggleDialog}
+                prefetch={false}
+                href={`/games/${game.id}`}
+              >
                 <CardListItem align="lg:items-center items-start">
                   <CardImage
                     gameName={game.name}
