@@ -1,15 +1,18 @@
+import { MdChevronRight } from "react-icons/md";
 import CardDetailsSkeleton from "../cards/CardDetailsSkeleton";
 import CardListItemSkeleton from "./CardListItemSkeleton";
 import { ReactElement } from "react";
 
 type VerticalListSkeletonProps = {
   listItemCount?: number;
+  sectionName: string;
 };
 
 const LIST_ITEM_QUANTITY = 5;
 
 const VerticalListSkeleton = ({
   listItemCount = LIST_ITEM_QUANTITY,
+  sectionName,
 }: VerticalListSkeletonProps) => {
   const listItems: ReactElement[] = [];
   let itemCount = 0;
@@ -28,8 +31,13 @@ const VerticalListSkeleton = ({
   }
 
   return (
-    <div className="grid gap-4">
-      <div className="max-w-80 w-full h-8 rounded bg-surface-container-normal"></div>
+    <div className="grid gap-4 flex-1">
+      <div className="flex items-center">
+        <h2 className="flex items-center text-on-surface-heading h-8 text-2xl">
+          {sectionName}
+        </h2>
+        <MdChevronRight size={32} className="text-on-surface-heading" />
+      </div>
       <ul className="grid grid-cols-[minmax(256px,1fr)] w-full">{listItems}</ul>
     </div>
   );

@@ -11,6 +11,24 @@ import CasualGames from "./_components/sections/CasualGames";
 import VerticalRay from "@/_components/VerticalRay";
 import PageTransition from "@/_components/primitives/loading/PageTransition";
 import VerticalListSection from "./_components/gameRepresentation/list/VerticalListSection";
+import VerticalListSkeleton from "@/_components/skeletons/list/VerticalListItemSkeleton";
+import VerticalCardSkeleton from "@/_components/skeletons/cards/VerticalCardSkeleton";
+import CardDetailsSkeleton from "@/_components/skeletons/cards/CardDetailsSkeleton";
+import FixedSizeCarousel from "@/_components/nonPrimitives/carousel/FixedSizeCarousel";
+
+// function createListFromComponent(
+//   Component: React.JSX.Element,
+//   itemCount: number,
+//   key: string
+// ): React.JSX.Element[] {
+//   const components: ReturnType<typeof createListFromComponent> = [];
+
+//   for (let i = 0; i < itemCount; i++) {
+//     components.push(<Component key={`${key}_${i}`} />);
+//   }
+
+//   return components;
+// }
 
 export default async function Home() {
   const { data: gameData, error: gameError } = await getOrSetCache(
@@ -27,6 +45,11 @@ export default async function Home() {
       <div className="flex flex-col [@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)] ml-4 md:ml-8">
         <MostAnticipated gameData={gameData?.mostAnticipated.result} />
         <TopRated gameData={gameData?.topRated.result} />
+        <FixedSizeCarousel>
+          <VerticalCardSkeleton>
+            <CardDetailsSkeleton type="RATING" />
+          </VerticalCardSkeleton>
+        </FixedSizeCarousel>
       </div>
       <div className="max-w-[1280px] [@media(min-width:1344px)]:mx-auto ml-4 md:ml-8">
         <VerticalListSection>
