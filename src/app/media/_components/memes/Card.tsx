@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 
 const Card = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="flex flex-col w-[200px] md:w-[254px] lg:w-[308px] gap-3">
+    <div className="flex w-[164px] md:w-[204px] lg:w-[244px] flex-col gap-3">
       {children}
     </div>
   );

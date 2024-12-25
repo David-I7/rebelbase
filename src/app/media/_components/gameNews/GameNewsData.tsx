@@ -16,7 +16,6 @@ const GameNewsData = async () => {
     titleSet.add(article.title);
     return true;
   });
-  console.log(data);
 
   return (
     <section className="mt-[104px]">

@@ -11,11 +11,11 @@ type GamingMemes = {
     type: string;
   }[];
 
-  available: 156;
+  available: number;
 };
 
 export async function getGamingMemes(): Promise<
-  DataOrError<GamingMemes, Error>
+  DataOrError<GamingMemes["memes"], Error>
 > {
   const queryString = new URLSearchParams({
     keywords: "gamer",
@@ -38,7 +38,16 @@ export async function getGamingMemes(): Promise<
       return (await res.json()) as GamingMemes;
     });
 
-    return { data: GamingMemesData, error: undefined };
+    const memeSet: Set<string> = new Set();
+
+    const filteredMemes = GamingMemesData.memes.filter((meme) => {
+      if (memeSet.has(meme.description) || meme.description.length > 100)
+        return false;
+      memeSet.add(meme.description);
+      return true;
+    });
+
+    return { data: filteredMemes, error: undefined };
   } catch (err) {
     return { error: err as Error };
   }
