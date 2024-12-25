@@ -47,7 +47,7 @@ async function getPopularGamingVideos(): Promise<DataOrError<string[], Error>> {
     regionCode: "US",
     chart: "mostPopular",
     videoCategoryId: "20",
-    maxResults: "15",
+    maxResults: "8",
     part: "snippet",
     fields: "items(snippet(channelId))",
   }).toString();

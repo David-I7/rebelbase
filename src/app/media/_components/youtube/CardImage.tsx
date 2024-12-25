@@ -13,6 +13,7 @@ const CardImage = ({ imgSrc }: CardImageProps) => {
   return (
     <img
       src={imgSrc}
+      loading="lazy"
       alt="profile picture"
       className="aspect-square rounded-full"
       width={146}
