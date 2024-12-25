@@ -8,7 +8,7 @@ import CardDetails from "../gameRepresentation/CardDetails";
 import Link from "next/link";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
 import VerticalList from "../gameRepresentation/list/VerticalList";
-import CloseGameDialog from "@/app/games/[gameId]/_components/gameSections/about/CloseGameDialog";
+import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
 
 const MostAnticipated = ({ gameData }: { gameData?: CardData[] }) => {
   if (!gameData) return;
@@ -44,7 +44,7 @@ const MostAnticipated = ({ gameData }: { gameData?: CardData[] }) => {
             <li key={`most_anticipated_horizontal_card_${game.id}`}>
               <Link
                 prefetch={false}
-                href={`/games/${game.id}`}
+                href={`/games/${game.slug}`}
                 className="h-full"
               >
                 <HorizontalCard>

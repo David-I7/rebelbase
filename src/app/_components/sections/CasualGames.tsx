@@ -3,7 +3,7 @@ import { MdChevronRight } from "react-icons/md";
 import VerticalList from "../gameRepresentation/list/VerticalList";
 import { CardData } from "@/interfaces/igdb";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
-import CloseGameDialog from "@/app/games/[gameId]/_components/gameSections/about/CloseGameDialog";
+import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
 
 const CasualGames = ({ gameData }: { gameData?: CardData[] }) => {
   if (!gameData) return;

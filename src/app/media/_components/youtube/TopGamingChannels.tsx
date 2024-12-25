@@ -6,7 +6,6 @@ const TopGamingChannels = async () => {
 
   if (error) throw error;
 
-  console.log(data);
   return <div>TopGamingChannels</div>;
 };
 

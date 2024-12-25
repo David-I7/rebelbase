@@ -6,7 +6,7 @@ import VerticalCard from "../gameRepresentation/verticalCard/VerticalCard";
 import CardImage from "../gameRepresentation/verticalCard/CardImage";
 import CardDetails from "../gameRepresentation/CardDetails";
 import Link from "next/link";
-import CloseGameDialog from "@/app/games/[gameId]/_components/gameSections/about/CloseGameDialog";
+import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
 import VerticalList from "../gameRepresentation/list/VerticalList";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
 
@@ -42,7 +42,7 @@ const TopRated = ({ gameData }: { gameData?: CardData[] }) => {
         <ul className="inline-grid grid-rows-1 grid-cols-[repeat(15,minmax(164px,1fr))] md:grid-cols-[repeat(15,minmax(204px,1fr))] lg:grid-cols-[repeat(15,minmax(244px,1fr))] gap-4 overflow-x-auto carousel pr-4 lg:pr-8 [@media(min-width:1280px)]:pr-[calc((100vw_-_1280px)_/_2)]">
           {gameData.map((game) => (
             <li key={`top_rated_vertical_card_${game.id}`}>
-              <Link prefetch={false} href={`/games/${game.id}`}>
+              <Link prefetch={false} href={`/games/${game.slug}`}>
                 <VerticalCard>
                   <CardImage
                     gameName={game.name}

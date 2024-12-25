@@ -21,7 +21,7 @@ type VideoResponse = BaseResponse & {
     };
   }[];
 };
-type ChannelResponse = BaseResponse & {
+export type ChannelResponse = BaseResponse & {
   items: {
     id: string;
     snippet: {

@@ -3,7 +3,7 @@ import React from "react";
 import { MdChevronRight } from "react-icons/md";
 import VerticalList from "../gameRepresentation/list/VerticalList";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
-import CloseGameDialog from "@/app/games/[gameId]/_components/gameSections/about/CloseGameDialog";
+import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
 
 const OnlineGames = ({ gameData }: { gameData?: CardData[] }) => {
   if (!gameData) return;

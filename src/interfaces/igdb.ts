@@ -17,15 +17,32 @@ export type GameModes = {
   id: number;
   name: string;
 }[];
+export type EventNetworks = {
+  id: number;
+  network_type: number;
+}[];
 
 export type CardData = {
   id: number;
+  slug: string;
   rating?: number;
   name: string;
   genres?: Genres;
   themes?: Themes;
   cover?: Cover;
   first_release_date?: number; //Seconds ellapsed since epoc
+};
+
+export type EventData = {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  event_logo: Cover;
+  start_time?: number;
+  live_stream_url?: string;
+  games: CardData[];
+  event_networks?: EventNetworks;
 };
 
 export type Popularity_Source_Response = {
