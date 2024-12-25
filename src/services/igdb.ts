@@ -81,47 +81,47 @@ export async function getHomeData(): Promise<
 
   const dataMultiquery = `
   query games "topNewReleases" {
-  fields name,rating,first_release_date, genres.name,themes.name,cover.image_id;
+  fields name,rating,first_release_date, genres.name,themes.name,cover.image_id,slug;
   where rating > 50 & rating_count > 10 & first_release_date > ${unix6MonthsAgo} & first_release_date <= ${now} & category = 0;
   sort rating_count desc; 
   limit 50;
   };
 
   query games "mostAnticipated" {
-  fields name,rating,first_release_date,genres.name,themes.name,cover.image_id; 
+  fields name,rating,first_release_date,genres.name,themes.name,cover.image_id,slug; 
   where first_release_date > ${now} & first_release_date <= ${twoYearsForward} & category = 0 & videos.video_id != null ;
   limit 100;
   };
 
   query games "topRated" {
- fields name,rating,first_release_date,genres.name,themes.name,cover.image_id;
+ fields name,rating,first_release_date,genres.name,themes.name,cover.image_id,slug;
  where rating > 70 & rating_count > 500 & category = 0;
  sort rating_count desc; 
  limit 50;
   };
 
   query games "onlineGames" {
- fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
+ fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date,slug;
  where genres = (4,5,16,12,11,14,36) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes = (2,6);
  sort rating desc;
  limit ${DEFAULT_SECTION_RESULTS};
   };
   query games "offlineGames" {
- fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
+ fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date,slug;
  where genres =(32,33,16,31,26,24,2) & category = 0 & cover.image_id !=null & videos.video_id !=null & rating > 60 & rating_count > 10 & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} & game_modes.id = 1;
  sort first_release_date desc;
  limit ${DEFAULT_SECTION_RESULTS};
   };
   
   query games "casualGames" {
-fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date;
+fields cover.image_id,rating,name,genres.name,themes.name,game_modes.name,first_release_date,slug;
 where cover.image_id !=null & genres = (9,15,26,35) & rating_count != null & first_release_date > ${fourYearsAgo} & first_release_date <= ${now} ;
 sort firt_release_date desc; 
  limit ${DEFAULT_SECTION_RESULTS};
   };
 
   query games "upcomingReleases" {
-fields name,rating,genres.name,themes.name,cover.image_id,first_release_date;
+fields name,rating,genres.name,themes.name,cover.image_id,first_release_date,slug;
 where first_release_date > ${now} & first_release_date <= ${unix3MonthsForward} & category = 0;
 sort first_release_date desc;
 limit 100;
@@ -300,8 +300,8 @@ type GameDataResponse = {
   accessToken: string;
 };
 
-export async function getGameById(
-  id: number
+export async function getGameBySlug(
+  slug: string
 ): Promise<DataOrError<GameDataResponse, Error>> {
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
@@ -327,7 +327,7 @@ export async function getGameById(
       involved_companies.company.name,involved_companies.developer,
       similar_games.name,similar_games.rating,similar_games.genres.name,similar_games.themes.name,similar_games.cover.image_id,
       artworks.image_id,screenshots.image_id;
-      where id = ${id}; limit 1;`,
+      where slug = "${slug}"; limit 1;`,
     }).then(async (res) => {
       if (res.status >= 400) {
         throw ErrorFactory.createFetchError(
@@ -379,7 +379,7 @@ export async function getMoreFromCompany(
           ...IGDBRequestOptions.headers,
           Authorization: `bearer ${accessToken}`,
         },
-        body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;where involved_companies.company = ${developerCompanyId};sort rating_count desc; limit ${DEFAULT_SECTION_RESULTS};`,
+        body: `fields cover.image_id,rating,name,genres.name,themes.name,slug,involved_companies.company.name;where involved_companies.company = ${developerCompanyId};sort rating_count desc; limit ${DEFAULT_SECTION_RESULTS};`,
       }
     ).then(async (res) => {
       if (res.status >= 400) {
@@ -420,7 +420,7 @@ export async function search(
         ...IGDBRequestOptions.headers,
         Authorization: `bearer ${twitchAccessToken!.access_token}`,
       },
-      body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name;search "${query}"; limit ${DEFAULT_SEARCH_RESULTS};`,
+      body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name,slug;search "${query}"; limit ${DEFAULT_SEARCH_RESULTS};`,
     }).then(async (res) => {
       if (res.status >= 400) {
         throw ErrorFactory.createFetchError(

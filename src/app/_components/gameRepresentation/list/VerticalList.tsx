@@ -30,7 +30,7 @@ const VerticalList = ({
         key={`${sectionName}_vertical_card_list_item_${gameData[i].id}`}
         className=""
       >
-        <Link prefetch={false} href={`/games/${gameData[i].id}`}>
+        <Link prefetch={false} href={`/games/${gameData[i].slug}`}>
           <CardListItem>
             <CardImage
               gameName={gameData[i].name}

@@ -20,6 +20,7 @@ export type GameModes = {
 
 export type CardData = {
   id: number;
+  slug: string;
   rating?: number;
   name: string;
   genres?: Genres;

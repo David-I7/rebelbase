@@ -1,4 +1,4 @@
-import { getGameById, getMoreFromCompany } from "@/services/igdb";
+import { getGameBySlug, getMoreFromCompany } from "@/services/igdb";
 import { notFound } from "next/navigation";
 import MoreByCompany from "./_components/gameSections/MoreByCompany";
 import { getDeveloperCompany } from "@/utils/dataTransformation";
@@ -14,14 +14,12 @@ import PageTransition from "@/_components/primitives/loading/PageTransition";
 export default async function GamePage({
   params,
 }: {
-  params: Promise<{ gameId: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const gameId = (await params).gameId;
+  const gameSlug = (await params).slug;
 
-  if (isNaN(Number(gameId))) return notFound();
-
-  const { data: gameData, error: gameDataError } = await getGameById(
-    Number(gameId)
+  const { data: gameData, error: gameDataError } = await getGameBySlug(
+    gameSlug
   );
 
   if (gameDataError) return notFound();
