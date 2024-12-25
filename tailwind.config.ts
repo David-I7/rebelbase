@@ -36,6 +36,8 @@ export default {
         "surface-container-low": "var(--color-surface-container-low)",
         "surface-container-normal": "var(--color-surface-container-normal)",
         "surface-container-high": "var(--color-surface-container-high)",
+        "surface-container-highest": "var(--color-surface-container-highest)",
+
         "on-surface-body": "var(--color-on-surface-body)",
         "on-surface-body-varient-low":
           "var(--color-on-surface-body-varient-low)",
