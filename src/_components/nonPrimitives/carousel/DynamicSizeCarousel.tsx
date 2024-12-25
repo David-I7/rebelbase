@@ -1,14 +1,10 @@
 "use client";
-import React, { ReactNode, useEffect, useRef } from "react";
-import PrevButton from "@/_components/primitives/buttons/carousel/PrevButton";
 import NextButton from "@/_components/primitives/buttons/carousel/NextButton";
+import PrevButton from "@/_components/primitives/buttons/carousel/PrevButton";
 import { handleCarouselScroll } from "@/utils/eventHandlers";
+import React, { ReactNode, useEffect, useRef } from "react";
 
-type VerticalListSectionProps = {
-  children: ReactNode;
-};
-
-const VerticalListSection = ({ children }: VerticalListSectionProps) => {
+const DynamicSizeCarousel = ({ children }: { children: ReactNode }) => {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const isScrolling = useRef<boolean>(false);
@@ -31,19 +27,17 @@ const VerticalListSection = ({ children }: VerticalListSectionProps) => {
   }, []);
 
   return (
-    <section className="mt-20 w-full">
-      <div className="relative">
-        <div
-          className="flex gap-6 overflow-x-auto carousel"
-          onScroll={(e) => handleCarouselScroll(e, nextRef, prevRef)}
-        >
-          {children}
-          <PrevButton isScrolling={isScrolling} ref={prevRef} />
-          <NextButton isScrolling={isScrolling} ref={nextRef} />
-        </div>
+    <div className="relative">
+      <div
+        className="overflow-x-auto carousel"
+        onScroll={(e) => handleCarouselScroll(e, nextRef, prevRef)}
+      >
+        {children}
+        <PrevButton isScrolling={isScrolling} ref={prevRef} />
+        <NextButton isScrolling={isScrolling} ref={nextRef} />
       </div>
-    </section>
+    </div>
   );
 };
 
-export default VerticalListSection;
+export default DynamicSizeCarousel;

@@ -9,6 +9,7 @@ import Link from "next/link";
 import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
 import VerticalList from "../gameRepresentation/list/VerticalList";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
+import FixedSizeCarousel from "@/_components/nonPrimitives/carousel/FixedSizeCarousel";
 
 const TopRated = ({ gameData }: { gameData?: CardData[] }) => {
   if (!gameData) return;
@@ -38,7 +39,7 @@ const TopRated = ({ gameData }: { gameData?: CardData[] }) => {
         </div>
       </SectionDialog>
 
-      <VerticalCardCarousel>
+      <FixedSizeCarousel>
         <ul className="inline-grid grid-rows-1 grid-cols-[repeat(15,minmax(164px,1fr))] md:grid-cols-[repeat(15,minmax(204px,1fr))] lg:grid-cols-[repeat(15,minmax(244px,1fr))] gap-4 overflow-x-auto carousel pr-4 lg:pr-8 [@media(min-width:1280px)]:pr-[calc((100vw_-_1280px)_/_2)]">
           {gameData.map((game) => (
             <li key={`top_rated_vertical_card_${game.id}`}>
@@ -54,7 +55,7 @@ const TopRated = ({ gameData }: { gameData?: CardData[] }) => {
             </li>
           ))}
         </ul>
-      </VerticalCardCarousel>
+      </FixedSizeCarousel>
     </section>
   );
 };

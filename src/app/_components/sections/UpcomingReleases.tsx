@@ -9,6 +9,7 @@ import Link from "next/link";
 import VerticalList from "../gameRepresentation/list/VerticalList";
 import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
+import FixedSizeCarousel from "@/_components/nonPrimitives/carousel/FixedSizeCarousel";
 
 const UpcomingReleases = ({ gameData }: { gameData?: CardData[] }) => {
   if (!gameData) return;
@@ -38,7 +39,7 @@ const UpcomingReleases = ({ gameData }: { gameData?: CardData[] }) => {
         </div>
       </SectionDialog>
 
-      <HorizontalCardCarousel>
+      <FixedSizeCarousel>
         <ul className="inline-grid grid-rows-1 grid-cols-[repeat(15,200px)] md:grid-cols-[repeat(15,254px)] lg:grid-cols-[repeat(15,308px)] gap-4 pr-4 lg:pr-8 [@media(min-width:1280px)]:pr-[calc((100vw_-_1280px)_/_2)]">
           {gameData.map((game) => (
             <li key={`upcoming_releases_horizontal_card_${game.id}`}>
@@ -54,7 +55,7 @@ const UpcomingReleases = ({ gameData }: { gameData?: CardData[] }) => {
             </li>
           ))}
         </ul>
-      </HorizontalCardCarousel>
+      </FixedSizeCarousel>
     </section>
   );
 };
