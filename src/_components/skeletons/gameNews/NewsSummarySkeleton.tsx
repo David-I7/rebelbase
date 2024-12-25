@@ -34,11 +34,11 @@ const NewsSummarySkeleton = ({
   return (
     <div
       className={`${
-        orientation === "landscape" ? "gap-4" : "gap-3"
+        orientation === "landscape" ? "gap-5" : "gap-4"
       } flex-1 flex-col flex`}
     >
       <div className={"flex flex-col gap-1"}>{headingSkeletons}</div>
-      <div className="flex flex-col gap-2">{bodySkeletons}</div>
+      <div className="flex flex-col gap-1">{bodySkeletons}</div>
     </div>
   );
 };

@@ -5,9 +5,9 @@ import RegularNewsSkeleton from "@/_components/skeletons/gameNews/RegularNewsSke
 import TopGamingChannels from "./_components/youtube/TopGamingChannels";
 import GamingMemes from "./_components/memes/GamingMemes";
 import GamingEvents from "./_components/gameEvents/GamingEvents";
-import YoutubeChannelSkeletonCarousel from "@/_components/skeletons/youtube/YoutubeChannelSkeletonCarousel";
-import GameEventsSkeletonCarousel from "@/_components/skeletons/gameEvents/GameEventsSkeletonCarousel";
-import MemeCardSkeletonCarousel from "@/_components/skeletons/memes/MemeCardSkeletonCarousel";
+import YoutubeCreatorsSkeleton from "@/_components/skeletons/youtube/YoutubeCreatorsSkeleton";
+import GameEventsSkeleton from "@/_components/skeletons/gameEvents/GameEventsSkeletonCarousel";
+import MemesSkeleton from "@/_components/skeletons/memes/MemeCardSkeletonCarousel";
 
 export default function Media() {
   return (
@@ -22,13 +22,13 @@ export default function Media() {
       >
         <GameNewsData />
       </Suspense>
-      <Suspense fallback={<YoutubeChannelSkeletonCarousel />}>
+      <Suspense fallback={<YoutubeCreatorsSkeleton />}>
         <TopGamingChannels />
       </Suspense>
-      <Suspense fallback={<GameEventsSkeletonCarousel />}>
+      <Suspense fallback={<GameEventsSkeleton />}>
         <GamingEvents />
       </Suspense>
-      <Suspense fallback={<MemeCardSkeletonCarousel />}>
+      <Suspense fallback={<MemesSkeleton />}>
         <GamingMemes />
       </Suspense>
     </main>

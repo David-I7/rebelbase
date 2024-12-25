@@ -10,7 +10,9 @@ const GameEventSkeleton = () => {
           <div className="flex flex-wrap items-center gap-2 mb-2">
             <div className="h-[14px] rounded bg-surface-container-normal w-14"></div>
             <Dot
-              style={{ background: "var(--color-on-surface-body-varient-low)" }}
+              style={{
+                background: "var(--color-on-surface-body-varient-lowest)",
+              }}
             />
             <div className="h-[14px] rounded bg-surface-container-normal w-14"></div>
           </div>
