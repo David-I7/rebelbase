@@ -21,9 +21,9 @@ import type {
   HomeSections,
   UpcomingReleases,
   CardData,
-  GameModes,
   GameData,
   InvolvedCompanies,
+  EventData,
 } from "../interfaces/igdb";
 import { SearchParamsBrowse } from "@/lib/validation/queryFieldsValidation";
 
@@ -379,7 +379,7 @@ export async function getMoreFromCompany(
           ...IGDBRequestOptions.headers,
           Authorization: `bearer ${accessToken}`,
         },
-        body: `fields cover.image_id,rating,name,genres.name,themes.name,slug,involved_companies.company.name;where involved_companies.company = ${developerCompanyId};sort rating_count desc; limit ${DEFAULT_SECTION_RESULTS};`,
+        body: `fields cover.image_id,rating,name,genres.name,themes.name,slug;where involved_companies.company = ${developerCompanyId};sort rating_count desc; limit ${DEFAULT_SECTION_RESULTS};`,
       }
     ).then(async (res) => {
       if (res.status >= 400) {
@@ -420,7 +420,7 @@ export async function search(
         ...IGDBRequestOptions.headers,
         Authorization: `bearer ${twitchAccessToken!.access_token}`,
       },
-      body: `fields cover.image_id,rating,name,genres.name,themes.name,involved_companies.company.name,slug;search "${query}"; limit ${DEFAULT_SEARCH_RESULTS};`,
+      body: `fields cover.image_id,rating,name,genres.name,themes.name,slug;search "${query}"; limit ${DEFAULT_SEARCH_RESULTS};`,
     }).then(async (res) => {
       if (res.status >= 400) {
         throw ErrorFactory.createFetchError(
@@ -435,6 +435,47 @@ export async function search(
 
     return {
       data: searchData,
+      error: undefined,
+    };
+  } catch (err) {
+    return { data: undefined, error: err as Error };
+  }
+}
+export async function getGameEvents(): Promise<DataOrError<EventData, Error>> {
+  const { data: twitchAccessToken, error: err } =
+    await getOrSetToCacheDynamicExpiration(
+      CACHE_KEYS.twitchAccessToken,
+      getIGDBAccessToken
+    );
+
+  if (err) return { data: undefined, error: err };
+
+  try {
+    const eventData: EventData = await fetch(IGDB_BASE_URL + "/events", {
+      ...IGDBRequestOptions,
+      headers: {
+        ...IGDBRequestOptions.headers,
+        Authorization: `bearer ${twitchAccessToken!.access_token}`,
+      },
+      body: `fields games.cover.image_id,games.rating,games.name,games.genres.name,games.themes.name,games.involved_companies.company.name,games.slug,
+      description,event_logo.image_id,games.name,name,start_time,event_networks.network_type.name,live_stream_url; 
+      where description != null & games != null & event_logo.image_id != null;
+      sort start_time desc;
+      limit ${DEFAULT_SECTION_RESULTS};`,
+    }).then(async (res) => {
+      if (res.status >= 400) {
+        throw ErrorFactory.createFetchError(
+          res.status,
+          res.statusText,
+          JSON.stringify(await res.json())
+        );
+      }
+
+      return await res.json();
+    });
+
+    return {
+      data: eventData,
       error: undefined,
     };
   } catch (err) {

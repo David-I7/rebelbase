@@ -1,17 +1,17 @@
 import CACHE_KEYS from "@/data/constants/cacheKeys";
 import getOrSetCache from "@/lib/redis/controllers";
-import { getGamingMemes } from "@/services/apiLeague";
+import { getGameEvents } from "@/services/igdb";
 import React from "react";
 
-const GamingMemes = async () => {
+const GamingEvents = async () => {
   const { data, error } = await getOrSetCache(
-    CACHE_KEYS.gameMemes,
-    getGamingMemes
+    CACHE_KEYS.gameEvents,
+    getGameEvents
   );
 
   if (error) throw error;
 
-  return <div>GamingMemes</div>;
+  return <div>GamingEvents</div>;
 };
 
-export default GamingMemes;
+export default GamingEvents;
