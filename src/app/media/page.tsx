@@ -6,6 +6,7 @@ import TopGamingChannels from "./_components/youtube/TopGamingChannels";
 import GamingMemes from "./_components/memes/GamingMemes";
 import GamingEvents from "./_components/gameEvents/GamingEvents";
 import YoutubeChannelSkeletonCarousel from "@/_components/skeletons/youtube/YoutubeChannelSkeletonCarousel";
+import GameEventsSkeletonCarousel from "@/_components/skeletons/gameEvents/GameEventsSkeletonCarousel";
 
 export default function Media() {
   return (
@@ -23,7 +24,7 @@ export default function Media() {
       <Suspense fallback={<YoutubeChannelSkeletonCarousel />}>
         <TopGamingChannels />
       </Suspense>
-      <Suspense>
+      <Suspense fallback={<GameEventsSkeletonCarousel />}>
         <GamingEvents />
       </Suspense>
       <Suspense fallback={<>Loading...</>}>
