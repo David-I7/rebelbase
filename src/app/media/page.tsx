@@ -5,6 +5,7 @@ import RegularNewsSkeleton from "@/_components/skeletons/gameNews/RegularNewsSke
 import TopGamingChannels from "./_components/youtube/TopGamingChannels";
 import GamingMemes from "./_components/memes/GamingMemes";
 import GamingEvents from "./_components/gameEvents/GamingEvents";
+import YoutubeChannelSkeletonCarousel from "@/_components/skeletons/youtube/YoutubeChannelSkeletonCarousel";
 
 export default function Media() {
   return (
@@ -19,7 +20,7 @@ export default function Media() {
       >
         <GameNewsData />
       </Suspense>
-      <Suspense fallback={<>Loading...</>}>
+      <Suspense fallback={<YoutubeChannelSkeletonCarousel />}>
         <TopGamingChannels />
       </Suspense>
       <Suspense>
