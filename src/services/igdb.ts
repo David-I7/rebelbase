@@ -441,7 +441,9 @@ export async function search(
     return { data: undefined, error: err as Error };
   }
 }
-export async function getGameEvents(): Promise<DataOrError<EventData, Error>> {
+export async function getGameEvents(): Promise<
+  DataOrError<EventData[], Error>
+> {
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
       CACHE_KEYS.twitchAccessToken,
@@ -451,7 +453,7 @@ export async function getGameEvents(): Promise<DataOrError<EventData, Error>> {
   if (err) return { data: undefined, error: err };
 
   try {
-    const eventData: EventData = await fetch(IGDB_BASE_URL + "/events", {
+    const eventData: EventData[] = await fetch(IGDB_BASE_URL + "/events", {
       ...IGDBRequestOptions,
       headers: {
         ...IGDBRequestOptions.headers,

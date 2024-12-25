@@ -1,6 +1,6 @@
-import YoutubeChannelCarousel from "@/app/media/_components/youtube/YoutubeChannelCarousel";
 import React from "react";
 import YoutubeCardSkeleton from "./YoutubeCardSkeleton";
+import DynamicSizeCarousel from "@/_components/nonPrimitives/carousel/DynamicSizeCarousel";
 
 const itemCount = 8;
 
@@ -14,9 +14,9 @@ const YoutubeChannelSkeletonCarousel = () => {
   }
 
   return (
-    <YoutubeChannelCarousel>
+    <DynamicSizeCarousel>
       <ul className="inline-flex gap-4">{channelSkeletons}</ul>
-    </YoutubeChannelCarousel>
+    </DynamicSizeCarousel>
   );
 };
 

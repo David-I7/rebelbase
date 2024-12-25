@@ -1,11 +1,11 @@
 import { getTopGamingChannelsFacade } from "@/services/youtube";
 import React from "react";
-import YoutubeChannelCarousel from "./YoutubeChannelCarousel";
 import Card from "./Card";
 import CardImage from "./CardImage";
 import CardDetails from "./CardDetails";
 import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
+import DynamicSizeCarousel from "@/_components/nonPrimitives/carousel/DynamicSizeCarousel";
 
 const TopGamingChannels = async () => {
   const { data, error } = await getTopGamingChannelsFacade();
@@ -33,7 +33,7 @@ const TopGamingChannels = async () => {
         </header>
         <div className="text-on-surface-body px-6 pb-6 max-w-full"></div>
       </SectionDialog>
-      <YoutubeChannelCarousel>
+      <DynamicSizeCarousel>
         <ul className="inline-flex gap-4">
           {data.items.map((channel) => (
             <li key={`top_gaming_channel_${channel.id}`}>
@@ -49,7 +49,7 @@ const TopGamingChannels = async () => {
             </li>
           ))}
         </ul>
-      </YoutubeChannelCarousel>
+      </DynamicSizeCarousel>
     </section>
   );
 };

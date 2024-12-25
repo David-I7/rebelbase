@@ -9,10 +9,8 @@ import OfflineGames from "./_components/sections/OfflineGames";
 import OnlineGames from "./_components/sections/OnlineGames";
 import CasualGames from "./_components/sections/CasualGames";
 import VerticalRay from "@/_components/VerticalRay";
-import Test from "@/_components/test/TestUseQuery";
-import TestUseEffect from "@/_components/test/TestUseEffect";
 import PageTransition from "@/_components/primitives/loading/PageTransition";
-import DynamicSizeCarousel from "@/_components/nonPrimitives/carousel/DynamicSizeCarousel";
+import VerticalListSection from "./_components/gameRepresentation/list/VerticalListSection";
 
 export default async function Home() {
   const { data: gameData, error: gameError } = await getOrSetCache(
@@ -31,13 +29,13 @@ export default async function Home() {
         <TopRated gameData={gameData?.topRated.result} />
       </div>
       <div className="max-w-[1280px] [@media(min-width:1344px)]:mx-auto ml-4 md:ml-8">
-        <DynamicSizeCarousel>
+        <VerticalListSection>
           <OfflineGames gameData={gameData?.offlineGames.result} />
           <VerticalRay />
           <OnlineGames gameData={gameData?.onineGames.result} />
           <VerticalRay />
           <CasualGames gameData={gameData?.casualGames.result} />
-        </DynamicSizeCarousel>
+        </VerticalListSection>
       </div>
       <div className="[@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)] ml-4 md:ml-8">
         <UpcomingReleases gameData={gameData?.upcomingReleases.result} />
