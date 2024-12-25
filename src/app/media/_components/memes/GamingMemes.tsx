@@ -1,4 +1,3 @@
-import FixedSizeCarousel from "@/_components/nonPrimitives/carousel/FixedSizeCarousel";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
 import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
 import CACHE_KEYS from "@/data/constants/cacheKeys";
@@ -7,6 +6,7 @@ import { getGamingMemes } from "@/services/apiLeague";
 import React from "react";
 import Card from "./Card";
 import CardImage from "./CardImage";
+import DynamicSizeCarousel from "@/_components/nonPrimitives/carousel/DynamicSizeCarousel";
 
 const GamingMemes = async () => {
   const { data, error } = await getOrSetCache(
@@ -37,7 +37,7 @@ const GamingMemes = async () => {
         </header>
         <div className="text-on-surface-body px-6 pb-6 max-w-full"></div>
       </SectionDialog>
-      <FixedSizeCarousel>
+      <DynamicSizeCarousel>
         <ul className="inline-flex gap-4">
           {data.map((meme, index) => (
             <li key={`meme_${index}`}>
@@ -53,7 +53,7 @@ const GamingMemes = async () => {
             </li>
           ))}
         </ul>
-      </FixedSizeCarousel>
+      </DynamicSizeCarousel>
     </section>
   );
 };

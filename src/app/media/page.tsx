@@ -7,6 +7,7 @@ import GamingMemes from "./_components/memes/GamingMemes";
 import GamingEvents from "./_components/gameEvents/GamingEvents";
 import YoutubeChannelSkeletonCarousel from "@/_components/skeletons/youtube/YoutubeChannelSkeletonCarousel";
 import GameEventsSkeletonCarousel from "@/_components/skeletons/gameEvents/GameEventsSkeletonCarousel";
+import MemeCardSkeletonCarousel from "@/_components/skeletons/memes/MemeCardSkeletonCarousel";
 
 export default function Media() {
   return (
@@ -27,7 +28,7 @@ export default function Media() {
       <Suspense fallback={<GameEventsSkeletonCarousel />}>
         <GamingEvents />
       </Suspense>
-      <Suspense fallback={<>Loading...</>}>
+      <Suspense fallback={<MemeCardSkeletonCarousel />}>
         <GamingMemes />
       </Suspense>
     </main>
