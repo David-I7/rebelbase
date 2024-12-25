@@ -11,7 +11,7 @@ export default function Media() {
     <main className="max-w-[1280px] mx-4 md:mx-8 [@media(min-width:1344px)]:mx-auto">
       <Suspense
         fallback={
-          <section>
+          <section className="mt-[104px]">
             <HeroNewsSkeleton />
             <RegularNewsSkeleton />
           </section>
