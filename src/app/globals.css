@@ -252,20 +252,6 @@ footer::before {
   background-image: url("../assets/rebelbase_footer.svg");
 }
 
-footer::after {
-  content: "REBELBASE";
-  font-size: 12rem;
-  line-height: 100%;
-  color: var(--color-surface-container-high);
-  opacity: 0.08;
-  font-family: var(--font-display);
-  position: absolute;
-  left: 0rem;
-  right: 0;
-  top: 1rem;
-  overflow: hidden;
-}
-
 footer {
   margin-top: calc(120px + 64px);
 }

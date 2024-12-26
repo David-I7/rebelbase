@@ -1,28 +1,30 @@
 import React from "react";
 import FullLogo from "../../_components/primitives/logo/FullLogo";
-import NavBar from "./NavBar";
+import FooterNav from "./FooterNav";
+import FooterAccordions from "./FooterAccordions";
 
 const Footer = () => {
   return (
-    <footer className="bg-surface p-4 w-full relative">
-      <div className="flex flex-col max-w-[600px] lg:max-w-[50%] relative z-10">
-        <FullLogo />
-        <div className="flex font-body-s mt-6 mb-16">
-          <div className="flex-1 flex flex-col gap-3">
-            <span className="pl-8">Search</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="pl-4">Links</span>
-            <NavBar customClass="flex flex-col [@media(min-width:500px)]:flex-row" />
-          </div>
+    <footer className="bg-surface w-full relative">
+      <div className="mx-4 md:mx-8 flex flex-col sm:flex-row mb-16 gap-4 sm:gap-28">
+        <div className="flex flex-col max-w-[600px] lg:max-w-[50%] relative z-10 ">
+          <FullLogo />
+          <p className="font-body-s max-w-lg text-pretty mt-4">
+            RebelBase serves as a hub for gaming enthusiasts, offering
+            personalized recommendations, trending titles, and curated lists
+            across various genres and platforms.
+          </p>
         </div>
-        <p
-          suppressHydrationWarning
-          className="font-body-xs text-on-surface-body-varient-low ml-8"
-        >
-          &copy; {new Date().getFullYear()} Rebelbase. All rights reserved
-        </p>
+        <FooterAccordions />
+        <FooterNav />
       </div>
+
+      <p
+        suppressHydrationWarning
+        className="font-body-xs h-14 bg-surface-container-high text-on-surface-heading-varient grid place-content-center"
+      >
+        &copy; {new Date().getFullYear()} RebelBase. All rights reserved
+      </p>
     </footer>
   );
 };

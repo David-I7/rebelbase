@@ -225,11 +225,11 @@ export const platforms = [
 
 export const uiFriendlyPlatformsMap: { [key: string]: string } = {
   windows: "Windows",
-  ps5: "PlayStation 5",
+  mac: "Mac",
   browser: "Web Browser",
+  ps5: "PlayStation 5",
+  xboxSeriesXS: "Xbox Series X|S",
   android: "Android",
   ios: "iOS",
   ps4: "PlayStation 4",
-  xboxSeriesXS: "Xbox Series X|S",
-  mac: "Mac",
 };

@@ -49,25 +49,25 @@ const HeroSectionSkeleton = () => {
                   ></div>
                   <div className="absolute z-20 backdrop-blur-sm py-2 px-3 bottom-0 left-0 right-0 rounded-bl-xl rounded-br-xl">
                     <div className="mb-2 flex items-center gap-x-2 gap-y-0 ">
-                      <div className="h-[13px] rounded w-20 bg-surface-container-highest"></div>
+                      <div className="h-[13px] rounded w-20 bg-surface-container-high"></div>
 
                       <Dot
                         style={{
                           backgroundColor:
-                            "var(--color-surface-container-highest)",
+                            "var(--color-surface-container-high)",
                         }}
                       />
 
-                      <div className="h-[13px] rounded w-20 bg-surface-container-highest"></div>
+                      <div className="h-[13px] rounded w-20 bg-surface-container-high"></div>
                     </div>
 
                     <div
-                      className={`h-7 rounded bg-surface-container-highest w-2/3`}
+                      className={`h-7 rounded bg-surface-container-high w-2/3`}
                     ></div>
 
                     <div className="flex items-center gap-[2px] mt-3">
-                      <div className="h-[18px] w-8 rounded-sm bg-surface-container-highest"></div>
-                      <div className="h-[18px] w-[18px]  rounded-lg bg-surface-container-highest"></div>
+                      <div className="h-[18px] w-8 rounded-sm bg-surface-container-high"></div>
+                      <div className="h-[18px] w-[18px]  rounded-lg bg-surface-container-high"></div>
                     </div>
                   </div>
                 </HeroCard>
