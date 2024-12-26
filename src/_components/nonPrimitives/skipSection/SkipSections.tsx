@@ -24,7 +24,7 @@ const SkipSections = ({
         });
       },
       {
-        rootMargin: "-80px 0px -100% 0px",
+        rootMargin: "-81px 0px -100% 0px",
       }
     );
 
@@ -36,7 +36,7 @@ const SkipSections = ({
   }, [sectionIds]);
 
   return (
-    <div className={`${customClass} py-6 flex gap-4`}>
+    <div className={`${customClass} py-6 flex`}>
       {sectionIds.map((id, i) => (
         <SkipLink
           key={id}

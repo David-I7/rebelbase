@@ -9,6 +9,7 @@ import YoutubeCreatorsSkeleton from "@/_components/skeletons/youtube/YoutubeCrea
 import GameEventsSkeleton from "@/_components/skeletons/gameEvents/GameEventsSkeletonCarousel";
 import MemesSkeleton from "@/_components/skeletons/memes/MemeCardSkeletonCarousel";
 import SkipSections from "@/_components/nonPrimitives/skipSection/SkipSections";
+import PageTransition from "@/_components/primitives/loading/PageTransition";
 
 const sectionIds = [
   "gamingNews",
@@ -22,7 +23,7 @@ const labels = ["News", "Creators", "Events", "Memes"] as const;
 export default function Media() {
   return (
     <main className="">
-      <div className="px-4 md:px-8 [@media(min-width:1344px)]:px-0 sticky top-0 flex justify-center z-20 bg-surface-container-lowest">
+      <div className="px-4 md:px-8 [@media(min-width:1344px)]:px-0 sticky top-0 flex sm:justify-center scroll-hidden z-20 bg-surface-container-lowest overflow-x-auto ">
         <SkipSections
           customClass="max-w-[1280px] flex-1"
           sectionIds={sectionIds}
@@ -79,6 +80,7 @@ export default function Media() {
       >
         <GamingMemes sectionId={sectionIds[3]} />
       </Suspense>
+      <PageTransition />
     </main>
   );
 }

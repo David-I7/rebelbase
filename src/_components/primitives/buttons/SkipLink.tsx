@@ -30,10 +30,15 @@ const SkipLink = ({
 
   return (
     <Link
+      onClickCapture={(e) => {
+        e.stopPropagation();
+      }}
       ref={linkRef}
       href={`#${sectionId}`}
       className={`${linkPadding} ${
-        isActive ? "bg-secondary text-on-secondary" : ""
+        isActive
+          ? "bg-secondary text-on-secondary"
+          : "hover:bg-surface-container-normal"
       } flex items-center justify-center gap-2 font-medium font-body-s h-8 rounded-full`}
     >
       {leadingIcon}

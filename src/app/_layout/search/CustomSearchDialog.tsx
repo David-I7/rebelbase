@@ -63,7 +63,7 @@ const CustomSearchDialog = React.forwardRef(
         ref={ref}
         className={`${
           isOpen ? "dialogOpen" : ""
-        } top-20 m-0 left-0 w-full max-w-full min-h-[50%] bg-surface-container-lowest backdrop:bg-[rgba(0,0,0,0.38)] backdrop:backdrop-blur-sm backdrop:top-20 text-inherit`}
+        } top-20 m-0 z-30 left-0 w-full max-w-full min-h-[50%] bg-surface-container-lowest backdrop:bg-[rgba(0,0,0,0.38)] backdrop:backdrop-blur-sm backdrop:top-20 text-inherit`}
       >
         {children}
       </dialog>
