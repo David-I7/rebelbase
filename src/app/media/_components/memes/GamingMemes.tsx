@@ -39,7 +39,7 @@ const GamingMemes = async ({ sectionId }: { sectionId: string }) => {
           <CloseGameDialog style={{ top: "1.25rem" }} />
         </header>
         <div className="text-on-surface-body px-6 pb-6 max-w-full">
-          <ul className="flex flex-col items-center gap-16">
+          <ul className="flex flex-col items-center gap-20">
             {data.map((meme, index) => (
               <li key={`meme_${index}`} className="">
                 <Card style={{ width: "244px" }}>
@@ -47,9 +47,7 @@ const GamingMemes = async ({ sectionId }: { sectionId: string }) => {
                     imgSrc={meme.url}
                     memeDescription={meme.description}
                   />
-                  <h3 className="text-base line-clamp-2 text-ellipsis">
-                    {meme.description}
-                  </h3>
+                  <h3 className="text-base">{meme.description}</h3>
                 </Card>
               </li>
             ))}

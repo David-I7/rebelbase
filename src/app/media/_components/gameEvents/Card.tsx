@@ -1,8 +1,17 @@
 import React, { ReactNode } from "react";
 
-const Card = ({ children }: { children: ReactNode }) => {
+const Card = ({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: React.CSSProperties;
+}) => {
   return (
-    <div className="flex flex-col w-[200px] md:w-[254px] lg:w-[308px] gap-3">
+    <div
+      style={style}
+      className="flex flex-col w-[200px] md:w-[254px] lg:w-[308px] gap-3"
+    >
       {children}
     </div>
   );
