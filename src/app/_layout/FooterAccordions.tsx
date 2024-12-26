@@ -19,7 +19,7 @@ const FooterAccordions = () => {
     }
   };
   return (
-    <div className="sm:hidden bg-ou">
+    <div className="sm:hidden">
       <Accordion
         style={{
           borderBottom: "1px solid var(--color-outline-varient-low)",
