@@ -41,7 +41,7 @@ const GamingMemes = async ({ sectionId }: { sectionId: string }) => {
         <div className="text-on-surface-body px-6 pb-6 max-w-full"></div>
       </SectionDialog>
       <DynamicSizeCarousel>
-        <ul className="inline-flex gap-4">
+        <ul className="inline-flex gap-4 pr-4 md:pr-8 [@media(min-width:1344px)]:pr-[calc((100vw_-_1280px)_/_2)]">
           {data.map((meme, index) => (
             <li key={`meme_${index}`}>
               <Card>

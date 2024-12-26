@@ -23,13 +23,13 @@ const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
         sectionHasDialog={true}
         label={
           <h2 className="flex items-center text-on-surface-heading h-10 text-2xl">
-            Top Creators
+            Popular Creators
           </h2>
         }
       >
         <header className="sticky px-6 py-6 top-0 z-10 bg-surface-container-lowest ">
           <div className="text-2xl text-on-surface-heading text-center mr-12 font-semibold">
-            Top Creators
+            Popular Creators
           </div>
 
           <CloseGameDialog style={{ top: "1.25rem" }} />
@@ -37,7 +37,7 @@ const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
         <div className="text-on-surface-body px-6 pb-6 max-w-full"></div>
       </SectionDialog>
       <DynamicSizeCarousel>
-        <ul className="inline-flex gap-4">
+        <ul className="inline-flex gap-4  pr-4 md:pr-8 [@media(min-width:1344px)]:pr-0">
           {data.items.map((channel) => (
             <li key={`top_gaming_channel_${channel.id}`}>
               <a
