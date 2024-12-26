@@ -6,6 +6,7 @@ import CardDetails from "./CardDetails";
 import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
 import DynamicSizeCarousel from "@/_components/nonPrimitives/carousel/DynamicSizeCarousel";
+import CardLink from "./CardLink";
 
 const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
   const { data, error } = await getTopGamingChannelsFacade();
@@ -34,21 +35,37 @@ const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
 
           <CloseGameDialog style={{ top: "1.25rem" }} />
         </header>
-        <div className="text-on-surface-body px-6 pb-6 max-w-full"></div>
+        <div className="text-on-surface-body px-6 pb-6 max-w-full">
+          <ul>
+            {data.items.map((channel) => (
+              <li key={`top_gaming_channel_${channel.id}`}>
+                <CardLink
+                  href={`https://www.youtube.com/${channel.snippet.customUrl}`}
+                  className="hover:bg-surface-container-normal rounded p-4 cursor-pointer block transition-colors"
+                >
+                  <Card style={{ gridTemplateColumns: "4rem 1fr" }}>
+                    <CardImage imgSrc={channel.snippet.thumbnails.medium.url} />
+
+                    <CardDetails orientation="landscape" channel={channel} />
+                  </Card>
+                </CardLink>
+              </li>
+            ))}
+          </ul>
+        </div>
       </SectionDialog>
       <DynamicSizeCarousel>
         <ul className="inline-flex gap-4  pr-4 md:pr-8 [@media(min-width:1344px)]:pr-0">
           {data.items.map((channel) => (
             <li key={`top_gaming_channel_${channel.id}`}>
-              <a
-                target="_blank"
+              <CardLink
                 href={`https://www.youtube.com/${channel.snippet.customUrl}`}
               >
                 <Card>
                   <CardImage imgSrc={channel.snippet.thumbnails.medium.url} />
                   <CardDetails channel={channel} />
                 </Card>
-              </a>
+              </CardLink>
             </li>
           ))}
         </ul>

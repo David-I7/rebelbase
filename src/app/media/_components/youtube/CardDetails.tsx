@@ -4,15 +4,21 @@ import React from "react";
 
 const CardDetails = ({
   channel,
+  orientation = "portrait",
 }: {
   channel: ChannelResponse["items"][number];
+  orientation?: "landscape" | "portrait";
 }) => {
   return (
-    <div className="text-center">
+    <div className={`${orientation === "portrait" ? "text-center" : ""} `}>
       <h3 className="text-base text-ellipsis text-nowrap overflow-hidden mb-1">
         {channel.snippet.title}
       </h3>
-      <div className="flex-wrap flex font-body-s items-center gap-x-2 justify-center">
+      <div
+        className={`flex-wrap flex font-body-s items-center gap-x-2 ${
+          orientation === "portrait" ? "justify-center" : ""
+        } `}
+      >
         <div className="break-all">{channel.snippet.customUrl}</div>
         <Dot />
         <div>
