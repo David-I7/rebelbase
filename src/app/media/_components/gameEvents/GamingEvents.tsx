@@ -10,7 +10,7 @@ import Card from "./Card";
 import CardImage from "./CardImage";
 import CardDetails from "./CardDetails";
 
-const GamingEvents = async () => {
+const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
   const { data, error } = await getOrSetCache(
     CACHE_KEYS.gameEvents,
     getGameEvents
@@ -21,7 +21,10 @@ const GamingEvents = async () => {
   if (!data?.length) return;
 
   return (
-    <section>
+    <section
+      className="mt-20 scroll-mt-20 ml-4 md:ml-8 [@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)]"
+      id={sectionId}
+    >
       <SectionDialog
         sectionHasDialog={true}
         label={
@@ -40,7 +43,7 @@ const GamingEvents = async () => {
         <div className="text-on-surface-body px-6 pb-6 max-w-full"></div>
       </SectionDialog>
       <FixedSizeCarousel>
-        <ul className="inline-flex gap-4">
+        <ul className="inline-flex gap-4 pr-4 md:pr-8 [@media(min-width:1344px)]:pr-[calc((100vw_-_1280px)_/_2)]">
           {data.map((event) => (
             <li key={`gaming_event_${event.id}`}>
               <Card>

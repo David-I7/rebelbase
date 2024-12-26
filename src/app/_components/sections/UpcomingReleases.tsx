@@ -40,7 +40,7 @@ const UpcomingReleases = ({ gameData }: { gameData?: CardData[] }) => {
       </SectionDialog>
 
       <FixedSizeCarousel>
-        <ul className="inline-grid grid-rows-1 grid-cols-[repeat(15,200px)] md:grid-cols-[repeat(15,254px)] lg:grid-cols-[repeat(15,308px)] gap-4 pr-4 lg:pr-8 [@media(min-width:1280px)]:pr-[calc((100vw_-_1280px)_/_2)]">
+        <ul className="inline-grid grid-rows-1 grid-cols-[repeat(15,200px)] md:grid-cols-[repeat(15,254px)] lg:grid-cols-[repeat(15,308px)] gap-4 pr-4 lg:pr-8 [@media(min-width:1344px)]:pr-[calc((100vw_-_1280px)_/_2)]">
           {gameData.map((game) => (
             <li key={`upcoming_releases_horizontal_card_${game.id}`}>
               <Link prefetch={false} href={`/games/${game.slug}`}>

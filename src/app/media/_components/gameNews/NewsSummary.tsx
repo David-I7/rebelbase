@@ -10,7 +10,7 @@ const NewsSummary = ({
   details: string;
 }) => {
   return (
-    <div className="flex-1">
+    <div className="flex-1 basis-0 min-w-0">
       <h2
         className={`${
           orientation === "landscape" ? "text-base mb-2" : "text-xl mb-3"

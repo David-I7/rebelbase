@@ -21,7 +21,7 @@ const FooterNav = () => {
   };
 
   return (
-    <nav className="hidden sm:flex font-body-s gap-20 items-start">
+    <nav className="hidden sm:flex font-body-s gap-20 items-start [@media(min-width:945px)]:flex-1 justify-center">
       <div className="grid gap-3">
         Links
         <ul className="grid gap-2 text-on-surface-heading-varient">

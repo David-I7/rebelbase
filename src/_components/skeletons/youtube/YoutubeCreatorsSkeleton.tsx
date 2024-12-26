@@ -18,13 +18,15 @@ const YoutubeCreatorsSkeleton = () => {
     <div>
       <div className="flex items-center mb-4">
         <h2 className="flex items-center text-on-surface-heading h-10 text-2xl">
-          Top Creators
+          Popular Creators
         </h2>
         <MdChevronRight size={32} className="text-on-surface-heading" />
       </div>
 
       <DynamicSizeCarousel>
-        <ul className="inline-flex gap-4">{channelSkeletons}</ul>
+        <ul className="inline-flex gap-4 pr-4 md:pr-8 [@media(min-width:1344px)]:pr-0">
+          {channelSkeletons}
+        </ul>
       </DynamicSizeCarousel>
     </div>
   );

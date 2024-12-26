@@ -24,7 +24,7 @@ const FullScreenDialogSearch = () => {
         <MdSearch size={24} />
       </button>
       <FullScreenDialog
-        style={{ paddingInline: "2rem" }}
+        style={{ paddingInline: "2rem", zIndex: "30" }}
         id={ariaControlsId}
         isOpen={isOpen}
       >

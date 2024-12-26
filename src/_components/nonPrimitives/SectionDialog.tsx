@@ -43,7 +43,7 @@ const SectionDialog = ({
       }
     >
       <Dialog
-        customClass="mx-0 [@media(min-width:380px)]:w-[calc(100%_-_48px)] [@media(min-width:380px)_and_(max-width:737px)]:mx-6 [@media(min-width:737px)]:mx-auto scroll-hidden"
+        customClass="mx-0 w-full [@media(min-width:380px)]:w-[calc(100%_-_48px)] [@media(min-width:380px)_and_(max-width:737px)]:mx-6 [@media(min-width:737px)]:mx-auto scroll-hidden"
         style={{ maxWidth: "689px" }}
         ref={dialogRef}
       >

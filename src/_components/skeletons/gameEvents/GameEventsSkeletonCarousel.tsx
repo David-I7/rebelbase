@@ -21,7 +21,9 @@ const GameEventsSkeleton = () => {
         <MdChevronRight size={32} className="text-on-surface-heading" />
       </div>
       <FixedSizeCarousel>
-        <ul className="inline-flex gap-4">{gameEvents}</ul>
+        <ul className="inline-flex gap-4 pr-4 md:pr-8 [@media(min-width:1344px)]:pr-[calc((100vw_-_1280px)_/_2)]">
+          {gameEvents}
+        </ul>
       </FixedSizeCarousel>
     </div>
   );
