@@ -38,7 +38,23 @@ const GamingMemes = async ({ sectionId }: { sectionId: string }) => {
 
           <CloseGameDialog style={{ top: "1.25rem" }} />
         </header>
-        <div className="text-on-surface-body px-6 pb-6 max-w-full"></div>
+        <div className="text-on-surface-body px-6 pb-6 max-w-full">
+          <ul className="flex flex-col items-center gap-16">
+            {data.map((meme, index) => (
+              <li key={`meme_${index}`} className="">
+                <Card style={{ width: "244px" }}>
+                  <CardImage
+                    imgSrc={meme.url}
+                    memeDescription={meme.description}
+                  />
+                  <h3 className="text-base line-clamp-2 text-ellipsis">
+                    {meme.description}
+                  </h3>
+                </Card>
+              </li>
+            ))}
+          </ul>
+        </div>
       </SectionDialog>
       <DynamicSizeCarousel>
         <ul className="inline-flex gap-4 pr-4 md:pr-8 [@media(min-width:1344px)]:pr-[calc((100vw_-_1280px)_/_2)]">
