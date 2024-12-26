@@ -1,5 +1,5 @@
 import React from "react";
-import { Action } from "../../context/FilterContext";
+import { Action, filterKeys } from "../../context/FilterContext";
 import { MdCheck } from "react-icons/md";
 
 const FilterListItem = ({
@@ -11,7 +11,7 @@ const FilterListItem = ({
 }: {
   selected: boolean;
   dispatch: React.Dispatch<Action>;
-  actionKey: Action["payload"]["key"];
+  actionKey: (typeof filterKeys)[number];
   actionValue: string;
   label: string;
 }) => {

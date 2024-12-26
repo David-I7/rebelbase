@@ -7,7 +7,12 @@ export type Action = {
   payload?: { key?: (typeof filterKeys)[number]; value: string };
 };
 const ActionType = ["remove", "add", "reset", "search"] as const;
-const filterKeys = ["genres", "themes", "gameModes", "categories"] as const;
+export const filterKeys = [
+  "genres",
+  "themes",
+  "gameModes",
+  "categories",
+] as const;
 
 type InitFilterContext = [
   state: { [Key in (typeof filterKeys)[number]]: Set<string> } & {
@@ -43,12 +48,12 @@ function reducer(
       prevKeyState.delete(action.payload!.value);
       return {
         ...state,
-        [action.payload!.key!!]: new Set(prevKeyState),
+        [action.payload!.key!]: new Set(prevKeyState),
         filterCount: state.filterCount - 1,
       };
     }
     case ActionType[1]: {
-      const prevKeyState = state[action.payload!.key!!];
+      const prevKeyState = state[action.payload!.key!];
       prevKeyState.add(action.payload!.value);
 
       return {
