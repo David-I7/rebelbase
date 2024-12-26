@@ -47,7 +47,9 @@ export default async function GamePage({
         <AboutGame game={gameData!.result!} />
         <div className="grid gap-12 content-start">
           <SimilarGames similarGames={gameData!.result[0]["similar_games"]} />
-          <Suspense fallback={<VerticalListSkeleton />}>
+          <Suspense
+            fallback={<VerticalListSkeleton sectionName="more_by_company" />}
+          >
             <MoreByCompany
               data={companyData}
               gameId={gameData!.result[0].id}

@@ -7,7 +7,7 @@ import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/C
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
 import DynamicSizeCarousel from "@/_components/nonPrimitives/carousel/DynamicSizeCarousel";
 
-const TopGamingChannels = async () => {
+const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
   const { data, error } = await getTopGamingChannelsFacade();
 
   if (error) throw error;
@@ -15,7 +15,10 @@ const TopGamingChannels = async () => {
   if (!data?.items) return;
 
   return (
-    <section>
+    <section
+      className="scroll-mt-20 max-w-[1280px] mt-20 ml-4 md:ml-8 [@media(min-width:1344px)]:mx-auto"
+      id={sectionId}
+    >
       <SectionDialog
         sectionHasDialog={true}
         label={

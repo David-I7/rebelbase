@@ -1,12 +1,13 @@
 "use client";
 import Link from "next/link";
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, { ReactNode, useRef } from "react";
 
 type SkipLinkProps = {
   trailingIcon?: ReactNode;
   leadingIcon?: ReactNode;
   label: string;
   sectionId: string;
+  isActive: boolean;
 };
 
 const SkipLink = ({
@@ -14,6 +15,7 @@ const SkipLink = ({
   leadingIcon,
   label,
   sectionId,
+  isActive,
 }: SkipLinkProps) => {
   const linkPadding =
     trailingIcon && leadingIcon
@@ -26,48 +28,13 @@ const SkipLink = ({
 
   const linkRef = useRef<HTMLAnchorElement>(null);
 
-  useEffect(() => {
-    const sectionRef = document.getElementById(sectionId.replace("#", ""))!;
-    const linkRefCurrent = linkRef.current!;
-    const skipLinkParent = linkRef.current!.parentElement!;
-    const skipLinkParentBottom =
-      skipLinkParent.offsetTop + skipLinkParent.offsetHeight;
-    const sectionOffsetBottom = sectionRef.offsetTop + sectionRef.offsetHeight;
-    const handleScroll = () => {
-      const rangeStart =
-        sectionRef.offsetTop - document.documentElement.scrollTop;
-      const rangeEnd =
-        sectionOffsetBottom -
-        document.documentElement.scrollTop -
-        skipLinkParentBottom;
-      console.log(rangeStart, rangeEnd);
-      if (
-        sectionRef.offsetTop - document.documentElement.scrollTop <=
-          skipLinkParentBottom &&
-        sectionOffsetBottom -
-          document.documentElement.scrollTop -
-          skipLinkParentBottom >=
-          0
-      ) {
-        linkRefCurrent.classList.add("bg-secondary");
-        linkRefCurrent.classList.add("text-on-secondary");
-      } else {
-        linkRefCurrent.classList.remove("bg-secondary");
-        linkRefCurrent.classList.remove("text-on-secondary");
-      }
-    };
-    handleScroll();
-    document.addEventListener("scroll", handleScroll);
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <Link
       ref={linkRef}
-      href={sectionId}
-      className={`${linkPadding} flex items-center justify-center gap-2 font-medium font-body-s h-8 rounded-full`}
+      href={`#${sectionId}`}
+      className={`${linkPadding} ${
+        isActive ? "bg-secondary text-on-secondary" : ""
+      } flex items-center justify-center gap-2 font-medium font-body-s h-8 rounded-full`}
     >
       {leadingIcon}
       {label}
