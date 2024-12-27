@@ -33,7 +33,7 @@ const VerticalListSkeleton = ({
   return (
     <div className="grid gap-4 flex-1">
       <div className="flex items-center">
-        <h2 className="flex items-center text-on-surface-heading h-8 text-2xl">
+        <h2 className="flex items-center text-on-surface-heading min-h-8 text-2xl">
           {sectionName}
         </h2>
         <MdChevronRight size={32} className="text-on-surface-heading" />

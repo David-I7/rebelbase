@@ -375,7 +375,7 @@ export async function getGameById(
       involved_companies.company.name,involved_companies.developer,
       similar_games.name,similar_games.rating,similar_games.genres.name,similar_games.themes.name,similar_games.cover.image_id,
       artworks.image_id,screenshots.image_id;
-      where id = "${id}"; limit 1;`,
+      where id = ${id}; limit 1;`,
     }).then(async (res) => {
       if (res.status >= 400) {
         throw ErrorFactory.createFetchError(
