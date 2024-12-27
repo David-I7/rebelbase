@@ -49,6 +49,8 @@ export async function getGameNews(): Promise<DataOrError<GameNews, Error>> {
       return (await res.json()) as GameNews;
     });
 
+    gameNews.news = gameNews.news.filter((article) => Boolean(article.image));
+
     gameNews.news.sort(
       (a, b) =>
         (b.publish_date ? new Date(b.publish_date).getTime() : 0) -

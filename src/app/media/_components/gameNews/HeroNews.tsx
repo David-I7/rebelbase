@@ -3,6 +3,7 @@ import { GameNews } from "@/services/worldNewsApi";
 import HeroArticle from "./Hero/HeroArticle";
 import ArticleImage from "./Hero/ArticleImage";
 import NewsSummary from "./NewsSummary";
+import NewsArticleDialog from "./NewsArticleDialog";
 
 const largeCount = 3;
 
@@ -21,6 +22,7 @@ const HeroNews = ({ gameNews }: { gameNews: GameNews["news"] }) => {
             details={gameNews[i].text}
             summary={gameNews[i].title}
           />
+          <NewsArticleDialog article={gameNews[i]} />
         </HeroArticle>
       );
     }
