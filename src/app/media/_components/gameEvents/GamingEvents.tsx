@@ -52,7 +52,7 @@ const GamingEvents = async () => {
                   }}
                 >
                   <CardImage
-                    style={{ maxWidth: "80px" }}
+                    maxWidth="max-w-20 lg:max-w-28"
                     imgId={event.event_logo.image_id}
                   />
                   <CardDetails type="carousel" event={event} />
@@ -68,7 +68,10 @@ const GamingEvents = async () => {
           {data.map((event) => (
             <li className="relative" key={`gaming_event_${event.id}`}>
               <Card>
-                <CardImage imgId={event.event_logo.image_id} />
+                <CardImage
+                  maxWidth="max-w-[308px]"
+                  imgId={event.event_logo.image_id}
+                />
                 <CardDetails type="carousel" event={event} />
               </Card>
               <EventDetailsDialog event={event} />

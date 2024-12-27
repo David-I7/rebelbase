@@ -3,11 +3,11 @@ import React from "react";
 
 const CardImage = ({
   imgId,
-  style,
+  maxWidth,
   type = "regular",
 }: {
   imgId: string;
-  style?: React.CSSProperties;
+  maxWidth?: string;
   type?: "large" | "regular";
 }) => {
   if (!imgId)
@@ -17,8 +17,7 @@ const CardImage = ({
 
   return (
     <img
-      style={style}
-      className={`rounded object-cover max-w-[308px] w-full aspect-video`}
+      className={`${maxWidth} rounded object-cover w-full aspect-video`}
       width="308px"
       height="547px"
       loading="lazy"

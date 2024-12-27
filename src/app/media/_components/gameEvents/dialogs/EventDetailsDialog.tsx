@@ -6,9 +6,7 @@ import { EventData } from "@/interfaces/igdb";
 import React, { useEffect, useRef, useState } from "react";
 import CardImage from "../CardImage";
 import CardDetails from "../CardDetails";
-import OutlineButton from "@/_components/primitives/buttons/OutlineButton";
 import { MdOpenInNew } from "react-icons/md";
-import VerticalRay from "@/_components/VerticalRay";
 import HorizontalRay from "@/_components/HorizontalRay";
 
 type DialogProps = {
@@ -19,7 +17,7 @@ const EventDetailsDialog = React.memo(({ event }: DialogProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggle = (state?: boolean) => {
-    if (state) {
+    if (typeof state === "boolean") {
       setIsOpen(state);
       return;
     }
@@ -33,18 +31,19 @@ const EventDetailsDialog = React.memo(({ event }: DialogProps) => {
 
     const observer = new MutationObserver(
       (mutationRecord: MutationRecord[]) => {
-        console.log(mutationRecord[0]);
         if (mutationRecord[0].attributeName === "open") {
           const target = mutationRecord[0].target as HTMLDialogElement;
           if (!target.open) {
-            console.log("running");
             toggle(false);
           }
         }
       }
     );
 
-    observer.observe(dialogRef.current!, { attributes: true });
+    observer.observe(dialogRef.current!, {
+      attributes: true,
+      attributeFilter: ["open"],
+    });
 
     return () => {
       observer.disconnect();
@@ -88,7 +87,7 @@ const EventDetailsDialog = React.memo(({ event }: DialogProps) => {
                 <CardImage
                   type="large"
                   imgId={event.event_logo.image_id}
-                  style={{ maxWidth: "100%" }}
+                  maxWidth="100%"
                 />
                 <CardDetails type="details" event={event} />
                 {event.live_stream_url && (
