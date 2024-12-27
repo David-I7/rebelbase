@@ -19,7 +19,12 @@ const SectionDialog = ({
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const toggle = () => {
+  const toggle = (state?: boolean) => {
+    if (typeof state === "boolean") {
+      setIsOpen(state);
+      return;
+    }
+
     setIsOpen(!isOpen);
   };
 
@@ -34,7 +39,7 @@ const SectionDialog = ({
         if (mutationRecord[0].attributeName === "open") {
           const target = mutationRecord[0].target as HTMLDialogElement;
           if (!target.open) {
-            toggle();
+            toggle(false);
           }
         }
       }

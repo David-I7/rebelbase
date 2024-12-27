@@ -1,4 +1,3 @@
-import DynamicSizeCarousel from "@/_components/nonPrimitives/carousel/DynamicSizeCarousel";
 import FixedSizeCarousel from "@/_components/nonPrimitives/carousel/FixedSizeCarousel";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
 import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
@@ -11,7 +10,7 @@ import CardImage from "./CardImage";
 import CardDetails from "./CardDetails";
 import EventDetailsDialog from "./eventDetails/EventDetailsDialog";
 
-const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
+const GamingEvents = async () => {
   const { data, error } = await getOrSetCache(
     CACHE_KEYS.gameEvents,
     getGameEvents
@@ -22,10 +21,7 @@ const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
   if (!data?.length) return;
 
   return (
-    <section
-      className="mt-20 scroll-mt-20 ml-4 md:ml-8 [@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)]"
-      id={sectionId}
-    >
+    <>
       <SectionDialog
         sectionHasDialog={true}
         label={
@@ -56,7 +52,7 @@ const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
                   }}
                 >
                   <CardImage
-                    style={{ maxWidth: "80px" }}
+                    maxWidth="max-w-20 lg:max-w-28"
                     imgId={event.event_logo.image_id}
                   />
                   <CardDetails type="carousel" event={event} />
@@ -72,7 +68,10 @@ const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
           {data.map((event) => (
             <li className="relative" key={`gaming_event_${event.id}`}>
               <Card>
-                <CardImage imgId={event.event_logo.image_id} />
+                <CardImage
+                  maxWidth="max-w-[308px]"
+                  imgId={event.event_logo.image_id}
+                />
                 <CardDetails type="carousel" event={event} />
               </Card>
               <EventDetailsDialog event={event} />
@@ -80,7 +79,7 @@ const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
           ))}
         </ul>
       </FixedSizeCarousel>
-    </section>
+    </>
   );
 };
 

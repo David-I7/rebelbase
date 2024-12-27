@@ -8,7 +8,7 @@ import Card from "./Card";
 import CardImage from "./CardImage";
 import DynamicSizeCarousel from "@/_components/nonPrimitives/carousel/DynamicSizeCarousel";
 
-const GamingMemes = async ({ sectionId }: { sectionId: string }) => {
+const GamingMemes = async () => {
   const { data, error } = await getOrSetCache(
     CACHE_KEYS.gameMemes,
     getGamingMemes
@@ -19,10 +19,7 @@ const GamingMemes = async ({ sectionId }: { sectionId: string }) => {
   if (!data || !data.length) return;
 
   return (
-    <section
-      className="mt-20 scroll-mt-20 ml-4 md:ml-8 [@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)]"
-      id={sectionId}
-    >
+    <>
       <SectionDialog
         sectionHasDialog={true}
         label={
@@ -74,7 +71,7 @@ const GamingMemes = async ({ sectionId }: { sectionId: string }) => {
           ))}
         </ul>
       </DynamicSizeCarousel>
-    </section>
+    </>
   );
 };
 

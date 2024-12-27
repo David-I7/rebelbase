@@ -22,7 +22,10 @@ const RegularNews = ({ gameNews }: { gameNews: GameNews["news"] }) => {
           }
           key={`regular_game_article_${gameNews[i].id}`}
         >
-          <ArticleImage imgSrc={gameNews[i].image} />
+          <ArticleImage
+            publishDate={gameNews[i].publish_date}
+            imgSrc={gameNews[i].image}
+          />
           <NewsSummary
             orientation="landscape"
             details={gameNews[i].text}

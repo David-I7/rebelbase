@@ -8,7 +8,7 @@ import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
 import DynamicSizeCarousel from "@/_components/nonPrimitives/carousel/DynamicSizeCarousel";
 import CardLink from "./CardLink";
 
-const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
+const TopGamingChannels = async () => {
   const { data, error } = await getTopGamingChannelsFacade();
 
   if (error) throw error;
@@ -16,10 +16,7 @@ const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
   if (!data?.items) return;
 
   return (
-    <section
-      className="scroll-mt-20 max-w-[1280px] mt-20 ml-4 md:ml-8 [@media(min-width:1344px)]:mx-auto"
-      id={sectionId}
-    >
+    <>
       <SectionDialog
         sectionHasDialog={true}
         label={
@@ -77,7 +74,7 @@ const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
           ))}
         </ul>
       </DynamicSizeCarousel>
-    </section>
+    </>
   );
 };
 

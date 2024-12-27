@@ -2,8 +2,6 @@ import { apiLeague } from "@/data/baseUrls";
 import { apiLeagueRequestOptions } from "@/data/config/requestOptions";
 import ErrorFactory from "@/lib/errors/errorFactory";
 
-//consider filtering data if you see duplicates
-
 type GamingMemes = {
   memes: {
     description: string;
@@ -21,7 +19,7 @@ export async function getGamingMemes(): Promise<
     keywords: "gamer",
     "keywords-in-image": "false",
     "media-type": "image",
-    number: "10",
+    number: `10`,
   });
 
   try {
@@ -37,6 +35,8 @@ export async function getGamingMemes(): Promise<
         );
       return (await res.json()) as GamingMemes;
     });
+
+    console.log(GamingMemesData);
 
     const memeSet: Set<string> = new Set();
 

@@ -88,7 +88,7 @@ const EventDetailsDialog = React.memo(({ event }: DialogProps) => {
                 <CardImage
                   type="large"
                   imgId={event.event_logo.image_id}
-                  style={{ maxWidth: "100%" }}
+                  maxWidth="100%"
                 />
                 <CardDetails toggle={toggle} type="details" event={event} />
                 <p className="font-body-s">{event.description}</p>
