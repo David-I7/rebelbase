@@ -41,7 +41,10 @@ const GamingMemes = async ({ sectionId }: { sectionId: string }) => {
         <div className="text-on-surface-body px-6 pb-6 max-w-full">
           <ul className="flex flex-col items-center gap-20">
             {data.map((meme, index) => (
-              <li key={`meme_${index}`} className="">
+              <li
+                key={`meme_${index}`}
+                className="border-b last:border-b-0 border-solid border-b-outline-varient-lowest pb-20"
+              >
                 <Card style={{ width: "244px" }}>
                   <CardImage
                     imgSrc={meme.url}

@@ -25,13 +25,43 @@ function useTestWindowSize() {
 }
 
 const TestUseEffect = () => {
-  const size = useTestWindowSize();
+  const [state, setState] = useState<boolean>(false);
+
+  const toggle = () => {
+    setState(!state);
+  };
+
+  console.log("parent rendering");
 
   useEffect(() => {
     console.log("parent effect running");
-  }, [size]);
+  });
 
-  return <div>TestUseEffect</div>;
+  return <Child toggleParent={toggle} />;
 };
 
 export default TestUseEffect;
+
+function Child({ toggleParent }: { toggleParent: () => void }) {
+  const [state, setState] = useState<boolean>(false);
+
+  const toggle = () => {
+    setState(!state);
+  };
+
+  console.log("child rendering");
+
+  useEffect(() => {
+    console.log("child effect running");
+  });
+  return (
+    <button
+      onClick={() => {
+        toggle();
+        toggleParent();
+      }}
+    >
+      toggle child
+    </button>
+  );
+}

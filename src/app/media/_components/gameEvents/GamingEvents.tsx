@@ -9,6 +9,7 @@ import React from "react";
 import Card from "./Card";
 import CardImage from "./CardImage";
 import CardDetails from "./CardDetails";
+import EventDetailsDialog from "./dialogs/EventDetailsDialog";
 
 const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
   const { data, error } = await getOrSetCache(
@@ -41,9 +42,9 @@ const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
           <CloseGameDialog style={{ top: "1.25rem" }} />
         </header>
         <div className="text-on-surface-body px-6 pb-6 max-w-full">
-          <ul className="grid gap-4">
+          <ul className="grid">
             {data.map((event) => (
-              <li key={`gaming_event_${event.id}`}>
+              <li className="mb-6 relative" key={`gaming_event_${event.id}`}>
                 <Card
                   style={{
                     flexDirection: "row",
@@ -55,8 +56,9 @@ const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
                     style={{ maxWidth: "80px" }}
                     imgId={event.event_logo.image_id}
                   />
-                  <CardDetails event={event} />
+                  <CardDetails type="carousel" event={event} />
                 </Card>
+                <EventDetailsDialog event={event} />
               </li>
             ))}
           </ul>
@@ -68,8 +70,9 @@ const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
             <li key={`gaming_event_${event.id}`}>
               <Card>
                 <CardImage imgId={event.event_logo.image_id} />
-                <CardDetails event={event} />
+                <CardDetails type="carousel" event={event} />
               </Card>
+              <EventDetailsDialog event={event} />
             </li>
           ))}
         </ul>

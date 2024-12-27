@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useRef } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { DialogToggleOpen } from "../primitives/dialog/DialogToggle";
 import { MdChevronRight } from "react-icons/md";
 import Dialog from "../primitives/dialog/Dialog";
@@ -17,9 +17,41 @@ const SectionDialog = ({
 }: SectionProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const toggle = () => {
-    dialogRef.current!.showModal();
+    setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    // This observer takes care of closing the dialog
+    // This kepes the browser and app state in sync
+
+    const observer = new MutationObserver(
+      (mutationRecord: MutationRecord[]) => {
+        if (mutationRecord[0].attributeName === "open") {
+          const target = mutationRecord[0].target as HTMLDialogElement;
+          if (!target.open) {
+            toggle();
+          }
+        }
+      }
+    );
+
+    observer.observe(dialogRef.current!, { attributes: true });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      dialogRef.current!.showModal();
+    } else {
+      dialogRef.current!.close();
+    }
+  }, [isOpen]);
 
   if (!sectionHasDialog) return;
 
@@ -47,7 +79,7 @@ const SectionDialog = ({
         style={{ maxWidth: "689px" }}
         ref={dialogRef}
       >
-        {dialogChildren}
+        {isOpen && dialogChildren}
       </Dialog>
     </DialogToggleOpen>
   );

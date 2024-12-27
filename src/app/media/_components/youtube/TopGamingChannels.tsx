@@ -40,6 +40,7 @@ const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
             {data.items.map((channel) => (
               <li key={`top_gaming_channel_${channel.id}`}>
                 <CardLink
+                  type="dialog"
                   href={`https://www.youtube.com/${channel.snippet.customUrl}`}
                   className="hover:bg-surface-container-normal rounded p-4 cursor-pointer block transition-colors"
                 >
@@ -64,6 +65,7 @@ const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
           {data.items.map((channel) => (
             <li key={`top_gaming_channel_${channel.id}`}>
               <CardLink
+                type="regular"
                 href={`https://www.youtube.com/${channel.snippet.customUrl}`}
               >
                 <Card>

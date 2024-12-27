@@ -4,9 +4,11 @@ import React from "react";
 const CardImage = ({
   imgId,
   style,
+  type = "regular",
 }: {
   imgId: string;
   style?: React.CSSProperties;
+  type?: "large" | "regular";
 }) => {
   if (!imgId)
     return (
@@ -20,7 +22,9 @@ const CardImage = ({
       width="308px"
       height="547px"
       loading="lazy"
-      src={`${imagesMap.baseUrl}${imagesMap.horizontalCardLarge}/${imgId}.jpg`}
+      src={`${imagesMap.baseUrl}${imagesMap.horizontalCardLarge}${
+        type == "large" ? "_2x" : ""
+      }/${imgId}.jpg`}
       alt={`Event cover`}
     />
   );

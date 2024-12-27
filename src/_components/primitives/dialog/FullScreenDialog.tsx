@@ -28,7 +28,7 @@ const FullScreenDialog = ({
       id={id}
       className={`${
         isOpen ? "h-dvh duration-[350ms]" : "h-0 duration-200"
-      } transition-[height]  w-dvw fixed bg-surface-container-lowest overflow-y-auto z-20 top-0 left-0`}
+      } transition-[height]  w-dvw fixed bg-surface-container-lowest overflow-y-auto z-30 top-0 left-0`}
     >
       {children}
     </section>
