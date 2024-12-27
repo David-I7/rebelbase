@@ -1,3 +1,4 @@
+"use client";
 import { socialLinksIcons } from "@/data/constants/gamePageEnums";
 import { GameData } from "@/interfaces/igdb";
 import { getSocialLinks } from "@/utils/dataTransformation";
@@ -10,7 +11,7 @@ const AboutSocialLinks = ({ game }: { game: GameData }) => {
 
   return (
     <section className="mt-6">
-      <div className="mb-2 font-body-s">Links</div>
+      <div className="mb-2 font-body-s font-medium">Links</div>
       <ul className="flex flex-wrap">
         {socialLinks.map((link) => {
           const WebsiteLogo = socialLinksIcons[link.category];
@@ -19,6 +20,9 @@ const AboutSocialLinks = ({ game }: { game: GameData }) => {
           return (
             <li key={`${link.category}`}>
               <a
+                onClickCapture={(e) => {
+                  e.stopPropagation();
+                }}
                 href={link.url}
                 target="_blank"
                 className="h-10 w-10 cursor-pointer rounded bg-surface-container-lowest hover:brightness-115 transition-brightness grid place-content-center"

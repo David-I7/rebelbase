@@ -45,7 +45,7 @@ const MostAnticipated = ({ gameData }: { gameData?: CardData[] }) => {
             <li key={`most_anticipated_horizontal_card_${game.id}`}>
               <Link
                 prefetch={false}
-                href={`/games/${game.slug}`}
+                href={`/games/${game.slug ? game.slug : game.id}`}
                 className="h-full"
               >
                 <HorizontalCard>

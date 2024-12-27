@@ -39,7 +39,7 @@ const SearchItems = React.memo(
               <Link
                 onClick={toggleDialog}
                 prefetch={false}
-                href={`/games/${game.slug}`}
+                href={`/games/${game.slug ? game.slug : game.id}`}
               >
                 <CardListItem align="lg:items-center items-start">
                   <CardImage

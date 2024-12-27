@@ -1,8 +1,11 @@
 import React from "react";
 
-const HorizontalRay = () => {
+const HorizontalRay = ({ style }: { style?: React.CSSProperties }) => {
   return (
-    <hr className="h-[1px] border-[0.5px] border-outline-varient-lowest bg-outline-varient-lowest text-outline-varient-lowest"></hr>
+    <hr
+      style={style}
+      className="h-[1px] border-[0.5px] border-outline-varient-lowest bg-outline-varient-lowest text-outline-varient-lowest"
+    ></hr>
   );
 };
 

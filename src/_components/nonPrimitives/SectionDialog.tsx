@@ -24,6 +24,8 @@ const SectionDialog = ({
   };
 
   useEffect(() => {
+    if (!sectionHasDialog) return;
+
     // This observer takes care of closing the dialog
     // This kepes the browser and app state in sync
 
@@ -38,7 +40,10 @@ const SectionDialog = ({
       }
     );
 
-    observer.observe(dialogRef.current!, { attributes: true });
+    observer.observe(dialogRef.current!, {
+      attributes: true,
+      attributeFilter: ["open"],
+    });
 
     return () => {
       observer.disconnect();
@@ -46,6 +51,8 @@ const SectionDialog = ({
   }, []);
 
   useEffect(() => {
+    if (!sectionHasDialog) return;
+
     if (isOpen) {
       dialogRef.current!.showModal();
     } else {

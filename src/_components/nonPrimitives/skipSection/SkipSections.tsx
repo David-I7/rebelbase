@@ -12,10 +12,11 @@ const SkipSections = ({
   customClass?: string;
 }) => {
   const [activeLink, setActiveLink] = useState<string>(sectionIds[0]);
-
+  console.log("re-render");
   useEffect(() => {
     const sectionObserver = new IntersectionObserver(
       (changedEntries: IntersectionObserverEntry[]) => {
+        console.log(changedEntries);
         changedEntries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveLink(entry.target.id);
@@ -23,7 +24,7 @@ const SkipSections = ({
         });
       },
       {
-        rootMargin: "-81px 0px -100% 0px",
+        rootMargin: "-81px 0px -95% 0px",
       }
     );
 

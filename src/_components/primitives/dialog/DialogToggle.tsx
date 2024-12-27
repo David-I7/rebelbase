@@ -34,7 +34,7 @@ export const DialogToggleOpen = ({
     <>
       <button
         className={`${buttonPadding} ${extendedClass} gap-2 font-body-s font-medium rounded-full h-10 flex items-center`}
-        onClick={toggle}
+        onClick={() => toggle()}
         style={style}
       >
         {leadingIcon}
