@@ -10,6 +10,8 @@ const GameNewsData = async () => {
   if (error) throw error;
   if (!data?.news || !data.news.length) return;
 
+  console.log(data);
+
   const titleSet: Set<string> = new Set();
   const filteredData = data.news.filter((article) => {
     if (titleSet.has(article.title)) return false;

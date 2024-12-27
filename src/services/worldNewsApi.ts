@@ -34,8 +34,6 @@ export async function getGameNews(): Promise<DataOrError<GameNews, Error>> {
     text: "games OR gaming OR esports",
   }).toString();
 
-  console.log(queryParams);
-
   try {
     const gameNews: GameNews = await fetch(
       `${worldNewsApi}?${queryParams}`,
@@ -50,6 +48,12 @@ export async function getGameNews(): Promise<DataOrError<GameNews, Error>> {
 
       return (await res.json()) as GameNews;
     });
+
+    gameNews.news.sort(
+      (a, b) =>
+        (b.publish_date ? new Date(b.publish_date).getTime() : 0) -
+        (a.publish_date ? new Date(a.publish_date).getTime() : 0)
+    );
 
     return { data: gameNews, error: undefined };
   } catch (err) {
