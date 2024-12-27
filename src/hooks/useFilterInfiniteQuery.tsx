@@ -54,7 +54,7 @@ async function getFilterQuery(
   if (platform) {
     filterQs += `&platform=${platform[1]}`;
   }
-  console.log(filterQs);
+
   return fetch(`${filterApi}?${filterQs}&page=${pageParam}`).then(
     async (res) => {
       if (res.status >= 400) {

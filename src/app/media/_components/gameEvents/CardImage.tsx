@@ -18,7 +18,7 @@ const CardImage = ({
   return (
     <img
       style={style}
-      className="rounded object-cover max-w-[308px] w-full aspect-video"
+      className={`rounded object-cover max-w-[308px] w-full aspect-video`}
       width="308px"
       height="547px"
       loading="lazy"

@@ -619,6 +619,7 @@ export async function getQueryData(
       "genres.name",
       "themes.name",
       "cover.image_id",
+      "slug",
     ])
     .where(queryData.where)
     .sort(queryData.sort.field, queryData.sort.order)
