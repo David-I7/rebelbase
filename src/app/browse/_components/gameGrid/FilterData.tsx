@@ -21,7 +21,7 @@ const FilterData = React.memo(
       .map((game) => {
         return (
           <li className="max-w-[244px]" key={`filter_vertical_card_${game.id}`}>
-            <Link prefetch={false} href={`/games/${game.id}`}>
+            <Link prefetch={false} href={`/games/${game.slug}`}>
               <VerticalCard>
                 <CardImage gameName={game.name} imgId={game.cover?.image_id} />
                 <CardDetails

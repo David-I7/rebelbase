@@ -40,10 +40,16 @@ const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
             {data.items.map((channel) => (
               <li key={`top_gaming_channel_${channel.id}`}>
                 <CardLink
+                  type="dialog"
                   href={`https://www.youtube.com/${channel.snippet.customUrl}`}
                   className="hover:bg-surface-container-normal rounded p-4 cursor-pointer block transition-colors"
                 >
-                  <Card style={{ gridTemplateColumns: "4rem 1fr" }}>
+                  <Card
+                    style={{
+                      gridTemplateColumns: "4rem 1fr",
+                      alignItems: "center",
+                    }}
+                  >
                     <CardImage imgSrc={channel.snippet.thumbnails.medium.url} />
 
                     <CardDetails orientation="landscape" channel={channel} />
@@ -59,6 +65,7 @@ const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
           {data.items.map((channel) => (
             <li key={`top_gaming_channel_${channel.id}`}>
               <CardLink
+                type="regular"
                 href={`https://www.youtube.com/${channel.snippet.customUrl}`}
               >
                 <Card>

@@ -19,7 +19,6 @@ const SkipSections = ({
         changedEntries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveLink(entry.target.id);
-            console.log(entry.target);
           }
         });
       },
