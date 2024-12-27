@@ -40,7 +40,10 @@ const SectionDialog = ({
       }
     );
 
-    observer.observe(dialogRef.current!, { attributes: true });
+    observer.observe(dialogRef.current!, {
+      attributes: true,
+      attributeFilter: ["open"],
+    });
 
     return () => {
       observer.disconnect();

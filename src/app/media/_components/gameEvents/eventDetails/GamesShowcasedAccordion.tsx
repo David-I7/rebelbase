@@ -36,6 +36,13 @@ const GamesShowcasedAccordion = ({ event }: { event: EventData }) => {
     // The effect runs faster than the layout is calculated
     let mutationObserver: MutationObserver;
 
+    const handleResize = () => {
+      const accordionHeight = (
+        accordionRef.current!.children[0] as HTMLUListElement
+      ).offsetHeight;
+      accordionRef.current!.style.height = `${accordionHeight}px`;
+    };
+
     if (renderCount >= RENDER_COUNT) {
       mutationObserver = new MutationObserver((entries) => {
         const target = entries[0].target as HTMLDivElement;
@@ -46,10 +53,13 @@ const GamesShowcasedAccordion = ({ event }: { event: EventData }) => {
         childList: true,
         subtree: true,
       });
+
+      window.addEventListener("resize", handleResize);
     }
 
     return () => {
       mutationObserver?.disconnect();
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
