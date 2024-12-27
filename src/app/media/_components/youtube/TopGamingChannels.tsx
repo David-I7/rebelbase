@@ -42,7 +42,7 @@ const TopGamingChannels = async ({ sectionId }: { sectionId: string }) => {
                 <CardLink
                   type="dialog"
                   href={`https://www.youtube.com/${channel.snippet.customUrl}`}
-                  className="hover:bg-surface-container-normal rounded p-4 cursor-pointer block transition-colors"
+                  className="hover:bg-surface-container-normal rounded p-2 cursor-pointer block transition-colors"
                 >
                   <Card
                     style={{

@@ -81,3 +81,10 @@ export const socialLinksIcons = {
   14: <Reddit />,
   18: <Discord />,
 } as { [key: number]: React.JSX.Element };
+
+export const eventLinks = {
+  1: <Twitch />,
+  4: <X />,
+  2: <Website />,
+  3: <Youtube />,
+};

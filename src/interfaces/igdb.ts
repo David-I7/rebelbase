@@ -19,7 +19,9 @@ export type GameModes = {
 }[];
 export type EventNetworks = {
   id: number;
-  network_type: number;
+  network_type: {
+    id: number;
+  };
 }[];
 
 export type CardData = {

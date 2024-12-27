@@ -9,7 +9,7 @@ import React from "react";
 import Card from "./Card";
 import CardImage from "./CardImage";
 import CardDetails from "./CardDetails";
-import EventDetailsDialog from "./dialogs/EventDetailsDialog";
+import EventDetailsDialog from "./eventDetails/EventDetailsDialog";
 
 const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
   const { data, error } = await getOrSetCache(
@@ -44,7 +44,10 @@ const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
         <div className="text-on-surface-body px-6 pb-6 max-w-full">
           <ul className="grid">
             {data.map((event) => (
-              <li className="mb-6 relative" key={`gaming_event_${event.id}`}>
+              <li
+                className="p-2 hover:bg-surface-container-normal transition-colors rounded relative"
+                key={`gaming_event_${event.id}`}
+              >
                 <Card
                   style={{
                     flexDirection: "row",
@@ -67,7 +70,7 @@ const GamingEvents = async ({ sectionId }: { sectionId: string }) => {
       <FixedSizeCarousel>
         <ul className="inline-flex gap-4 pr-4 md:pr-8 [@media(min-width:1344px)]:pr-[calc((100vw_-_1280px)_/_2)]">
           {data.map((event) => (
-            <li key={`gaming_event_${event.id}`}>
+            <li className="relative" key={`gaming_event_${event.id}`}>
               <Card>
                 <CardImage imgId={event.event_logo.image_id} />
                 <CardDetails type="carousel" event={event} />

@@ -5,8 +5,10 @@ const PageTransition = () => {
   const pageTransitionRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClick = (e: Event) => {
+      console.log(e.target);
       if (!e.target) return;
       const anchorTag = findParentByTagname(e.target as HTMLElement, "A");
+      console.log(anchorTag);
       if (!anchorTag) return;
       pageTransitionRef.current!.classList.remove("hidden");
     };
@@ -14,7 +16,7 @@ const PageTransition = () => {
     return () => {
       document.removeEventListener("click", handleClick);
     };
-  }, []);
+  });
   return (
     <div
       ref={pageTransitionRef}
