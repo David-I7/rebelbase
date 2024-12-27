@@ -1,6 +1,6 @@
 "use client";
 import SkipLink from "@/_components/primitives/buttons/SkipLink";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const SkipSections = ({
   sectionIds,
@@ -12,27 +12,45 @@ const SkipSections = ({
   customClass?: string;
 }) => {
   const [activeLink, setActiveLink] = useState<string>(sectionIds[0]);
-  console.log("re-render");
-  useEffect(() => {
-    const sectionObserver = new IntersectionObserver(
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const createObserver = (rootMargin: string) => {
+    if (observerRef.current) observerRef.current.disconnect();
+
+    observerRef.current = new IntersectionObserver(
       (changedEntries: IntersectionObserverEntry[]) => {
-        console.log(changedEntries);
         changedEntries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveLink(entry.target.id);
           }
         });
       },
-      {
-        rootMargin: "-81px 0px -95% 0px",
-      }
+      { rootMargin }
     );
 
-    sectionIds.forEach((id) =>
-      sectionObserver.observe(document.getElementById(id)!)
-    );
+    sectionIds.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observerRef.current!.observe(element);
+    });
+  };
 
-    return () => sectionObserver.disconnect();
+  useEffect(() => {
+    let windowHeight = window.innerHeight;
+
+    const handleResize = () => {
+      if (windowHeight === window.innerHeight) return;
+      windowHeight = window.innerHeight;
+      createObserver(`0px 0px -${windowHeight - 80}px 0px`);
+    };
+
+    createObserver(`0px 0px -${windowHeight - 80}px 0px`);
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      observerRef.current?.disconnect();
+      window.removeEventListener("resize", handleResize);
+    };
   }, [sectionIds]);
 
   return (

@@ -31,56 +31,46 @@ export default function Media() {
           labels={labels}
         />
       </div>
+      <section
+        id={sectionIds[0]}
+        className="max-w-[1280px] mt-6 scroll-mt-[79px] mx-4 md:mx-8 [@media(min-width:1344px)]:mx-auto"
+      >
+        <Suspense
+          fallback={
+            <>
+              <HeroNewsSkeleton />
+              <RegularNewsSkeleton />
+            </>
+          }
+        >
+          <GameNewsData />
+        </Suspense>
+      </section>
+      <section
+        className="scroll-mt-[79px] max-w-[1280px] mt-20 ml-4 md:ml-8 [@media(min-width:1344px)]:mx-auto"
+        id={sectionIds[1]}
+      >
+        <Suspense fallback={<YoutubeCreatorsSkeleton />}>
+          <TopGamingChannels />
+        </Suspense>
+      </section>
+      <section
+        id={sectionIds[2]}
+        className="mt-20 scroll-mt-[79px] ml-4 md:ml-8 [@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)]"
+      >
+        <Suspense fallback={<GameEventsSkeleton />}>
+          <GamingEvents />
+        </Suspense>
+      </section>
 
-      <Suspense
-        fallback={
-          <section
-            id={sectionIds[0]}
-            className="max-w-[1280px] mt-6 scroll-mt-20 mx-4 md:mx-8 [@media(min-width:1344px)]:mx-auto "
-          >
-            <HeroNewsSkeleton />
-            <RegularNewsSkeleton />
-          </section>
-        }
+      <section
+        id={sectionIds[3]}
+        className="mt-20 scroll-mt-[79px] ml-4 md:ml-8 [@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)] "
       >
-        <GameNewsData sectionId={sectionIds[0]} />
-      </Suspense>
-      <Suspense
-        fallback={
-          <section
-            className="max-w-[1280px] mt-20 scroll-mt-20 ml-4 md:ml-8 [@media(min-width:1344px)]:mx-auto "
-            id={sectionIds[1]}
-          >
-            <YoutubeCreatorsSkeleton />
-          </section>
-        }
-      >
-        <TopGamingChannels sectionId={sectionIds[1]} />
-      </Suspense>
-      <Suspense
-        fallback={
-          <section
-            className="mt-20 scroll-mt-20 ml-4 md:ml-8 [@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)]"
-            id={sectionIds[2]}
-          >
-            <GameEventsSkeleton />
-          </section>
-        }
-      >
-        <GamingEvents sectionId={sectionIds[2]} />
-      </Suspense>
-      <Suspense
-        fallback={
-          <section
-            className="mt-20 scroll-mt-20 ml-4 md:ml-8 [@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)] "
-            id={sectionIds[3]}
-          >
-            <MemesSkeleton />
-          </section>
-        }
-      >
-        <GamingMemes sectionId={sectionIds[3]} />
-      </Suspense>
+        <Suspense fallback={<MemesSkeleton />}>
+          <GamingMemes />
+        </Suspense>
+      </section>
       <PageTransition />
     </main>
   );
