@@ -19,6 +19,7 @@ const SkipSections = ({
 
     observerRef.current = new IntersectionObserver(
       (changedEntries: IntersectionObserverEntry[]) => {
+        console.log(changedEntries);
         changedEntries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveLink(entry.target.id);
