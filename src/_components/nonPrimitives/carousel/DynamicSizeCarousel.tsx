@@ -13,13 +13,14 @@ const DynamicSizeCarousel = ({ children }: { children: ReactNode }) => {
     const handleResize = () => {
       const container = prevRef.current!.parentElement!;
 
-      if (container.scrollWidth === container.offsetWidth) {
+      if (container.offsetWidth >= container.scrollWidth - 1) {
         container.classList.remove("carousel");
       } else {
         container.classList.add("carousel");
       }
     };
     handleResize();
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);

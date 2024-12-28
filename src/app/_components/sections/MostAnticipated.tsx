@@ -1,7 +1,5 @@
 import React from "react";
-import HorizontalCardCarousel from "../gameRepresentation/horizontalCard/HorizontalCardCarousel";
 import { CardData } from "@/interfaces/igdb";
-import { MdChevronRight } from "react-icons/md";
 import HorizontalCard from "../gameRepresentation/horizontalCard/HorizontalCard";
 import CardImage from "../gameRepresentation/horizontalCard/CardImage";
 import CardDetails from "../gameRepresentation/CardDetails";

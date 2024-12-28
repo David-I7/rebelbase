@@ -13,7 +13,7 @@ const MediaThumbnail = ({
   return (
     <div className="rounded-xl overflow-hidden">
       <img
-        className="aspect-video w-full"
+        className="aspect-video w-full object-cover"
         width="308px"
         height="547px"
         loading="lazy"

@@ -42,5 +42,6 @@ const FilterData = React.memo(
       });
   }
 );
+FilterData.displayName = "FilterData";
 
 export default FilterData;

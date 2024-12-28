@@ -1,9 +1,4 @@
-import {
-  GameDataResponse,
-  getGameById,
-  getGameBySlug,
-  getMoreFromCompany,
-} from "@/services/igdb";
+import { getGameBySlug, getMoreFromCompany } from "@/services/igdb";
 import { notFound } from "next/navigation";
 import MoreByCompany from "./_components/gameSections/MoreByCompany";
 import { getDeveloperCompany } from "@/utils/dataTransformation";
@@ -15,27 +10,38 @@ import AboutGame from "./_components/gameSections/about/AboutGame";
 import { Suspense } from "react";
 import VerticalListSkeleton from "@/_components/skeletons/list/VerticalListItemSkeleton";
 import PageTransition from "@/_components/primitives/loading/PageTransition";
+import { Metadata, ResolvingMetadata } from "next";
+
+export const generateMetadata = async (
+  {
+    params,
+  }: {
+    params: Promise<{ slug: string | number }>;
+  },
+  parent: ResolvingMetadata
+): Promise<Metadata> => {
+  const rawSlug = (await params).slug;
+
+  const { data: gameData, error } = await getGameBySlug(rawSlug);
+
+  if (error) return notFound();
+
+  return {
+    title: `${gameData?.result[0].name} - RebelBase`,
+    description: (await parent).description,
+  };
+};
 
 export default async function GamePage({
   params,
 }: {
   params: Promise<{ slug: string | number }>;
 }) {
-  let gameData: GameDataResponse | undefined;
-
   const rawSlug = (await params).slug;
 
-  const gameSlug = Number(rawSlug);
+  const { data: gameData, error } = await getGameBySlug(rawSlug);
 
-  if (isNaN(gameSlug)) {
-    const { data, error } = await getGameBySlug(rawSlug as string);
-    if (error) return notFound();
-    gameData = data;
-  } else {
-    const { data, error } = await getGameById(gameSlug);
-    if (error) return notFound();
-    gameData = data;
-  }
+  if (error) return notFound();
 
   const company = getDeveloperCompany(gameData!.result[0]?.involved_companies);
 

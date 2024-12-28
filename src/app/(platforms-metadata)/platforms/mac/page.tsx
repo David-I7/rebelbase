@@ -1,3 +1,4 @@
+import PageTransition from "@/_components/primitives/loading/PageTransition";
 import FilterGameGridSkeleton from "@/_components/skeletons/FilterGameGridSkeleton";
 import FilterGames from "@/app/browse/_components/gameGrid/FilterGames";
 import GameGridServer from "@/app/browse/_components/gameGrid/GameGridServer";
@@ -17,15 +18,15 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export default async function PS5({ searchParams }: Props) {
+export default async function Windows({ searchParams }: Props) {
   const awaitedSearchParams = await searchParams;
   const extractedBrowseFields = extractFields(
     awaitedSearchParams,
-    "/platforms/ps5"
+    "/platforms/mac"
   );
 
   extractedBrowseFields.queryParams.where.push(
-    `release_dates.platform = ${convertedPlatformsKeys[platforms[3]]}`
+    `release_dates.platform = ${convertedPlatformsKeys[platforms[1]]}`
   );
 
   const browseDataPromise = getQueryData(extractedBrowseFields.queryParams);
@@ -33,11 +34,11 @@ export default async function PS5({ searchParams }: Props) {
   return (
     <main className="max-w-[1344px] [@media(min-width:1344px)]:mx-auto [@media(min-width:1344px)]:max-w-[1280px] mt-8">
       <div className="mx-4 md:mx-8 [@media(min-width:1344px)]:mx-0">
-        <h1 className="mb-4">{uiFriendlyPlatformsMap[platforms[3]]} Games</h1>
+        <h1 className="mb-4">{uiFriendlyPlatformsMap[platforms[1]]} Games</h1>
         <p className="max-w-[70ch] text-pretty">
-          Find your next favorite game in our collection of PS5 games. Start
-          browsing today and enjoy countless hours of fun and excitement right
-          on your PS5.
+          Find your next favorite game in our extensive collection of Mac games.
+          Start browsing today and enjoy countless hours of fun and excitement
+          right on your Macbook.
         </p>
       </div>
       <GameDataContextProvider URL={extractedBrowseFields.queryString}>
@@ -46,7 +47,7 @@ export default async function PS5({ searchParams }: Props) {
             searchParams={extractedBrowseFields.queryParams}
           >
             <FilterGames
-              pathName="/platforms/ps5"
+              pathName="/platforms/mac"
               sort={{
                 field: extractedBrowseFields.queryParams.sortBy,
                 order: extractedBrowseFields.queryParams.sort.order,
@@ -71,6 +72,7 @@ export default async function PS5({ searchParams }: Props) {
           </Suspense>
         </section>
       </GameDataContextProvider>
+      <PageTransition />
     </main>
   );
 }

@@ -9,6 +9,7 @@ import FilterGameGridSkeleton from "@/_components/skeletons/FilterGameGridSkelet
 import GameGridServer from "./_components/gameGrid/GameGridServer";
 import { GameDataContextProvider } from "./context/GameDataContext";
 import PageTransition from "@/_components/primitives/loading/PageTransition";
+import { Metadata } from "next";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -62,3 +63,9 @@ export default async function Browse({ searchParams }: Props) {
     </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Browse - RebelBase",
+  description:
+    "RebelBase serves as a hub for gaming enthusiasts, offering personalized recommendations, trending titles, and curated lists across various genres and platforms.",
+};

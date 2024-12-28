@@ -52,5 +52,6 @@ const KeywordSearch = React.memo(
     return false;
   }
 );
+KeywordSearch.displayName = "KeywordSearch";
 
 export default KeywordSearch;

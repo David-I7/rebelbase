@@ -69,7 +69,7 @@ const FooterAccordions = () => {
 export default FooterAccordions;
 
 type AccordionListItemProps = {
-  label: String;
+  label: string;
   isSelected: boolean;
   onClickCapture: (e: MouseEvent, targetPathName: string) => void;
   href: string;

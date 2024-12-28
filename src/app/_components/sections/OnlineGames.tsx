@@ -1,6 +1,6 @@
 import { CardData } from "@/interfaces/igdb";
 import React from "react";
-import { MdChevronRight } from "react-icons/md";
+
 import VerticalList from "../gameRepresentation/list/VerticalList";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
 import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";

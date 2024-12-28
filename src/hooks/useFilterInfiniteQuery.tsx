@@ -2,7 +2,7 @@ import { filterApi } from "@/data/baseUrls";
 import { CardData } from "@/interfaces/igdb";
 import ErrorFactory from "@/lib/errors/errorFactory";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 const STALE_TIME = 1000 * 60 * 60; //60 mins
 type FilterData = CardData[];
@@ -33,7 +33,7 @@ const useFilterInfiniteQuery = (
     queryFn: ({ pageParam = 2 }) => getFilterQuery(pageParam as number, qs),
     initialPageParam: initialPageParam,
     initialData: () => initialData,
-    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+    getNextPageParam: (lastPage, allPages) => {
       if (Array.isArray(lastPage) && lastPage.length === 40) {
         return allPages.length + 2;
       } else return undefined;

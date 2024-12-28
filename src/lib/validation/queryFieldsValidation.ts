@@ -62,7 +62,10 @@ const searchParamsBrowseSchema = z
         z.tuple([z.enum(gameModes)]).rest(z.enum(gameModes)),
       ])
       .optional(),
-    keyword: z.string().optional(),
+    keyword: z
+      .string()
+      .regex(new RegExp(/^(?!.*("|')).+$/, "s"))
+      .optional(),
     genres: z
       .union([z.enum(genres), z.tuple([z.enum(genres)]).rest(z.enum(genres))])
       .optional(),
@@ -161,12 +164,12 @@ export function extractFields(
       convertedPlatformsKeys
     );
 
-    categoriesCondition ? where.push(categoriesCondition) : null;
-    gameModesCondition ? where.push(gameModesCondition) : null;
-    themesCondition ? where.push(themesCondition) : null;
-    genresCondition ? where.push(genresCondition) : null;
-    keywordCondition ? where.push(keywordCondition) : null;
-    platformCondition ? where.push(platformCondition) : null;
+    if (categoriesCondition) where.push(categoriesCondition);
+    if (gameModesCondition) where.push(gameModesCondition);
+    if (themesCondition) where.push(themesCondition);
+    if (genresCondition) where.push(genresCondition);
+    if (keywordCondition) where.push(keywordCondition);
+    if (platformCondition) where.push(platformCondition);
 
     const sortDetails = SortDetailsFactory.create(
       parsedSearchParams.data.sortBy

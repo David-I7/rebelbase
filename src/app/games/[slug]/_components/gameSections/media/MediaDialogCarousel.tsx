@@ -122,4 +122,6 @@ const MediaDialogCarousel = React.forwardRef(
   }
 );
 
+MediaDialogCarousel.displayName = "MediaDialogCarousel";
+
 export default MediaDialogCarousel;

@@ -2,13 +2,10 @@
 import { GameData } from "@/interfaces/igdb";
 import { getHeroVideo, getMedia } from "@/utils/dataTransformation";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import MediaCarousel from "./MediaCarousel";
-import TrailerVideo from "./TrailerVideo";
-import MediaThumbnail from "./MediaThumbnail";
-import { DialogToggleOpen } from "@/_components/primitives/dialog/DialogToggle";
 import MediaDialogCarousel from "./MediaDialogCarousel";
 import { MediaCarouselDialogContextProvider } from "../../../context/MediaCarouselDialogContext";
 import MediaCarouselContent from "./MediaCarouselContent";
+import FixedSizeCarousel from "@/_components/nonPrimitives/carousel/FixedSizeCarousel";
 
 const MediaSection = ({ game }: { game: GameData }) => {
   const media = getMedia(game);
@@ -41,14 +38,14 @@ const MediaSection = ({ game }: { game: GameData }) => {
           (heroVideo ? 1 : 0)
         }
       >
-        <MediaCarousel>
+        <FixedSizeCarousel>
           <MediaCarouselContent
             gameName={game[0].name}
             toggleDialog={toggleDialog}
             media={media}
             heroVideo={heroVideo}
           />
-        </MediaCarousel>
+        </FixedSizeCarousel>
         <MediaDialogCarousel
           isOpen={isOpen}
           toggle={toggleDialog}

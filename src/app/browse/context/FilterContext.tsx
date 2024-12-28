@@ -22,7 +22,7 @@ type InitFilterContext = [
   dispatch: React.Dispatch<Action>
 ];
 
-const initStateValue: InitFilterContext[0] = {
+export const initStateValue: InitFilterContext[0] = {
   categories: new Set(),
   gameModes: new Set(),
   themes: new Set(),
@@ -44,7 +44,7 @@ function reducer(
 ): InitFilterContext["0"] {
   switch (action.type) {
     case ActionType[0]: {
-      const prevKeyState = state[action.payload!.key!!];
+      const prevKeyState = state[action.payload!.key!];
       prevKeyState.delete(action.payload!.value);
       return {
         ...state,

@@ -1,3 +1,4 @@
+import PageTransition from "@/_components/primitives/loading/PageTransition";
 import FilterGameGridSkeleton from "@/_components/skeletons/FilterGameGridSkeleton";
 import FilterGames from "@/app/browse/_components/gameGrid/FilterGames";
 import GameGridServer from "@/app/browse/_components/gameGrid/GameGridServer";
@@ -71,6 +72,7 @@ export default async function XboxSeriesXS({ searchParams }: Props) {
           </Suspense>
         </section>
       </GameDataContextProvider>
+      <PageTransition />
     </main>
   );
 }

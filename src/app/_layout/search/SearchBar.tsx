@@ -1,5 +1,5 @@
 import IconTarget from "@/_components/primitives/buttons/IconTarget";
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 import { SearchContext } from "../context/SearchContext";
 
@@ -38,7 +38,7 @@ const SearchBar = () => {
       />
       {searchValue && (
         <IconTarget
-          handleClick={(e) => {
+          handleClick={() => {
             handleReset();
           }}
         >

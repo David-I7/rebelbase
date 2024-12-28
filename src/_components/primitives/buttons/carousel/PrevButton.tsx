@@ -43,4 +43,6 @@ const PrevButton = forwardRef(
   }
 );
 
+PrevButton.displayName = "PrevButton";
+
 export default PrevButton;
