@@ -34,7 +34,7 @@ const CardDetails = ({ game, lastRow }: CardDetailsProps) => {
       )}
       <h3
         className={`text-base line-clamp-2 max-w-full text-ellipsis ${
-          lastRow ? "mb-2" : ""
+          lastRow ? "mb-1" : ""
         }`}
       >
         {game.name}
