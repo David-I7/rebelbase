@@ -1,14 +1,13 @@
 "use client";
+import { findParentByTagname } from "@/utils/dom";
 import React, { useEffect, useRef } from "react";
 
 const PageTransition = () => {
   const pageTransitionRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClick = (e: Event) => {
-      console.log(e.target);
       if (!e.target) return;
       const anchorTag = findParentByTagname(e.target as HTMLElement, "A");
-      console.log(anchorTag);
       if (!anchorTag) return;
       pageTransitionRef.current!.classList.remove("hidden");
     };
@@ -28,16 +27,3 @@ const PageTransition = () => {
 };
 
 export default PageTransition;
-
-function findParentByTagname(element: HTMLElement, tagName: string) {
-  let parent: HTMLElement | null = element;
-
-  while (parent) {
-    if (parent.tagName === tagName) {
-      break;
-    }
-    parent = parent.parentElement;
-  }
-
-  return parent;
-}

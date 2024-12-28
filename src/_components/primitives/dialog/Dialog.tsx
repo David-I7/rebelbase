@@ -8,17 +8,20 @@ const Dialog = React.forwardRef(
       style,
       onClose,
       customClass,
+      rest,
     }: {
       children: ReactNode;
       style?: React.CSSProperties;
       customClass?: string;
       onClose?: () => void;
+      rest?: Record<string, any>;
     },
     ref: React.ForwardedRef<HTMLDialogElement>
   ) => {
     return (
       <dialog
         style={style}
+        {...rest}
         onClick={(e) => {
           const dialogPosition = e.currentTarget.getBoundingClientRect();
 

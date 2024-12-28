@@ -46,7 +46,8 @@ const MediaCarouselContent = React.memo(
             </DialogToggleOpen>
           </li>
         )}
-        {media?.screenshots.length &&
+        {media?.screenshots &&
+          media?.screenshots.length > 0 &&
           media.screenshots.map((screenshot, index) => (
             <li
               className="flex-shrink-0 relative max-w-[308px] lg:max-w-[565px]"
@@ -78,7 +79,8 @@ const MediaCarouselContent = React.memo(
               </DialogToggleOpen>
             </li>
           ))}
-        {media?.artworks.length &&
+        {media?.artworks &&
+          media?.artworks.length > 0 &&
           media.artworks.map((screenshot, index) => (
             <li
               className="flex-shrink-0 relative max-w-[308px] lg:max-w-[565px]"

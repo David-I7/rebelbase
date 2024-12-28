@@ -19,7 +19,7 @@ const HeroCard = ({
     <div className={`${responsiveStyles} relative flex justify-center`}>
       <div
         className={`${
-          imgId ? "" : "bg-surface-container-low"
+          imgId ? "" : "bg-surface-container-normal"
         } max-h-[533px] h-[50vh] relative aspect-[3/4] rounded-xl overflow-hidden after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:to-surface-container-low after:from-[50%] after:to-[95%] md:after:hidden select-none mx-auto md:mx-0 md:mr-4`}
       >
         {imgId && (

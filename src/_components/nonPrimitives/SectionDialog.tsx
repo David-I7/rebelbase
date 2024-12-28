@@ -1,8 +1,15 @@
 "use client";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, {
+  MouseEvent,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { DialogToggleOpen } from "../primitives/dialog/DialogToggle";
 import { MdChevronRight } from "react-icons/md";
 import Dialog from "../primitives/dialog/Dialog";
+import { findParentByTagname } from "@/utils/dom";
 
 type SectionProps = {
   label: ReactNode;
@@ -87,6 +94,15 @@ const SectionDialog = ({
       }
     >
       <Dialog
+        rest={{
+          onClickCapture: (e: MouseEvent) => {
+            if (!e.target) return;
+            const anchorTag = findParentByTagname(e.target as HTMLElement, "A");
+            console.log(anchorTag);
+            if (!anchorTag) return;
+            toggle(false);
+          },
+        }}
         customClass="mx-0 w-full [@media(min-width:380px)]:w-[calc(100%_-_48px)] [@media(min-width:380px)_and_(max-width:737px)]:mx-6 [@media(min-width:737px)]:mx-auto scroll-hidden"
         style={{ maxWidth: "689px" }}
         ref={dialogRef}

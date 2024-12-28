@@ -10,6 +10,7 @@ import HorizontalRay from "@/_components/HorizontalRay";
 import GamesShowcasedAccordion from "./GamesShowcasedAccordion";
 import EventLinks from "./EventLinks";
 import { MdOpenInNew } from "react-icons/md";
+import { findParentByTagname } from "@/utils/dom";
 
 type DialogProps = {
   event: EventData;
@@ -71,6 +72,15 @@ const EventDetailsDialog = React.memo(({ event }: DialogProps) => {
       label={""}
     >
       <Dialog
+        rest={{
+          onClickCapture: (e: MouseEvent) => {
+            if (!e.target) return;
+            const anchorTag = findParentByTagname(e.target as HTMLElement, "A");
+
+            if (!anchorTag) return;
+            toggle(false);
+          },
+        }}
         customClass="mx-0 w-full [@media(min-width:380px)]:w-[calc(100%_-_48px)] [@media(min-width:380px)_and_(max-width:737px)]:mx-6 [@media(min-width:737px)]:mx-auto scroll-hidden"
         style={{ maxWidth: "689px" }}
         ref={dialogRef}
