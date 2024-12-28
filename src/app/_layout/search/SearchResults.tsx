@@ -15,7 +15,7 @@ const SearchResults = React.memo(
     deferredSearchValue: string;
     toggleDialog: () => void;
   }) => {
-    const { data, isFetching, isError, error } = useQuery({
+    const { data, isFetching, isError } = useQuery({
       queryKey: [deferredSearchValue],
       queryFn: () => search({ query: deferredSearchValue }),
       placeholderData: (prev) => prev,
@@ -39,6 +39,8 @@ const SearchResults = React.memo(
 );
 
 export default SearchResults;
+
+SearchResults.displayName = "SearchResults";
 
 type Props = {
   query: string;

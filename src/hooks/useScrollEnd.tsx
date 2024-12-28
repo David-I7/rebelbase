@@ -1,5 +1,5 @@
 "use client";
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const useScrollEnd = (offset: number, onEndReached?: () => void): boolean => {
   const [endReached, setEndReached] = useState<boolean>(false);

@@ -23,7 +23,6 @@ export const GameDataContext = createContext<InitContextType>({
 
 const useGameDataContext = (URL: string): InitContextType => {
   const [cacheKey, setCacheKey] = useState<string>(URL);
-  console.log(URL, cacheKey);
   useEffect(() => {
     if (URL !== cacheKey) setCacheKey(URL);
   }, [URL]);

@@ -43,7 +43,7 @@ const FilterGames = ({
   }, [dialogIsOpen]);
 
   useEffect(() => {
-    const handleResize = (e: Event) => {
+    const handleResize = () => {
       if (window.innerWidth >= 880) {
         if (dialogIsOpen) setDialogIsOpen(false);
       }

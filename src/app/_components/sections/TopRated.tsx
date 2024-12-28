@@ -1,6 +1,4 @@
 import React from "react";
-import { MdChevronRight } from "react-icons/md";
-import VerticalCardCarousel from "../gameRepresentation/verticalCard/VerticalCardCarousel";
 import { CardData } from "@/interfaces/igdb";
 import VerticalCard from "../gameRepresentation/verticalCard/VerticalCard";
 import CardImage from "../gameRepresentation/verticalCard/CardImage";

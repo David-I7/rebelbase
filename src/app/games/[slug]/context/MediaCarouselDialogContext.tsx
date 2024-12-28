@@ -10,7 +10,9 @@ import {
 type InitContextValue = ReturnType<typeof useContext>;
 
 const InitContextValue: InitContextValue = {
-  toggleIndex: (targetIndex: number) => {},
+  toggleIndex: (targetIndex: number) => {
+    console.log(targetIndex);
+  },
   index: 0,
   totalItems: 0,
   handleNext: () => {},

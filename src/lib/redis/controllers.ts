@@ -36,7 +36,7 @@ export async function setToCache(
     redisClient.setEx(key, cacheExpirationSec, data);
     return true;
   } catch (err) {
-    return false;
+    return err ? false : false;
   }
 }
 export async function getFromCache<T>(

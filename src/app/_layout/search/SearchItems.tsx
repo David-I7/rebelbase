@@ -57,4 +57,6 @@ const SearchItems = React.memo(
   }
 );
 
+SearchItems.displayName = "SearchItems";
+
 export default SearchItems;

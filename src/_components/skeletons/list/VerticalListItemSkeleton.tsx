@@ -15,7 +15,7 @@ const VerticalListSkeleton = ({
   sectionName,
 }: VerticalListSkeletonProps) => {
   const listItems: ReactElement[] = [];
-  let itemCount = 0;
+
   for (let i = 0; i < listItemCount; i++) {
     listItems.push(
       <li key={`vertical_card_list_item_skeleton_${i}`} className="">
@@ -27,7 +27,6 @@ const VerticalListSkeleton = ({
         </CardListItemSkeleton>
       </li>
     );
-    itemCount++;
   }
 
   return (

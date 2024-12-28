@@ -65,6 +65,8 @@ const GenresAccordion = React.memo(
     );
   }
 );
+
+GenresAccordion.displayName = "GenresAccordion";
 const ThemesAccordion = React.memo(
   ({
     themesState,
@@ -96,6 +98,8 @@ const ThemesAccordion = React.memo(
     );
   }
 );
+
+ThemesAccordion.displayName = "ThemesAccordion";
 const GameModesAccordion = React.memo(
   ({
     gameModesState,
@@ -127,6 +131,8 @@ const GameModesAccordion = React.memo(
     );
   }
 );
+
+GameModesAccordion.displayName = "GameModesAccordion";
 const CategoriesAccordion = React.memo(
   ({
     categoriesState,
@@ -153,3 +159,4 @@ const CategoriesAccordion = React.memo(
     );
   }
 );
+CategoriesAccordion.displayName = "CategoriesAccordion";

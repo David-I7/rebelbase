@@ -1,4 +1,3 @@
-import Dialog from "@/_components/primitives/dialog/Dialog";
 import { DialogToggleOpen } from "@/_components/primitives/dialog/DialogToggle";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { MdSearch } from "react-icons/md";

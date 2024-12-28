@@ -13,7 +13,6 @@ export async function getIGDBAccessToken(): Promise<
     Error
   >
 > {
-  let data: TwitchOAuthRes | undefined;
   let error: Error | undefined;
 
   const requestBody = JSON.stringify({
@@ -22,7 +21,7 @@ export async function getIGDBAccessToken(): Promise<
     grant_type: "client_credentials",
   });
 
-  data = await fetch(`${twitchDeveloperAuthUrl}`, {
+  const data = await fetch(`${twitchDeveloperAuthUrl}`, {
     method: "post",
     body: requestBody,
     headers: { "Content-Type": "application/json" },

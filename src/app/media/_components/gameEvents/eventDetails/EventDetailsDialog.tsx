@@ -145,4 +145,6 @@ const EventDetailsDialog = React.memo(({ event }: DialogProps) => {
   );
 });
 
+EventDetailsDialog.displayName = "EventDetailsDialog";
+
 export default EventDetailsDialog;

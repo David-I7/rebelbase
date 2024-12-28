@@ -1,21 +1,17 @@
 "use client";
 import React, { ReactNode } from "react";
 
+type DialogProps = {
+  children: ReactNode;
+  style?: React.CSSProperties;
+  customClass?: string;
+  onClose?: () => void;
+  rest?: Record<string, any>;
+};
+
 const Dialog = React.forwardRef(
   (
-    {
-      children,
-      style,
-      onClose,
-      customClass,
-      rest,
-    }: {
-      children: ReactNode;
-      style?: React.CSSProperties;
-      customClass?: string;
-      onClose?: () => void;
-      rest?: Record<string, any>;
-    },
+    { children, style, onClose, customClass, rest }: DialogProps,
     ref: React.ForwardedRef<HTMLDialogElement>
   ) => {
     return (
@@ -43,5 +39,7 @@ const Dialog = React.forwardRef(
     );
   }
 );
+
+Dialog.displayName = "Dialog";
 
 export default Dialog;

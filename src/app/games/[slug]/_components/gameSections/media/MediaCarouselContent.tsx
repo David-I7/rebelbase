@@ -125,6 +125,8 @@ const MediaCarouselContent = React.memo(
   }
 );
 
+MediaCarouselContent.displayName = "MediaCarouselContent";
+
 export default function MediaCarouselContentMemo(
   props: MediaCarouselContentProps
 ) {

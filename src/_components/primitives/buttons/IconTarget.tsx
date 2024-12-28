@@ -1,5 +1,5 @@
 "use client";
-import React, { KeyboardEvent, MouseEvent, ReactElement } from "react";
+import React, { MouseEvent, ReactElement } from "react";
 
 type IconTargetProps = {
   handleClick?: (e?: MouseEvent) => void;

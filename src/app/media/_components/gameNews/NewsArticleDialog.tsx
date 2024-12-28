@@ -112,6 +112,8 @@ const NewsArticleDialog = React.memo(
 
 export default NewsArticleDialog;
 
+NewsArticleDialog.displayName = "NewsArticleDialog";
+
 function getArticleParagraphs(articleText: string): string[] {
   return articleText.split(/\n\s/);
 }

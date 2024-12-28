@@ -31,7 +31,7 @@ const CustomSearchDialog = React.forwardRef(
               dialogRef.classList.remove("dialogClose");
               dialogRef.close();
               toggle();
-              isTimedOut.current === false;
+              isTimedOut.current = false;
             }, dialogCloseDuration + 10);
           }
         } else if (e.clientX < window.innerWidth - offsetX) {
@@ -41,7 +41,7 @@ const CustomSearchDialog = React.forwardRef(
             dialogRef.classList.remove("dialogClose");
             dialogRef.close();
             toggle();
-            isTimedOut.current === false;
+            isTimedOut.current = false;
           }, dialogCloseDuration + 10);
         }
       };
@@ -70,5 +70,7 @@ const CustomSearchDialog = React.forwardRef(
     );
   }
 );
+
+CustomSearchDialog.displayName = "CustomSearchDialog";
 
 export default CustomSearchDialog;

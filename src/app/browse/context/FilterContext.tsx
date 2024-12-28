@@ -44,7 +44,7 @@ function reducer(
 ): InitFilterContext["0"] {
   switch (action.type) {
     case ActionType[0]: {
-      const prevKeyState = state[action.payload!.key!!];
+      const prevKeyState = state[action.payload!.key!];
       prevKeyState.delete(action.payload!.value);
       return {
         ...state,

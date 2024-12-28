@@ -6,7 +6,7 @@ export function debounceAsync<T, U>(
 
   return async (props: T) => {
     clearTimeout(timer);
-    return await new Promise((res, rej) => {
+    return await new Promise((res) => {
       timer = setTimeout(async () => {
         try {
           return res(await cb(props));

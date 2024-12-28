@@ -46,4 +46,6 @@ const NextButton = forwardRef(
   }
 );
 
+NextButton.displayName = "NextButton";
+
 export default NextButton;

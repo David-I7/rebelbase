@@ -4,7 +4,6 @@ const DEFAULT_HERO_RESULTS = 8;
 const DEFAULT_SEARCH_RESULTS = 5;
 
 import { getOrSetToCacheDynamicExpiration } from "@/lib/redis/controllers";
-("@/lib/redis/controllers");
 import { getIGDBAccessToken } from "./twitch";
 import CACHE_KEYS from "@/data/constants/cacheKeys";
 import { IGDBRequestOptions } from "@/data/config/requestOptions";
