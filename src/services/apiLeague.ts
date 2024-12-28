@@ -12,11 +12,23 @@ type GamingMemes = {
   available: number;
 };
 
+const keywords = [
+  "gamer",
+  "games",
+  "esports",
+  "game",
+  "gaming",
+  "good game",
+  "online game",
+];
+
 export async function getGamingMemes(): Promise<
   DataOrError<GamingMemes["memes"], Error>
 > {
+  const dayOfWeek = new Date().getDay();
+
   const queryString = new URLSearchParams({
-    keywords: "gamer",
+    keywords: `${keywords[dayOfWeek % 7]}`,
     "keywords-in-image": "false",
     "media-type": "image",
     number: `10`,
