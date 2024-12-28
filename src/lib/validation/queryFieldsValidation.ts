@@ -62,7 +62,10 @@ const searchParamsBrowseSchema = z
         z.tuple([z.enum(gameModes)]).rest(z.enum(gameModes)),
       ])
       .optional(),
-    keyword: z.string().optional(),
+    keyword: z
+      .string()
+      .regex(new RegExp(/^(?!.*("|')).+$/, "s"))
+      .optional(),
     genres: z
       .union([z.enum(genres), z.tuple([z.enum(genres)]).rest(z.enum(genres))])
       .optional(),

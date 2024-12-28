@@ -22,7 +22,7 @@ const SearchResults = React.memo(
       staleTime: STALE_TIME,
     });
 
-    if (isError) throw error;
+    if (isError) return;
 
     return (
       <SearchItems
@@ -47,13 +47,19 @@ type Props = {
 async function search(props: Props): Promise<CardData[]> {
   if (props.query === "") return [];
 
+  if (props.query.match(/"/)) return [];
+
   return fetch(`${searchApi}?q=${props.query.trim()}`).then(async (res) => {
-    if (res.status >= 400)
-      throw ErrorFactory.createFetchError(
+    if (res.status >= 400) {
+      const error = ErrorFactory.createFetchError(
         res.status,
         res.statusText,
         await res.json()
       );
+
+      throw error;
+    }
+
     return (await res.json()) as CardData[];
   });
 }

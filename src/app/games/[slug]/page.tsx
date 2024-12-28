@@ -20,7 +20,6 @@ export const generateMetadata = async (
   },
   parent: ResolvingMetadata
 ): Promise<Metadata> => {
-  console.log("hello");
   const rawSlug = (await params).slug;
 
   const { data: gameData, error } = await getGameBySlug(rawSlug);

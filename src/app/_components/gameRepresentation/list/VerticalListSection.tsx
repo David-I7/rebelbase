@@ -34,7 +34,7 @@ const VerticalListSection = ({ children }: VerticalListSectionProps) => {
     <section className="mt-20 w-full">
       <div className="relative">
         <div
-          className="flex gap-6 overflow-x-auto carousel"
+          className="flex gap-6 overflow-x-auto carousel pr-4 md:pr-8 [@media(min-width:1344px)]:pr-0"
           onScroll={(e) => handleCarouselScroll(e, nextRef, prevRef)}
         >
           {children}

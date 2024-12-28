@@ -13,7 +13,7 @@ const DynamicSizeCarousel = ({ children }: { children: ReactNode }) => {
     const handleResize = () => {
       const container = prevRef.current!.parentElement!;
 
-      if (container.scrollWidth === container.offsetWidth) {
+      if (container.offsetWidth >= container.scrollWidth - 1) {
         container.classList.remove("carousel");
       } else {
         container.classList.add("carousel");
@@ -30,7 +30,7 @@ const DynamicSizeCarousel = ({ children }: { children: ReactNode }) => {
   return (
     <div className="relative">
       <div
-        className="overflow-x-auto carousel"
+        className="overflow-x-scroll carousel"
         onScroll={(e) => handleCarouselScroll(e, nextRef, prevRef)}
       >
         {children}

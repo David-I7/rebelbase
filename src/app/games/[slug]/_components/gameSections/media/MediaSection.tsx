@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import MediaDialogCarousel from "./MediaDialogCarousel";
 import { MediaCarouselDialogContextProvider } from "../../../context/MediaCarouselDialogContext";
 import MediaCarouselContent from "./MediaCarouselContent";
-import DynamicSizeCarousel from "@/_components/nonPrimitives/carousel/DynamicSizeCarousel";
+import FixedSizeCarousel from "@/_components/nonPrimitives/carousel/FixedSizeCarousel";
 
 const MediaSection = ({ game }: { game: GameData }) => {
   const media = getMedia(game);
@@ -38,14 +38,14 @@ const MediaSection = ({ game }: { game: GameData }) => {
           (heroVideo ? 1 : 0)
         }
       >
-        <DynamicSizeCarousel>
+        <FixedSizeCarousel>
           <MediaCarouselContent
             gameName={game[0].name}
             toggleDialog={toggleDialog}
             media={media}
             heroVideo={heroVideo}
           />
-        </DynamicSizeCarousel>
+        </FixedSizeCarousel>
         <MediaDialogCarousel
           isOpen={isOpen}
           toggle={toggleDialog}
