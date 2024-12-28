@@ -9,6 +9,7 @@ import CardDetails from "../CardDetails";
 import HorizontalRay from "@/_components/HorizontalRay";
 import GamesShowcasedAccordion from "./GamesShowcasedAccordion";
 import EventLinks from "./EventLinks";
+import { MdOpenInNew } from "react-icons/md";
 
 type DialogProps = {
   event: EventData;
@@ -92,6 +93,20 @@ const EventDetailsDialog = React.memo(({ event }: DialogProps) => {
                 />
                 <CardDetails toggle={toggle} type="details" event={event} />
                 <p className="font-body-s">{event.description}</p>
+                {event.live_stream_url && (
+                  <a
+                    href={event.live_stream_url}
+                    className="rounded-full text-link font-medium font-body-s flex gap-2 h-10 items-center hover:brightness-115 transition-brightness mt-4"
+                    target="_blank"
+                    onClickCapture={(e) => {
+                      e.stopPropagation();
+                      toggle?.();
+                    }}
+                  >
+                    View Livestream
+                    <MdOpenInNew size={18} />
+                  </a>
+                )}
               </div>
 
               <HorizontalRay style={{ marginBlock: "1.5rem" }} />

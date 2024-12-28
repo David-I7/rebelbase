@@ -5,6 +5,7 @@ import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/C
 import { GameNews } from "@/services/worldNewsApi";
 import React, { useEffect, useRef, useState } from "react";
 import ArticleDetails from "./ArticleDetails";
+import HorizontalRay from "@/_components/HorizontalRay";
 
 const NewsArticleDialog = React.memo(
   ({ article }: { article: GameNews["news"][number] }) => {
@@ -18,8 +19,6 @@ const NewsArticleDialog = React.memo(
 
       setIsOpen(!isOpen);
     };
-
-    console.log(getArticleParagraphs(article.text));
 
     useEffect(() => {
       // This observer takes care of closing the dialog
@@ -75,7 +74,7 @@ const NewsArticleDialog = React.memo(
                 <CloseGameDialog style={{ top: "1.25rem" }} />
               </header>
               <div className="text-on-surface-body px-6 pb-6 max-w-full">
-                <div className="grid">
+                <div>
                   <img
                     className="w-full aspect-video"
                     alt="article cover"
@@ -84,10 +83,18 @@ const NewsArticleDialog = React.memo(
                     height={545}
                     src={article.image}
                   />
-                  <ArticleDetails article={article} />
+
+                  <ArticleDetails toggle={toggle} article={article} />
+                  <HorizontalRay style={{ marginBlock: "1.5rem" }} />
+                  {article.authors && article.authors.length && (
+                    <div className="mb-6 font-body-s text-on-surface-heading-varient font-medium">
+                      Article written by {formatAuthors(article.authors)}
+                    </div>
+                  )}
                   <div className="grid gap-6">
-                    {getArticleParagraphs(article.text).map((paragraph) => (
+                    {getArticleParagraphs(article.text).map((paragraph, i) => (
                       <p
+                        key={`news_article_p_${i}`}
                         className="font-body-s"
                         dangerouslySetInnerHTML={{ __html: paragraph }}
                       ></p>
@@ -107,4 +114,13 @@ export default NewsArticleDialog;
 
 function getArticleParagraphs(articleText: string): string[] {
   return articleText.split(/\n\s/);
+}
+
+function formatAuthors(authors: string[]): string {
+  if (authors.length === 1) return authors[0];
+  else if (authors.length === 2) return authors.join(" and ");
+  else
+    return `${authors.slice(0, authors.length - 2).join(", ")} and ${
+      authors[authors.length - 1]
+    }`;
 }

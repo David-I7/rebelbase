@@ -3,6 +3,7 @@ import React, { useMemo } from "react";
 import RegularArticle from "./Regular/RegularArticle";
 import ArticleImage from "./Regular/ArticleImage";
 import NewsSummary from "./NewsSummary";
+import NewsArticleDialog from "./NewsArticleDialog";
 
 const renderCount = 4;
 const largestart = 3;
@@ -31,6 +32,7 @@ const RegularNews = ({ gameNews }: { gameNews: GameNews["news"] }) => {
             details={gameNews[i].text}
             summary={gameNews[i].title}
           />
+          <NewsArticleDialog article={gameNews[i]} />
         </RegularArticle>
       );
     }
