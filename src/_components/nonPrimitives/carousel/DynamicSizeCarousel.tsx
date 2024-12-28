@@ -30,7 +30,7 @@ const DynamicSizeCarousel = ({ children }: { children: ReactNode }) => {
   return (
     <div className="relative">
       <div
-        className="overflow-x-scroll carousel"
+        className="overflow-x-auto carousel"
         onScroll={(e) => handleCarouselScroll(e, nextRef, prevRef)}
       >
         {children}

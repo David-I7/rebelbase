@@ -22,7 +22,7 @@ type InitFilterContext = [
   dispatch: React.Dispatch<Action>
 ];
 
-const initStateValue: InitFilterContext[0] = {
+export const initStateValue: InitFilterContext[0] = {
   categories: new Set(),
   gameModes: new Set(),
   themes: new Set(),

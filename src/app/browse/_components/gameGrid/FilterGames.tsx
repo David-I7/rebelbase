@@ -11,6 +11,7 @@ import KeywordSearch from "./KeywordSearch";
 import TextButton from "@/_components/primitives/buttons/TextButton";
 import { GameDataContext } from "../../context/GameDataContext";
 import { useQueryClient } from "@tanstack/react-query";
+import { initStateValue } from "../../context/FilterContext";
 
 const FilterGames = ({
   pathName,
@@ -24,8 +25,8 @@ const FilterGames = ({
   const { cacheKey, setCacheKey } = useContext(GameDataContext);
   const router = useRouter();
 
-  const handleFilter = () => {
-    const targetUrl = buildQueryString(pathName, sort, state);
+  const handleFilter = (curState: typeof state = state) => {
+    const targetUrl = buildQueryString(pathName, sort, curState);
     if (targetUrl === cacheKey) return;
 
     if (queryClient.getQueryData([targetUrl])) {
@@ -74,6 +75,7 @@ const FilterGames = ({
                 style={{ paddingInline: "0.5rem" }}
                 handleClick={() => {
                   dispatch({ type: "reset" });
+                  handleFilter(initStateValue);
                 }}
                 label="Reset"
               />
@@ -97,6 +99,7 @@ const FilterGames = ({
               style={{ paddingInline: "0.5rem" }}
               handleClick={() => {
                 dispatch({ type: "reset" });
+                handleFilter(initStateValue);
               }}
               label="Reset"
             />
