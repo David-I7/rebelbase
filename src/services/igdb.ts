@@ -301,7 +301,7 @@ export type GameDataResponse = {
 };
 
 export async function getGameBySlug(
-  slug: string
+  slug: string | number
 ): Promise<DataOrError<GameDataResponse, Error>> {
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
@@ -311,53 +311,15 @@ export async function getGameBySlug(
 
   if (err) return { data: undefined, error: err };
 
-  try {
-    const gameData: GameData = await fetch(IGDB_BASE_URL + "/games", {
-      ...IGDBRequestOptions,
-      headers: {
-        ...IGDBRequestOptions.headers,
-        Authorization: `bearer ${twitchAccessToken!.access_token}`,
-      },
-      body: `fields cover.image_id,rating,name,first_release_date,videos.video_id,videos.name,genres.name,themes.name,keywords.name,game_modes.name,platforms.name,
-      player_perspectives.name,age_ratings.category,age_ratings.rating,
-      release_dates.date,release_dates.platform.name,release_dates.status.name,
-      language_supports.language.name,language_supports.language.locale,language_supports.language_support_type.name,
-      websites.category,websites.url,
-      summary,storyline,
-      involved_companies.company.name,involved_companies.developer,
-      similar_games.name,similar_games.rating,similar_games.genres.name,similar_games.themes.name,similar_games.cover.image_id,
-      artworks.image_id,screenshots.image_id;
-      where slug = "${slug}"; limit 1;`,
-    }).then(async (res) => {
-      if (res.status >= 400) {
-        throw ErrorFactory.createFetchError(
-          res.status,
-          res.statusText,
-          JSON.stringify(await res.json())
-        );
-      }
+  let filter!: string;
 
-      return await res.json();
-    });
+  const gameSlug = Number(slug);
 
-    return {
-      data: { result: gameData, accessToken: twitchAccessToken!.access_token! },
-      error: undefined,
-    };
-  } catch (err) {
-    return { data: undefined, error: err as Error };
+  if (isNaN(gameSlug)) {
+    filter = `where slug = "${slug}"`;
+  } else {
+    filter = `where id = ${gameSlug}`;
   }
-}
-export async function getGameById(
-  id: number
-): Promise<DataOrError<GameDataResponse, Error>> {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
-
-  if (err) return { data: undefined, error: err };
 
   try {
     const gameData: GameData = await fetch(IGDB_BASE_URL + "/games", {
@@ -375,7 +337,7 @@ export async function getGameById(
       involved_companies.company.name,involved_companies.developer,
       similar_games.name,similar_games.rating,similar_games.genres.name,similar_games.themes.name,similar_games.cover.image_id,
       artworks.image_id,screenshots.image_id;
-      where id = ${id}; limit 1;`,
+    ${filter}; limit 1;`,
     }).then(async (res) => {
       if (res.status >= 400) {
         throw ErrorFactory.createFetchError(

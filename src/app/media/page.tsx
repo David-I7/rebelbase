@@ -11,6 +11,7 @@ import MemesSkeleton from "@/_components/skeletons/memes/MemeCardSkeletonCarouse
 import SkipSections from "@/_components/nonPrimitives/skipSection/SkipSections";
 import PageTransition from "@/_components/primitives/loading/PageTransition";
 import TestUseEffect from "@/_components/test/TestUseEffect";
+import { Metadata } from "next";
 
 const sectionIds = [
   "gamingNews",
@@ -75,3 +76,9 @@ export default function Media() {
     </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Media - RebelBase",
+  description:
+    "RebelBase serves as a hub for gaming enthusiasts, offering personalized recommendations, trending titles, and curated lists across various genres and platforms.",
+};
