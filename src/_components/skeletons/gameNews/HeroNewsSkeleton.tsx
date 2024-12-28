@@ -16,7 +16,7 @@ const HeroNewsSkeleton = () => {
   }
 
   return (
-    <section className="grid grid-rows-[1fr_0_0] overflow-hidden sm:grid-cols-2 [@media(min-width:960px)]:grid-cols-3 gap-6 gap-y-0">
+    <section className="animate-pulse grid grid-rows-[1fr_0_0] overflow-hidden sm:grid-cols-2 [@media(min-width:960px)]:grid-cols-3 gap-6 gap-y-0">
       {Articles}
     </section>
   );

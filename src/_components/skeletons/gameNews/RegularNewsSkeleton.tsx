@@ -26,7 +26,7 @@ const RegularNewsSkeleton = () => {
 
   return (
     <section
-      className={`grid gap-x-6 mt-12 [@media(min-width:960px)]:grid-cols-2 [@media(min-width:960px)]:grid-rows-[1fr_1fr_0_0_0] grid-rows-[1fr_1fr_1fr_1fr_0_0_0]`}
+      className={`animate-pulse grid gap-x-6 mt-12 [@media(min-width:960px)]:grid-cols-2 [@media(min-width:960px)]:grid-rows-[1fr_1fr_0_0_0] grid-rows-[1fr_1fr_1fr_1fr_0_0_0]`}
     >
       {Articles}
     </section>

@@ -20,7 +20,7 @@ const FilterGameGridSkeleton = ({
   }
 
   return (
-    <div className="filter-game-grid [@media(max-width:622px)]:grid-cols-2 [@media(min-width:622px)]:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-x-4 gap-y-6">
+    <div className="animate-pulse filter-game-grid [@media(max-width:622px)]:grid-cols-2 [@media(min-width:622px)]:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-x-4 gap-y-6">
       {skeletons}
     </div>
   );

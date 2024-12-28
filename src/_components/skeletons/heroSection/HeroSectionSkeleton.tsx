@@ -13,7 +13,7 @@ const HeroSectionSkeleton = () => {
         <button className="z-10 grid place-content-center rounded-full h-10 w-10 absolute right-0 vertical-center text-white backdrop-blur-md bg-background-blur-dark">
           <MdChevronRight size={40} />
         </button>
-        <ul className={`hero-carousel relative isolate`}>
+        <ul className={`hero-carousel relative isolate animate-pulse`}>
           {Array.from({ length: 5 }, (_, index) => {
             const position: number = index;
 
@@ -22,21 +22,21 @@ const HeroSectionSkeleton = () => {
 
             if (position === 3) {
               className +=
-                "[transform:translateX(-50%)_scale(0.85)] sm:hover:[transform:translateX(-78%)_scale(0.88)] sm:[transform:translateX(-75%)_scale(0.85)] blur-sm hover:blur-0 brightness-[85%] hover:brightness-100 z-20"; //hover:opacity-95 opactity-85
+                "hidden sm:block [transform:translateX(-50%)_scale(0.85)] sm:hover:[transform:translateX(-78%)_scale(0.88)] sm:[transform:translateX(-75%)_scale(0.85)] blur-sm hover:blur-0 brightness-[85%] hover:brightness-100 z-20"; //hover:opacity-95 opactity-85
             } else if (position === 4) {
               className +=
-                "[transform:translateX(-50%)_scale(0.7)] lg:hover:[transform:translateX(-97%)_scale(0.72)] lg:[transform:translateX(-95%)_scale(0.7)] blur-sm hover:blur-0 brightness-[70%] hover:brightness-100 z-10"; //hover:opacity-80 opactity-70
+                "hidden lg:block [transform:translateX(-50%)_scale(0.7)] lg:hover:[transform:translateX(-97%)_scale(0.72)] lg:[transform:translateX(-95%)_scale(0.7)] blur-sm hover:blur-0 brightness-[70%] hover:brightness-100 z-10"; //hover:opacity-80 opactity-70
             } else if (position === 2) {
               className +=
-                "[transform:translateX(-50%)_scale(0.7)] lg:hover:[transform:translateX(-3%)_scale(0.72)] lg:[transform:translateX(-5%)_scale(0.7)] blur-sm hover:blur-0 brightness-[70%] hover:brightness-100 z-10"; //hover:opacity-80 opactity-70
+                "hidden lg:block [transform:translateX(-50%)_scale(0.7)] lg:hover:[transform:translateX(-3%)_scale(0.72)] lg:[transform:translateX(-5%)_scale(0.7)] blur-sm hover:blur-0 brightness-[70%] hover:brightness-100 z-10"; //hover:opacity-80 opactity-70
             } else if (position === 1) {
               className +=
-                "[transform:translateX(-50%)_scale(0.85)] sm:hover:[transform:translateX(-22%)_scale(0.88)] sm:[transform:translateX(-25%)_scale(0.85)] blur-sm hover:blur-0 brightness-[85%] hover:brightness-100 z-20"; //hover:opacity-95 opactity-85
+                "hidden [transform:translateX(-50%)_scale(0.85)] sm:block sm:hover:[transform:translateX(-22%)_scale(0.88)] sm:[transform:translateX(-25%)_scale(0.85)] blur-sm hover:blur-0 brightness-[85%] hover:brightness-100 z-20"; //hover:opacity-95 opactity-85
             } else if (position === 0) {
               className += "[transform:translateX(-50%)_scale(1)] z-30";
             } else {
               className +=
-                "opacity-0 pointer-events-none transition-opacity [transform:translateX(-50%)_scale(1)]";
+                "hidden pointer-events-none transition-opacity [transform:translateX(-50%)_scale(1)]";
             }
             return (
               <li

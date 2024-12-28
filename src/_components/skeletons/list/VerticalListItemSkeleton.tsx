@@ -38,7 +38,9 @@ const VerticalListSkeleton = ({
         </h2>
         <MdChevronRight size={32} className="text-on-surface-heading" />
       </div>
-      <ul className="grid grid-cols-[minmax(256px,1fr)] w-full">{listItems}</ul>
+      <ul className="animate-pulse grid grid-cols-[minmax(256px,1fr)] w-full">
+        {listItems}
+      </ul>
     </div>
   );
 };

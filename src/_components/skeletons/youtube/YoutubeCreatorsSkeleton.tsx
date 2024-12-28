@@ -24,7 +24,7 @@ const YoutubeCreatorsSkeleton = () => {
       </div>
 
       <DynamicSizeCarousel>
-        <ul className="inline-flex gap-4 pr-4 md:pr-8 [@media(min-width:1344px)]:pr-0">
+        <ul className="animate-pulse inline-flex gap-4 pr-4 md:pr-8 [@media(min-width:1344px)]:pr-0">
           {channelSkeletons}
         </ul>
       </DynamicSizeCarousel>

@@ -32,7 +32,7 @@ const SearchItems = React.memo(
     }
 
     return (
-      <ul className={`${isLoading ? "opacity-50" : ""} mt-6`}>
+      <ul className={`${isLoading ? "animate-pulse" : ""} mt-6`}>
         {gameData.map((game) => {
           return (
             <li key={`search_vertical_card_list_item_${game.id}`} className="">
