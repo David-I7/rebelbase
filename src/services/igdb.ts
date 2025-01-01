@@ -338,7 +338,6 @@ export async function getGameBySlug(
       artworks.image_id,screenshots.image_id;
     ${filter}; limit 1;`,
     }).then(async (res) => {
-      console.log(new Date().getTime());
       if (res.status >= 400) {
         throw ErrorFactory.createFetchError(
           res.status,
@@ -588,8 +587,6 @@ export async function getQueryData(
     .paginate(queryData.page);
 
   const browseQuery = queryBuilder.buildQuery();
-
-  console.log(browseQuery);
 
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
