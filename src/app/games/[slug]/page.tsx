@@ -11,6 +11,11 @@ import { Suspense } from "react";
 import VerticalListSkeleton from "@/_components/skeletons/list/VerticalListItemSkeleton";
 import PageTransition from "@/_components/primitives/loading/PageTransition";
 import { Metadata, ResolvingMetadata } from "next";
+import { cache } from "react";
+
+const getGameSlugMemo = cache((rawSlug: string | number) =>
+  getGameBySlug(rawSlug)
+);
 
 export const generateMetadata = async (
   {
@@ -22,7 +27,7 @@ export const generateMetadata = async (
 ): Promise<Metadata> => {
   const rawSlug = (await params).slug;
 
-  const { data: gameData, error } = await getGameBySlug(rawSlug);
+  const { data: gameData, error } = await getGameSlugMemo(rawSlug);
 
   if (error) return notFound();
 
@@ -39,7 +44,7 @@ export default async function GamePage({
 }) {
   const rawSlug = (await params).slug;
 
-  const { data: gameData, error } = await getGameBySlug(rawSlug);
+  const { data: gameData, error } = await getGameSlugMemo(rawSlug);
 
   if (error) return notFound();
 

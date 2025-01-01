@@ -1,9 +1,12 @@
-const redisOptions = {
+import { RedisClientOptions } from "redis";
+
+const redisOptions: RedisClientOptions = {
   url: "redis://localhost:6379",
   isolationPoolOptions: {
     max: 10,
     idleTimeoutMillis: 10000,
   },
+  name: "Server",
 };
 
 export default redisOptions;

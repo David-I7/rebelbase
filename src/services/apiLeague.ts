@@ -48,8 +48,6 @@ export async function getGamingMemes(): Promise<
       return (await res.json()) as GamingMemes;
     });
 
-    console.log(GamingMemesData);
-
     const memeSet: Set<string> = new Set();
 
     const filteredMemes = GamingMemesData.memes.filter((meme) => {

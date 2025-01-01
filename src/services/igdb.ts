@@ -588,8 +588,6 @@ export async function getQueryData(
 
   const browseQuery = queryBuilder.buildQuery();
 
-  console.log(browseQuery);
-
   const { data: twitchAccessToken, error: err } =
     await getOrSetToCacheDynamicExpiration(
       CACHE_KEYS.twitchAccessToken,
