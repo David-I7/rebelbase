@@ -338,6 +338,7 @@ export async function getGameBySlug(
       artworks.image_id,screenshots.image_id;
     ${filter}; limit 1;`,
     }).then(async (res) => {
+      console.log(new Date().getTime());
       if (res.status >= 400) {
         throw ErrorFactory.createFetchError(
           res.status,

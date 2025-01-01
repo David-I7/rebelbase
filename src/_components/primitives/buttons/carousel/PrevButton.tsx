@@ -1,5 +1,5 @@
 "use client";
-import React, { forwardRef, MouseEvent, useEffect } from "react";
+import React, { forwardRef, MouseEvent } from "react";
 import { MdChevronLeft } from "react-icons/md";
 
 const PrevButton = forwardRef(
