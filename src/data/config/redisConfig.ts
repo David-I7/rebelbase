@@ -6,9 +6,9 @@ const redisOptions: RedisClientOptions = {
     max: 10,
     idleTimeoutMillis: 10000,
   },
-  name: "Server",
+  name: "server-connection",
 };
 
 export default redisOptions;
 
-export const DEFAULT_CACHE_EXPIRATION = 60 * 60 * 24 * 7; // 7days in seconds
+export const DEFAULT_CACHE_EXPIRATION = 60 * 60 * 24; // 1day in seconds
