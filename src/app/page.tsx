@@ -1,6 +1,6 @@
 import { getHomeData } from "@/services/igdb";
-import getOrSetCache from "@/lib/redis/controllers";
-import CACHE_KEYS from "@/data/constants/cacheKeys";
+import CACHE_KEYS, { DEFAULT_CACHE_EXPIRATION } from "@/data/constants/cache";
+import { unstable_cache } from "next/cache";
 import HeroSection from "./_components/gameRepresentation/hero/HeroSection";
 import MostAnticipated from "./_components/sections/MostAnticipated";
 import UpcomingReleases from "./_components/sections/UpcomingReleases";
@@ -13,6 +13,7 @@ import PageTransition from "@/_components/primitives/loading/PageTransition";
 import VerticalListSection from "./_components/gameRepresentation/list/VerticalListSection";
 import { Suspense } from "react";
 import LoadingHome from "@/_components/skeletons/HomeSkeleton";
+import { getIGDBAccessToken } from "@/services/twitch";
 
 export default function Home() {
   return (
@@ -22,10 +23,15 @@ export default function Home() {
   );
 }
 
+const cachedGetHomeData = unstable_cache(getHomeData, [CACHE_KEYS.homePage], {
+  revalidate: DEFAULT_CACHE_EXPIRATION,
+});
+
 async function HomePage() {
-  const { data: gameData, error: gameError } = await getOrSetCache(
-    CACHE_KEYS.homePage,
-    getHomeData
+  const { data: twitchAccessToken, error: err } = await getIGDBAccessToken();
+  if (err) throw err;
+  const { data: gameData, error: gameError } = await cachedGetHomeData(
+    twitchAccessToken!.access_token
   );
   if (gameError) throw gameError;
 

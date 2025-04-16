@@ -1,5 +1,6 @@
 import ErrorFactory from "@/lib/errors/errorFactory";
 import { twitchDeveloperAuthUrl } from "@/data/baseUrls";
+import { ONE_MONTH } from "@/data/constants/cache";
 
 export type TwitchOAuthRes = {
   access_token: string;
@@ -8,10 +9,7 @@ export type TwitchOAuthRes = {
 };
 
 export async function getIGDBAccessToken(): Promise<
-  DataOrError<
-    { payload: Pick<TwitchOAuthRes, "access_token">; revalidateIn: number },
-    Error
-  >
+  DataOrError<{ access_token: string }, Error>
 > {
   let error: Error | undefined;
 
@@ -25,6 +23,8 @@ export async function getIGDBAccessToken(): Promise<
     method: "post",
     body: requestBody,
     headers: { "Content-Type": "application/json" },
+    cache: "force-cache",
+    next: { revalidate: ONE_MONTH },
   })
     .then(async (res) => {
       if (res.status >= 400)
@@ -49,8 +49,7 @@ export async function getIGDBAccessToken(): Promise<
 
   return {
     data: {
-      payload: { access_token: data.access_token },
-      revalidateIn: data.expires_in,
+      access_token: data.access_token,
     },
     error: undefined,
   };

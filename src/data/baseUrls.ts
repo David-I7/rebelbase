@@ -3,5 +3,5 @@ export const twitchDeveloperAuthUrl = "https://id.twitch.tv/oauth2/token";
 export const worldNewsApi = "https://api.worldnewsapi.com/search-news";
 export const apiLeague = "https://api.apileague.com/search-memes";
 export const youtubeApi = "https://www.googleapis.com/youtube/v3";
-export const filterApi = "http://localhost:3000/api/v1/games";
-export const searchApi = "http://localhost:3000/api/v1/search";
+export const filterApi = `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/games`;
+export const searchApi = `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/search`;

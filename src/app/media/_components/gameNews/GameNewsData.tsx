@@ -1,12 +1,16 @@
-import CACHE_KEYS from "@/data/constants/cacheKeys";
-import getOrSetCache from "@/lib/redis/controllers";
+import CACHE_KEYS, { DEFAULT_CACHE_EXPIRATION } from "@/data/constants/cache";
+import { unstable_cache } from "next/cache";
 import { getGameNews } from "@/services/worldNewsApi";
 import React from "react";
 import HeroNews from "./HeroNews";
 import RegularNews from "./RegularNews";
 
+const cahcedGetGameNews = unstable_cache(getGameNews, [CACHE_KEYS.gameNews], {
+  revalidate: DEFAULT_CACHE_EXPIRATION,
+});
+
 const GameNewsData = async () => {
-  const { data, error } = await getOrSetCache(CACHE_KEYS.gameNews, getGameNews);
+  const { data, error } = await cahcedGetGameNews();
   if (error) throw error;
   if (!data?.news || !data.news.length) return;
 

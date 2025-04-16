@@ -3,9 +3,7 @@ const DEFAULT_SECTION_RESULTS = 15;
 const DEFAULT_HERO_RESULTS = 8;
 const DEFAULT_SEARCH_RESULTS = 5;
 
-import { getOrSetToCacheDynamicExpiration } from "@/lib/redis/controllers";
 import { getIGDBAccessToken } from "./twitch";
-import CACHE_KEYS from "@/data/constants/cacheKeys";
 import { IGDBRequestOptions } from "@/data/config/requestOptions";
 import { IGDB_BASE_URL } from "@/data/baseUrls";
 import ErrorFactory from "@/lib/errors/errorFactory";
@@ -51,17 +49,9 @@ export type HomeMultiqueryPopularityResponse = [
   { name: HomeSections.topRated; result: Popularity_Source_Response[] },
   { name: HomeSections.upcomingReleases; result: Popularity_Source_Response[] }
 ];
-export async function getHomeData(): Promise<
-  DataOrError<HomeDataResponse, Error>
-> {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
-
-  if (err) return { data: undefined, error: err };
-
+export async function getHomeData(
+  access_token: string
+): Promise<DataOrError<HomeDataResponse, Error>> {
   const now = Math.floor(new Date().getTime() / 1000);
   const unix6MonthsAgo = Math.floor(
     new Date(new Date().setMonth(new Date().getMonth() - 6)).getTime() / 1000
@@ -134,7 +124,7 @@ limit 100;
         ...IGDBRequestOptions,
         headers: {
           ...IGDBRequestOptions.headers,
-          Authorization: `bearer ${twitchAccessToken!.access_token}`,
+          Authorization: `bearer ${access_token}`,
         },
         body: dataMultiquery,
       }
@@ -226,7 +216,7 @@ limit 100;
         ...IGDBRequestOptions,
         headers: {
           ...IGDBRequestOptions.headers,
-          Authorization: `bearer ${twitchAccessToken!.access_token}`,
+          Authorization: `bearer ${access_token}`,
         },
         body: popularityMultiquery,
       }
@@ -302,11 +292,7 @@ export type GameDataResponse = {
 export async function getGameBySlug(
   slug: string | number
 ): Promise<DataOrError<GameDataResponse, Error>> {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
+  const { data: twitchAccessToken, error: err } = await getIGDBAccessToken();
 
   if (err) return { data: undefined, error: err };
 
@@ -350,7 +336,10 @@ export async function getGameBySlug(
     });
 
     return {
-      data: { result: gameData, accessToken: twitchAccessToken!.access_token! },
+      data: {
+        result: gameData,
+        accessToken: twitchAccessToken!.access_token!,
+      },
       error: undefined,
     };
   } catch (err) {
@@ -414,11 +403,7 @@ export async function getMoreFromCompany(
 export async function search(
   query: string
 ): Promise<DataOrError<CardData[], Error>> {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
+  const { data: twitchAccessToken, error: err } = await getIGDBAccessToken();
 
   if (err) return { data: undefined, error: err };
 
@@ -453,11 +438,7 @@ export async function search(
 export async function getGameEvents(): Promise<
   DataOrError<EventData[], Error>
 > {
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
+  const { data: twitchAccessToken, error: err } = await getIGDBAccessToken();
 
   if (err) return { data: undefined, error: err };
 
@@ -588,11 +569,7 @@ export async function getQueryData(
 
   const browseQuery = queryBuilder.buildQuery();
 
-  const { data: twitchAccessToken, error: err } =
-    await getOrSetToCacheDynamicExpiration(
-      CACHE_KEYS.twitchAccessToken,
-      getIGDBAccessToken
-    );
+  const { data: twitchAccessToken, error: err } = await getIGDBAccessToken();
 
   if (err) return { data: undefined, error: err };
 
@@ -621,7 +598,6 @@ export async function getQueryData(
       error: undefined,
     };
   } catch (err) {
-    console.log((err as Error).cause);
     return { data: undefined, error: err as Error };
   }
 }
