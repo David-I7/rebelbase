@@ -1,18 +1,21 @@
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
 import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
-import CACHE_KEYS from "@/data/constants/cacheKeys";
-import getOrSetCache from "@/lib/redis/controllers";
+import CACHE_KEYS, { DEFAULT_CACHE_EXPIRATION } from "@/data/constants/cache";
+import { unstable_cache } from "next/cache";
 import { getGamingMemes } from "@/services/apiLeague";
 import React from "react";
 import Card from "./Card";
 import CardImage from "./CardImage";
 import DynamicSizeCarousel from "@/_components/nonPrimitives/carousel/DynamicSizeCarousel";
 
+const cachedGetGamingMemes = unstable_cache(
+  getGamingMemes,
+  [CACHE_KEYS.gameMemes],
+  { revalidate: DEFAULT_CACHE_EXPIRATION }
+);
+
 const GamingMemes = async () => {
-  const { data, error } = await getOrSetCache(
-    CACHE_KEYS.gameMemes,
-    getGamingMemes
-  );
+  const { data, error } = await cachedGetGamingMemes();
 
   if (error) throw error;
 

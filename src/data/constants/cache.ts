@@ -8,4 +8,6 @@ const CACHE_KEYS = {
   channelData: "YT_CHANNEL_DATA",
 };
 
+export const DEFAULT_CACHE_EXPIRATION = 3600 * 24; // 1day in seconds
+export const ONE_MONTH = 3600 * 24 * 31;
 export default CACHE_KEYS;

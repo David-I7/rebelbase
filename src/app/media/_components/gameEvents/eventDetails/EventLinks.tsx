@@ -20,7 +20,10 @@ const EventLinks = ({
             }}
             target="_blank"
           >
-            {eventLinks[link.network_type.id as keyof typeof eventLinks]}
+            {
+              //@ts-ignore
+              eventLinks[link.network_type]
+            }
           </a>
         </li>
       ))}

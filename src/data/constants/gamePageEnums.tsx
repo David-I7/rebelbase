@@ -87,4 +87,4 @@ export const eventLinks = {
   4: <X />,
   2: <Website />,
   3: <Youtube />,
-};
+} as { [key: number]: React.JSX.Element };

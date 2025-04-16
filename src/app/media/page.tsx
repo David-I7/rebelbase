@@ -2,24 +2,17 @@ import { Suspense } from "react";
 import GameNewsData from "./_components/gameNews/GameNewsData";
 import HeroNewsSkeleton from "@/_components/skeletons/gameNews/HeroNewsSkeleton";
 import RegularNewsSkeleton from "@/_components/skeletons/gameNews/RegularNewsSkeleton";
-import TopGamingChannels from "./_components/youtube/TopGamingChannels";
 import GamingMemes from "./_components/memes/GamingMemes";
 import GamingEvents from "./_components/gameEvents/GamingEvents";
-import YoutubeCreatorsSkeleton from "@/_components/skeletons/youtube/YoutubeCreatorsSkeleton";
 import GameEventsSkeleton from "@/_components/skeletons/gameEvents/GameEventsSkeletonCarousel";
 import MemesSkeleton from "@/_components/skeletons/memes/MemeCardSkeletonCarousel";
 import SkipSections from "@/_components/nonPrimitives/skipSection/SkipSections";
 import PageTransition from "@/_components/primitives/loading/PageTransition";
 import { Metadata } from "next";
 
-const sectionIds = [
-  "gamingNews",
-  "gamingCreators",
-  "gamingEvents",
-  "gamingMemes",
-] as const;
+const sectionIds = ["gamingNews", "gamingEvents", "gamingMemes"] as const;
 
-const labels = ["News", "Creators", "Events", "Memes"] as const;
+const labels = ["News", "Events", "Memes"] as const;
 
 export default function Media() {
   return (
@@ -46,16 +39,9 @@ export default function Media() {
           <GameNewsData />
         </Suspense>
       </section>
+
       <section
-        className="scroll-mt-[79px] max-w-[1280px] mt-20 ml-4 md:ml-8 [@media(min-width:1344px)]:mx-auto"
         id={sectionIds[1]}
-      >
-        <Suspense fallback={<YoutubeCreatorsSkeleton />}>
-          <TopGamingChannels />
-        </Suspense>
-      </section>
-      <section
-        id={sectionIds[2]}
         className="mt-20 scroll-mt-[79px] ml-4 md:ml-8 [@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)]"
       >
         <Suspense fallback={<GameEventsSkeleton />}>
@@ -64,7 +50,7 @@ export default function Media() {
       </section>
 
       <section
-        id={sectionIds[3]}
+        id={sectionIds[2]}
         className="mt-20 scroll-mt-[79px] ml-4 md:ml-8 [@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)] "
       >
         <Suspense fallback={<MemesSkeleton />}>

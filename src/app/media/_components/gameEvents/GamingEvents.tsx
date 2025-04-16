@@ -1,8 +1,8 @@
 import FixedSizeCarousel from "@/_components/nonPrimitives/carousel/FixedSizeCarousel";
 import SectionDialog from "@/_components/nonPrimitives/SectionDialog";
 import CloseGameDialog from "@/app/games/[slug]/_components/gameSections/about/CloseGameDialog";
-import CACHE_KEYS from "@/data/constants/cacheKeys";
-import getOrSetCache from "@/lib/redis/controllers";
+import CACHE_KEYS, { DEFAULT_CACHE_EXPIRATION } from "@/data/constants/cache";
+import { unstable_cache } from "next/cache";
 import { getGameEvents } from "@/services/igdb";
 import React from "react";
 import Card from "./Card";
@@ -10,11 +10,14 @@ import CardImage from "./CardImage";
 import CardDetails from "./CardDetails";
 import EventDetailsDialog from "./eventDetails/EventDetailsDialog";
 
+const cachedGetGameEvents = unstable_cache(
+  getGameEvents,
+  [CACHE_KEYS.gameEvents],
+  { revalidate: DEFAULT_CACHE_EXPIRATION }
+);
+
 const GamingEvents = async () => {
-  const { data, error } = await getOrSetCache(
-    CACHE_KEYS.gameEvents,
-    getGameEvents
-  );
+  const { data, error } = await cachedGetGameEvents();
 
   if (error) throw error;
 
