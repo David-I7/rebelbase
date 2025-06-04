@@ -39,12 +39,6 @@ const FooterAccordions = () => {
             onClickCapture={handleClickCapture}
             href="/browse"
           />
-          <AccordionListItem
-            label={"Media"}
-            isSelected={pathName === "/media"}
-            onClickCapture={handleClickCapture}
-            href="/media"
-          />
         </ul>
       </Accordion>
       <Accordion summary="Platforms">

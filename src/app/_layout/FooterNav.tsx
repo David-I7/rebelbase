@@ -51,19 +51,6 @@ const FooterNav = () => {
               Browse
             </Link>
           </li>
-          <li>
-            <Link
-              onClickCapture={(e) => handleClickCapture(e, "/media")}
-              href={"/media"}
-              className={`${
-                pathName === "/media"
-                  ? selectedStyles
-                  : "hover:text-on-primary-container transition-colors"
-              } font-medium`}
-            >
-              Media
-            </Link>
-          </li>
         </ul>
       </div>
       <div className="grid gap-3 min-w-max">
