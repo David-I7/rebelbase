@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    unoptimized: true,
+  },
   experimental: {
     staleTimes: {
       dynamic: 60 * 60, // 1h
