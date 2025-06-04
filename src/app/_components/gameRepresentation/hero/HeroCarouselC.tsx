@@ -9,8 +9,6 @@ import HeroCardDetailsB from "./HeroCardDetailsB";
 import Link from "next/link";
 
 const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
-  //change to make the cards server comp if they don't need interactivity
-
   const [offset, setOffset] = useState(0);
   const isTransitioning = useRef<boolean>(false);
 

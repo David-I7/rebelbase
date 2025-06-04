@@ -14,6 +14,8 @@ import VerticalListSection from "./_components/gameRepresentation/list/VerticalL
 import { Suspense } from "react";
 import LoadingHome from "@/_components/skeletons/HomeSkeleton";
 import { getIGDBAccessToken } from "@/services/twitch";
+import GameEventsSkeleton from "@/_components/skeletons/gameEvents/GameEventsSkeletonCarousel";
+import GamingEvents from "./_components/sections/gameEvents/GamingEvents";
 
 export default function Home() {
   return (
@@ -55,6 +57,13 @@ async function HomePage() {
       </div>
       <div className="[@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)] ml-4 md:ml-8">
         <UpcomingReleases gameData={gameData?.upcomingReleases.result} />
+      </div>
+      <div className="[@media(min-width:1344px)]:ml-[calc((100vw_-_1280px)_/_2)] ml-4 md:ml-8">
+        <section className="mt-20">
+          <Suspense fallback={<GameEventsSkeleton />}>
+            <GamingEvents />
+          </Suspense>
+        </section>
       </div>
       <PageTransition />
     </main>
