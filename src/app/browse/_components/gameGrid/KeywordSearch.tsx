@@ -23,7 +23,6 @@ const KeywordSearch = React.memo(
 
     const handleSubmit = (e: FormEvent) => {
       e.preventDefault();
-      console.log("form submitted");
       toggleDialog?.();
       handleFilter();
     };

@@ -98,7 +98,7 @@ const SectionDialog = ({
           onClickCapture: (e: MouseEvent) => {
             if (!e.target) return;
             const anchorTag = findParentByTagname(e.target as HTMLElement, "A");
-            console.log(anchorTag);
+
             if (!anchorTag) return;
             toggle(false);
           },

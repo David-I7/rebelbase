@@ -21,9 +21,7 @@ type InitSearchType = {
 const InitSearchState: InitSearchType = {
   searchValue: "",
   deferredSearchValue: "",
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
-  },
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => {},
   handleReset: () => {},
 };
 

@@ -88,7 +88,6 @@ const MediaCarouselContent = React.memo(
             >
               <DialogToggleOpen
                 toggle={() => {
-                  console.log(index);
                   if (inRangeMedium) {
                     toggleIndex(
                       (media?.screenshots.length - 1 || 0) + index + 1

@@ -9,8 +9,6 @@ import HeroCardDetailsB from "./HeroCardDetailsB";
 import Link from "next/link";
 
 const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
-  //change to make the cards server comp if they don't need interactivity
-
   const [offset, setOffset] = useState(0);
   const isTransitioning = useRef<boolean>(false);
 
@@ -114,7 +112,7 @@ const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
           })}
         </ul>
       </div>
-      <div className="flex items-center justify-center gap-2 mt-4 mb-4">
+      <div className="flex items-center justify-center gap-2 h-10">
         {carouselIndicators}
       </div>
     </>

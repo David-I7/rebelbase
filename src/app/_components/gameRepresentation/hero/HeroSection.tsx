@@ -10,7 +10,7 @@ const HeroSection = ({ gameData }: HeroSectionProps) => {
   if (!gameData) return;
 
   return (
-    <section>
+    <section className="[@media(max-width:390px)]:h-[397px] h-[450px]">
       <HeroCarouselC gameData={gameData} />
     </section>
   );
