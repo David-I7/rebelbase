@@ -1,7 +1,7 @@
 import React, { MouseEvent, ReactNode, useEffect, useRef } from "react";
 
 const offsetY = 80;
-const offsetX = 72 + 20; //default scrollbar width;
+const offsetX = 100 + 20; //default scrollbar width;
 const dialogCloseDuration = 150;
 const CustomSearchDialog = React.forwardRef(
   (

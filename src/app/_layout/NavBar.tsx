@@ -50,24 +50,6 @@ const NavBar = ({ customClass }: NavBarProps) => {
             Browse
           </Link>
         </li>
-        <li>
-          <Link
-            onClickCapture={(e) => {
-              if (currentPath === "/media") {
-                e.preventDefault();
-                e.stopPropagation();
-              }
-            }}
-            className={`${
-              currentPath === "/media"
-                ? selectedStyles
-                : "text-secondary hover:text-on-primary-container transition-colors"
-            } relative   after:absolute after:bottom-0 after:w-[calc(100%_-_2rem)] after:h-[2px] h-10 px-4 flex items-center cursor-pointer font-medium font-body-m`}
-            href={`/media`}
-          >
-            Media
-          </Link>
-        </li>
       </ul>
     </nav>
   );
