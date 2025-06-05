@@ -27,6 +27,7 @@ const FooterNav = () => {
         <ul className="grid gap-2 text-on-surface-heading-varient">
           <li>
             <Link
+              prefetch={false}
               onClickCapture={(e) => handleClickCapture(e, "/")}
               href={"/"}
               className={`${
@@ -40,6 +41,7 @@ const FooterNav = () => {
           </li>
           <li>
             <Link
+              prefetch={false}
               onClickCapture={(e) => handleClickCapture(e, "/browse")}
               href={"/browse"}
               className={`${
@@ -60,6 +62,7 @@ const FooterNav = () => {
             return (
               <li key={`footer_nav_platform_link_${key}`}>
                 <Link
+                  prefetch={false}
                   onClickCapture={(e) =>
                     handleClickCapture(e, `/platforms/${key}`)
                   }

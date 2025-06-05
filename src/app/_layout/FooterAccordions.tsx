@@ -81,6 +81,7 @@ function AccordionListItem({
   return (
     <li>
       <Link
+        prefetch={false}
         className={`${selectedStyle} px-2 font-body-s h-10 rounded-sm hover:bg-surface-container-normal cursor-pointer transition-colors flex items-center gap-2 justify-between`}
         onClickCapture={(e) => onClickCapture(e, href)}
         href={href}

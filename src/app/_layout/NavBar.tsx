@@ -16,6 +16,7 @@ const NavBar = ({ customClass }: NavBarProps) => {
       <ul className={customClass}>
         <li>
           <Link
+            prefetch={false}
             onClickCapture={(e) => {
               if (currentPath === "/") {
                 e.preventDefault();
@@ -34,6 +35,7 @@ const NavBar = ({ customClass }: NavBarProps) => {
         </li>
         <li>
           <Link
+            prefetch={false}
             onClickCapture={(e) => {
               if (currentPath === "/browse") {
                 e.preventDefault();

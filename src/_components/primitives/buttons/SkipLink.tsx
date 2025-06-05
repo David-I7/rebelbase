@@ -30,6 +30,7 @@ const SkipLink = ({
 
   return (
     <Link
+      prefetch={false}
       onClickCapture={(e) => {
         e.stopPropagation();
       }}
