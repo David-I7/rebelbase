@@ -25,6 +25,7 @@ const SuggestionChip = ({
 
   return (
     <Link
+      prefetch={false}
       href={href}
       className={`${linkPadding} hover:brightness-115 transition-brightness font-body-s font-medium bg-surface-container h-8 inline-flex items-center gap-2  border-outline-varient border rounded-full`}
     >

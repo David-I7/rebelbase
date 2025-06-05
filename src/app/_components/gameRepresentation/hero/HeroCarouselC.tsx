@@ -96,6 +96,7 @@ const HeroCarouselC = ({ gameData }: { gameData: CardData[] }) => {
                 key={`hero_carousel_item_${game.id}}`}
               >
                 <Link
+                  prefetch={false}
                   className={`${position !== 0 ? "pointer-events-none" : ""}`}
                   href={`/games/${game.slug ? game.slug : game.id}`}
                 >

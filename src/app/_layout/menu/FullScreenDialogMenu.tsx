@@ -42,6 +42,7 @@ const FullScreenDialogMenu = () => {
         <ul>
           <li>
             <Link
+              prefetch={false}
               onMouseEnter={(e) => {
                 const chevronRightRef = e.currentTarget
                   .children[0]! as HTMLElement;
@@ -75,6 +76,7 @@ const FullScreenDialogMenu = () => {
           </li>
           <li>
             <Link
+              prefetch={false}
               onMouseEnter={(e) => {
                 const chevronRightRef = e.currentTarget
                   .children[0]! as HTMLElement;
@@ -108,6 +110,7 @@ const FullScreenDialogMenu = () => {
           </li>
           <li>
             <Link
+              prefetch={false}
               onMouseEnter={(e) => {
                 const chevronRightRef = e.currentTarget
                   .children[0]! as HTMLElement;

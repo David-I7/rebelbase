@@ -15,7 +15,7 @@ const PlatformSection = () => {
   Object.entries(convertedPlatformsKeys).map(([platformName, platformId]) => {
     platformsJSX.push(
       <li key={`platform_${platformId}`}>
-        <Link href={`/platforms/${platformName}`}>
+        <Link prefetch={false} href={`/platforms/${platformName}`}>
           <Card>
             <div
               className={`flex-1 flex items-center ${
